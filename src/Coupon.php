@@ -33,6 +33,6 @@ class Coupon
     public function __construct($configPath)
     {
         $this->config = new Config($configPath);
-        $this->database = new Database();
+        $this->database = new Database($this->config);
     }
 }

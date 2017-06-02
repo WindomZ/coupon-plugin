@@ -12,13 +12,15 @@ class Config extends \Noodlehaus\Config
     protected function getDefaults()
     {
         return array(
-            'host' => 'localhost',
+            'host' => '127.0.0.1',
             'port' => 80,
             'database' => array(
-                'host' => 'localhost',
+                'host' => '127.0.0.1',
                 'port' => 3306,
-                'user' => 'root',
-                'secret' => 'root',
+                'type' => 'mysql',
+                'name' => 'name',
+                'username' => 'root',
+                'password' => 'root',
             ),
         );
     }
