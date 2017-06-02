@@ -18,7 +18,9 @@
     },
     "require": {
         "php": ">=7.0",
-        "catfan/Medoo": "^1.4"
+        "catfan/Medoo": "^1.4",
+        "hassankhan/config": "^0.10.0",
+        "symfony/yaml": "^3.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.1",
