@@ -16,6 +16,11 @@ class CouponTest extends TestCase
         self::assertEquals($coupon->getConfig()->get('host'), 'localhost');
         self::assertEquals($coupon->getConfig()->get('port'), 80);
 
+        self::assertEquals($coupon->getConfig()->get('database.host'), 'localhost');
+        self::assertEquals($coupon->getConfig()->get('database.port'), 3306);
+        self::assertEquals($coupon->getConfig()->get('database.user'), 'root');
+        self::assertEquals($coupon->getConfig()->get('database.secret'), 'root');
+
         return $coupon;
     }
 }
