@@ -4,6 +4,7 @@ composer.phar
 
 # php
 *.cache
+composer.lock
 
 # IntelliJ project files
 .idea

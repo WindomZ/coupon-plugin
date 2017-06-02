@@ -1,0 +1,15 @@
+{
+    "name": "windomz/coupon-plugin",
+    "description": "desc",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "WindomZ",
+            "email": "git.windomz@gmail.com"
+        }
+    ],
+    "require": {
+        "catfan/Medoo": "^1.4"
+    }
+}
