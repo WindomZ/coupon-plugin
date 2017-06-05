@@ -30,7 +30,9 @@ abstract class baseId extends base
 
     protected function _insert($datas): bool
     {
-        $datas[self::COL_ID] = $this->makeId();
+        if (!$this->validId()) {
+            $datas[self::COL_ID] = $this->makeId();
+        }
 
         return parent::_insert($datas);
     }
