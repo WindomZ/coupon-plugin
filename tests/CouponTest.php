@@ -2,7 +2,7 @@
 
 namespace CouponPlugin\Test;
 
-use CouponPlugin\Classes\Test;
+use CouponPlugin\Db\DbTest;
 use CouponPlugin\Coupon;
 
 use PHPUnit\Framework\TestCase;
@@ -43,13 +43,13 @@ class CouponTest extends TestCase
     {
         self::assertNotEmpty($coupon);
 
-        $test = new Test();
-        if ($test->get([Test::COL_NAME => 'name'])) {
+        $test = new DbTest();
+        if ($test->get([DbTest::COL_NAME => 'name'])) {
             $this->assertEquals($test->name, 'name');
-            $this->assertEquals($test->tel, 'tel');
+            $this->assertEquals($test->email, 'email');
         } else {
             $test->name = 'name';
-            $test->tel = 'tel';
+            $test->email = 'email';
             $this->assertTrue($test->insert());
         }
     }

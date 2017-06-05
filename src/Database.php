@@ -23,5 +23,11 @@ class Database extends Medoo
                 'password' => $config->get('database.password'),
             ]
         );
+
+        $this->prepare();
+    }
+
+    protected function prepare()
+    {
     }
 }

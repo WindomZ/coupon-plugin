@@ -1,17 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace CouponPlugin\Classes;
+namespace CouponPlugin\Db;
 
-class Test extends Base
+class DbTest extends baseId
 {
-    const COL_ID = 'id';
     const COL_NAME = 'name';
-    const COL_TEL = 'tel';
-
-    /**
-     * @var int
-     */
-    public $id;
+    const COL_EMAIL = 'email';
 
     /**
      * @var string
@@ -21,11 +15,25 @@ class Test extends Base
     /**
      * @var string
      */
-    public $tel;
+    public $email;
 
     protected function getTableName(): string
     {
         return 'test';
+    }
+
+    /**
+     * @param int $type
+     * @return bool
+     */
+    public function valid($type): bool
+    {
+        switch ($type) {
+            case self::_TypeDbInsert:
+                return !empty($this->name) && !empty($this->email);
+        }
+
+        return false;
     }
 
     /**
@@ -36,7 +44,7 @@ class Test extends Base
         return parent::_insert(
             [
                 self::COL_NAME => $this->name,
-                self::COL_TEL => $this->tel,
+                self::COL_EMAIL => $this->email,
             ]
         );
     }
@@ -51,7 +59,7 @@ class Test extends Base
             [
                 self::COL_ID,
                 self::COL_NAME,
-                self::COL_TEL,
+                self::COL_EMAIL,
             ],
             $where
         );
@@ -60,7 +68,7 @@ class Test extends Base
         }
         $this->id = $data[self::COL_ID];
         $this->name = $data[self::COL_NAME];
-        $this->tel = $data[self::COL_TEL];
+        $this->email = $data[self::COL_EMAIL];
 
         return true;
     }
