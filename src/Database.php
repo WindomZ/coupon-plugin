@@ -6,19 +6,15 @@ require 'vendor/autoload.php';
 
 use Medoo\Medoo;
 
-class Database
+class Database extends Medoo
 {
-    /**
-     * @var Medoo
-     */
-    protected $database;
 
     /**
      * @param  Config $config
      */
     public function __construct($config)
     {
-        $this->database = new Medoo(
+        parent::__construct(
             [
                 'database_type' => $config->get('database.type'),
                 'database_name' => $config->get('database.name'),

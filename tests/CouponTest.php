@@ -2,15 +2,23 @@
 
 namespace CouponPlugin\Test;
 
+use CouponPlugin\Classes\Test;
 use CouponPlugin\Coupon;
 
 use PHPUnit\Framework\TestCase;
 
 class CouponTest extends TestCase
 {
+    /**
+     * @covers  Coupon::getInstance()
+     * @return Coupon
+     */
     public function testNewCoupon()
     {
         $coupon = new Coupon('./tests/config.yml');
+        self::assertNotEmpty($coupon);
+
+        $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
         self::assertEquals($coupon->getConfig()->get('host'), '127.0.0.1');
@@ -24,5 +32,25 @@ class CouponTest extends TestCase
         self::assertEquals($coupon->getConfig()->get('database.password'), 'root');
 
         return $coupon;
+    }
+
+    /**
+     * @depends testNewCoupon
+     * @param Coupon $coupon
+     * @return array
+     */
+    public function testDbTest($coupon)
+    {
+        self::assertNotEmpty($coupon);
+
+        $test = new Test();
+        if ($test->get([Test::COL_NAME => 'name'])) {
+            $this->assertEquals($test->name, 'name');
+            $this->assertEquals($test->tel, 'tel');
+        } else {
+            $test->name = 'name';
+            $test->tel = 'tel';
+            $this->assertTrue($test->insert());
+        }
     }
 }

@@ -2,6 +2,8 @@
 
 namespace CouponPlugin;
 
+use Noodlehaus\ErrorException;
+
 class Coupon
 {
     /**
@@ -25,14 +27,31 @@ class Coupon
     /**
      * @return Database
      */
-    public function getDatabase(): Database
+    public function getDb(): Database
     {
         return $this->database;
+    }
+
+    private static $_instance;
+
+    private function __clone()
+    {
+    }
+
+    public static function getInstance(): Coupon
+    {
+        if (!(self::$_instance instanceof self)) {
+            throw new ErrorException('No initialization Coupon!');
+        }
+
+        return self::$_instance;
     }
 
     public function __construct($configPath)
     {
         $this->config = new Config($configPath);
         $this->database = new Database($this->config);
+
+        self::$_instance = $this;
     }
 }
