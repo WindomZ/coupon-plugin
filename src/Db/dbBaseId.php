@@ -38,20 +38,20 @@ abstract class dbBaseId extends dbBase
      */
     protected function toArray(): array
     {
-        return array();
+        return $this->getArray();
     }
 
     /**
      * @param $data
-     * @return bool
+     * @return object
      */
-    abstract protected function getInstance($data): bool;
+    abstract protected function getInstance($data);
 
     /**
      * @param $data
-     * @return bool
+     * @return object
      */
-    protected function toInstance($data): bool
+    protected function toInstance($data)
     {
         $this->id = $data[self::COL_ID];
 
@@ -62,21 +62,37 @@ abstract class dbBaseId extends dbBase
      * @param array $data
      * @return bool
      */
-    protected function _insert($data): bool
+    protected function _post($data): bool
     {
         if (!$this->validId()) {
             $data[self::COL_ID] = $this->makeId();
         }
 
-        return parent::_insert($data);
+        return parent::_post($data);
     }
 
     /**
      * @return bool
      */
-    public function insert(): bool
+    public function post(): bool
     {
-        return parent::_insert($this->getArray());
+        return $this->_post($this->getArray());
+    }
+
+    /**
+     * @param array|string $columns
+     * @return bool
+     */
+    public function put($columns = []): bool
+    {
+        $data = $this->toArray();
+
+        if ($columns !== '*' && gettype($columns) === 'array') {
+            $columns = array_diff($columns, [self::COL_ID]);
+            $data = array_intersect_key($data, array_flip($columns));
+        }
+
+        return $this->_put($data);
     }
 
     /**
@@ -89,19 +105,10 @@ abstract class dbBaseId extends dbBase
     }
 
     /**
-     * @param $id
-     * @return bool
-     */
-    public function getById($id): bool
-    {
-        return $this->_getById($id);
-    }
-
-    /**
      * @param string $id
      * @return bool
      */
-    public function _getById($id): bool
+    public function getById($id): bool
     {
         return $this->_get([self::COL_ID => $id]);
     }

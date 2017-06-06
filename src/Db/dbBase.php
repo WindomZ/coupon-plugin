@@ -9,7 +9,8 @@ abstract class dbBase
 {
     abstract protected function getTableName(): string;
 
-    const _TypeDbInsert = 1;
+    const _TypeDbPost = 1;
+    const _TypeDbPut = 2;
 
     /**
      * @param int $type
@@ -20,7 +21,13 @@ abstract class dbBase
     /**
      * @return bool
      */
-    abstract public function insert(): bool;
+    abstract public function post(): bool;
+
+    /**
+     * @param array|string $columns
+     * @return bool
+     */
+    abstract public function put($columns = []): bool;
 
     /**
      * @param array $where
@@ -35,9 +42,9 @@ abstract class dbBase
 
     /**
      * @param $data
-     * @return bool
+     * @return object
      */
-    abstract protected function toInstance($data): bool;
+    abstract protected function toInstance($data);
 
     protected function getDb()
     {
@@ -49,16 +56,29 @@ abstract class dbBase
      * @return bool
      * @throws ErrorException
      */
-    protected function _insert($data): bool
+    protected function _post($data): bool
     {
-        if (!$this->valid(self::_TypeDbInsert)) {
+        if (!$this->valid(self::_TypeDbPost)) {
             var_dump($this);
             throw new ErrorException('Invalid insert object!');
         }
 
-        $result = $this->getDb()->insert($this->getTableName(), $data);
+        return !empty($this->getDb()->insert($this->getTableName(), $data));
+    }
 
-        return !empty($result);
+    /**
+     * @param array $data
+     * @return bool
+     * @throws ErrorException
+     */
+    protected function _put($data): bool
+    {
+        if (!$this->valid(self::_TypeDbPut)) {
+            var_dump($this);
+            throw new ErrorException('Invalid update object!');
+        }
+
+        return !empty($this->getDb()->update($this->getTableName(), $data));
     }
 
     /**
@@ -72,6 +92,6 @@ abstract class dbBase
             return false;
         }
 
-        return $this->toInstance($data);
+        return !empty($this->toInstance($data));
     }
 }
