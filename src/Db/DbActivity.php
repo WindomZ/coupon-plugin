@@ -2,17 +2,51 @@
 
 namespace CouponPlugin\Db;
 
-class DbActivity extends dbBaseId
+class DbActivity extends dbBaseDate
 {
     const COL_NAME = 'name';
     const COL_NOTE = 'note';
     const COL_VALID = 'valid';
-    const COL_POST_TIME = 'post_time';
-    const COL_PUT_TIME = 'put_time';
     const COL_DEAD_TIME = 'dead_time';
     const COL_COUPON_SIZE = 'coupon_size';
     const COL_COUPON_USED = 'coupon_used';
     const COL_COUPON_UNI = 'coupon_uni';
+
+
+    /**
+     * @var string
+     */
+    public $name = '';
+
+    /**
+     * @var string
+     */
+    public $note = '';
+
+    /**
+     * @var bool
+     */
+    public $valid = true;
+
+    /**
+     * @var string
+     */
+    public $dead_time;
+
+    /**
+     * @var int
+     */
+    public $coupon_size = 0;
+
+    /**
+     * @var int
+     */
+    public $coupon_used = 0;
+
+    /**
+     * @var bool
+     */
+    public $coupon_uni = false;
 
     protected function getTableName(): string
     {
@@ -25,23 +59,51 @@ class DbActivity extends dbBaseId
      */
     public function valid($type): bool
     {
+        switch ($type) {
+            case self::_TypeDbPost:
+            case self::_TypeDbPut:
+                return !empty($this->name)
+                    && $this->coupon_size >= 0 && $this->coupon_used >= 0;
+        }
+
         return false;
     }
 
     /**
-     * @return bool
+     * @return array
      */
-    public function insert(): bool
+    protected function getArray(): array
     {
-        return false;
+        return array_merge(
+            parent::getArray(),
+            [
+                self::COL_NAME => $this->name,
+                self::COL_NOTE => $this->note,
+                self::COL_VALID => $this->valid,
+                self::COL_DEAD_TIME => $this->dead_time,
+                self::COL_COUPON_SIZE => $this->coupon_size,
+                self::COL_COUPON_USED => $this->coupon_used,
+                self::COL_COUPON_UNI => $this->coupon_uni,
+            ]
+        );
     }
 
     /**
-     * @param array $where
-     * @return bool
+     * @param $data
+     * @return DbActivity
      */
-    public function get($where): bool
+    protected function getInstance($data)
     {
-        return false;
+        parent::getInstance($data);
+
+        $this->name = $data[self::COL_NAME];
+        $this->note = $data[self::COL_NOTE];
+        $this->valid = $data[self::COL_VALID];
+        $this->dead_time = $data[self::COL_DEAD_TIME];
+        $this->coupon_size = $data[self::COL_COUPON_SIZE];
+        $this->coupon_used = $data[self::COL_COUPON_USED];
+        $this->coupon_uni = $data[self::COL_COUPON_UNI];
+
+        return $this;
     }
 }
