@@ -64,7 +64,9 @@ abstract class dbBaseDate extends dbBaseId
     public function put($columns = []): bool
     {
         $this->put_time = Date::get_now_time();
-        array_push($columns, self::COL_PUT_TIME);
+        if (gettype($columns) === 'array') {
+            array_push($columns, self::COL_PUT_TIME);
+        }
 
         return parent::put($columns);
     }
