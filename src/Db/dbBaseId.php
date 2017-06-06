@@ -38,7 +38,7 @@ abstract class dbBaseId extends dbBase
      */
     protected function toArray(): array
     {
-        return $this->getArray();
+        return array_merge([self::COL_ID => $this->id], $this->getArray());
     }
 
     /**
@@ -76,7 +76,7 @@ abstract class dbBaseId extends dbBase
      */
     public function post(): bool
     {
-        return $this->_post($this->getArray());
+        return $this->_post($this->toArray());
     }
 
     /**

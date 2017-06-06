@@ -2,14 +2,10 @@
 
 namespace CouponPlugin\Db;
 
-use CouponPlugin\Util\Date;
-
-class DbTest extends dbBaseId
+class DbTest extends dbBaseDate
 {
     const COL_NAME = 'name';
     const COL_EMAIL = 'email';
-    const COL_POST_TIME = 'post_time';
-    const COL_PUT_TIME = 'put_time';
 
     /**
      * @var string
@@ -20,16 +16,6 @@ class DbTest extends dbBaseId
      * @var string
      */
     public $email;
-
-    /**
-     * @var string
-     */
-    public $post_time;
-
-    /**
-     * @var string
-     */
-    public $put_time;
 
     protected function getTableName(): string
     {
@@ -56,12 +42,13 @@ class DbTest extends dbBaseId
      */
     protected function getArray(): array
     {
-        return [
-            self::COL_NAME => $this->name,
-            self::COL_EMAIL => $this->email,
-            self::COL_POST_TIME => $this->post_time,
-            self::COL_PUT_TIME => $this->put_time,
-        ];
+        return array_merge(
+            parent::getArray(),
+            [
+                self::COL_NAME => $this->name,
+                self::COL_EMAIL => $this->email,
+            ]
+        );
     }
 
     /**
@@ -70,34 +57,11 @@ class DbTest extends dbBaseId
      */
     protected function getInstance($data)
     {
+        parent::getInstance($data);
+
         $this->name = $data[self::COL_NAME];
         $this->email = $data[self::COL_EMAIL];
-        $this->post_time = $data[self::COL_POST_TIME];
-        $this->put_time = $data[self::COL_PUT_TIME];
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function post(): bool
-    {
-        $this->post_time = Date::get_now_time();
-        $this->put_time = Date::get_now_time();
-
-        return parent::post();
-    }
-
-    /**
-     * @param array|string $columns
-     * @return bool
-     */
-    public function put($columns = []): bool
-    {
-        $this->put_time = Date::get_now_time();
-        array_push($columns, self::COL_PUT_TIME);
-
-        return parent::put($columns);
     }
 }
