@@ -50,5 +50,11 @@ class CouponTest extends TestCase
             $test->email = 'email';
             $this->assertTrue($test->insert());
         }
+
+        $id = $test->id;
+        $test = new DbTest();
+        $this->assertTrue($test->getById($id));
+        $this->assertEquals($test->name, 'name');
+        $this->assertEquals($test->email, 'email');
     }
 }

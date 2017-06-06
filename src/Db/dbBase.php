@@ -28,25 +28,45 @@ abstract class dbBase
      */
     abstract public function get($where): bool;
 
+    /**
+     * @param $data
+     * @return bool
+     */
+    abstract protected function toInstance($data): bool;
+
     protected function getDb()
     {
         return Coupon::getInstance()->getDb();
     }
 
-    protected function _insert($datas): bool
+    /**
+     * @param array $data
+     * @return bool
+     * @throws ErrorException
+     */
+    protected function _insert($data): bool
     {
         if (!$this->valid(self::_TypeDbInsert)) {
             var_dump($this);
             throw new ErrorException('Invalid insert object!');
         }
 
-        $result = $this->getDb()->insert($this->getTableName(), $datas);
+        $result = $this->getDb()->insert($this->getTableName(), $data);
 
         return !empty($result);
     }
 
-    protected function _get($columns = null, $where = null)
+    /**
+     * @param array $where
+     * @return bool
+     */
+    protected function _get($where = null)
     {
-        return $this->getDb()->get($this->getTableName(), $columns, $where);
+        $data = $this->getDb()->get($this->getTableName(), '*', $where);
+        if (!$data) {
+            return false;
+        }
+
+        return $this->toInstance($data);
     }
 }

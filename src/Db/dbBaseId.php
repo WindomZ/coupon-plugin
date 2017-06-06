@@ -36,4 +36,19 @@ abstract class dbBaseId extends dbBase
 
         return parent::_insert($datas);
     }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    abstract public function getById($id): bool;
+
+    /**
+     * @param string $id
+     * @return bool
+     */
+    public function _getById($id): bool
+    {
+        return $this->_get([self::COL_ID => $id]);
+    }
 }
