@@ -2,7 +2,11 @@
 
 namespace CouponPlugin\Db;
 
-class DbTest extends baseId
+/**
+ * Class DbTest
+ * @package CouponPlugin\Db
+ */
+class DbTest extends dbBaseDate
 {
     const COL_NAME = 'name';
     const COL_EMAIL = 'email';
@@ -17,6 +21,9 @@ class DbTest extends baseId
      */
     public $email;
 
+    /**
+     * @return string
+     */
     protected function getTableName(): string
     {
         return 'test';
@@ -29,7 +36,8 @@ class DbTest extends baseId
     public function valid($type): bool
     {
         switch ($type) {
-            case self::_TypeDbInsert:
+            case self::_TypeDbPost:
+            case self::_TypeDbPut:
                 return !empty($this->name) && !empty($this->email);
         }
 
@@ -37,11 +45,12 @@ class DbTest extends baseId
     }
 
     /**
-     * @return bool
+     * @return array
      */
-    public function insert(): bool
+    protected function getArray(): array
     {
-        return parent::_insert(
+        return array_merge(
+            parent::getArray(),
             [
                 self::COL_NAME => $this->name,
                 self::COL_EMAIL => $this->email,
@@ -50,26 +59,16 @@ class DbTest extends baseId
     }
 
     /**
-     * @param array $where
-     * @return bool
+     * @param $data
+     * @return DbTest
      */
-    public function get($where): bool
+    protected function getInstance($data)
     {
-        $data = parent::_get(
-            [
-                self::COL_ID,
-                self::COL_NAME,
-                self::COL_EMAIL,
-            ],
-            $where
-        );
-        if (!$data) {
-            return false;
-        }
-        $this->id = $data[self::COL_ID];
+        parent::getInstance($data);
+
         $this->name = $data[self::COL_NAME];
         $this->email = $data[self::COL_EMAIL];
 
-        return true;
+        return $this;
     }
 }

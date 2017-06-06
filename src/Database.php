@@ -6,6 +6,10 @@ require 'vendor/autoload.php';
 
 use Medoo\Medoo;
 
+/**
+ * Class Database
+ * @package CouponPlugin
+ */
 class Database extends Medoo
 {
 
