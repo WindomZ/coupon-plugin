@@ -2,6 +2,10 @@
 
 namespace CouponPlugin\Db;
 
+/**
+ * Class DbActivity
+ * @package CouponPlugin\Db
+ */
 class DbActivity extends dbBaseDate
 {
     const COL_NAME = 'name';
@@ -48,6 +52,9 @@ class DbActivity extends dbBaseDate
      */
     public $coupon_uni = false;
 
+    /**
+     * @return string
+     */
     protected function getTableName(): string
     {
         return 'activity';

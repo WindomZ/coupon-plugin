@@ -2,6 +2,10 @@
 
 namespace CouponPlugin;
 
+/**
+ * Class Coupon
+ * @package CouponPlugin
+ */
 class Coupon
 {
     /**
@@ -30,14 +34,23 @@ class Coupon
         return $this->database;
     }
 
+    /**
+     * @var string
+     */
     public static $configPath = './config.yml';
 
+    /**
+     * @var Coupon
+     */
     private static $_instance;
 
     private function __clone()
     {
     }
 
+    /**
+     * @return Coupon
+     */
     public static function getInstance(): Coupon
     {
         if (!(self::$_instance instanceof self)) {
@@ -47,6 +60,9 @@ class Coupon
         return self::$_instance;
     }
 
+    /**
+     * Coupon constructor.
+     */
     private function __construct()
     {
         $this->config = new Config(self::$configPath);

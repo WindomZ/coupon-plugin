@@ -2,13 +2,24 @@
 
 namespace CouponPlugin;
 
+/**
+ * Class Config
+ * @package CouponPlugin
+ */
 class Config extends \Noodlehaus\Config
 {
+    /**
+     * Config constructor.
+     * @param array|string $path
+     */
     public function __construct($path)
     {
         parent::__construct($path);
     }
 
+    /**
+     * @return array
+     */
     protected function getDefaults()
     {
         return array(

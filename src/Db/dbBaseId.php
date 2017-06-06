@@ -4,6 +4,10 @@ namespace CouponPlugin\Db;
 
 use Ramsey\Uuid\Uuid;
 
+/**
+ * Class dbBaseId
+ * @package CouponPlugin\Db
+ */
 abstract class dbBaseId extends dbBase
 {
     const COL_ID = 'id';
@@ -13,6 +17,9 @@ abstract class dbBaseId extends dbBase
      */
     public $id;
 
+    /**
+     * @return string
+     */
     protected function makeId(): string
     {
         $this->id = Uuid::uuid4()->toString();

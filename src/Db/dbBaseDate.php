@@ -4,6 +4,10 @@ namespace CouponPlugin\Db;
 
 use CouponPlugin\Util\Date;
 
+/**
+ * Class dbBaseDate
+ * @package CouponPlugin\Db
+ */
 abstract class dbBaseDate extends dbBaseId
 {
     const COL_POST_TIME = 'post_time';

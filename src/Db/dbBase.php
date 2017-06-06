@@ -5,8 +5,15 @@ namespace CouponPlugin\Db;
 use CouponPlugin\Coupon;
 use CouponPlugin\ErrorException;
 
+/**
+ * Class dbBase
+ * @package CouponPlugin\Db
+ */
 abstract class dbBase
 {
+    /**
+     * @return string
+     */
     abstract protected function getTableName(): string;
 
     const _TypeDbPost = 1;
@@ -46,6 +53,9 @@ abstract class dbBase
      */
     abstract protected function toInstance($data);
 
+    /**
+     * @return \CouponPlugin\Database
+     */
     protected function getDb()
     {
         return Coupon::getInstance()->getDb();

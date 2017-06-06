@@ -2,6 +2,10 @@
 
 namespace CouponPlugin\Db;
 
+/**
+ * Class DbCouponTemplate
+ * @package CouponPlugin\Db
+ */
 class DbCouponTemplate extends dbBaseDate
 {
     const COL_CLASS = 'class';
@@ -67,6 +71,9 @@ class DbCouponTemplate extends dbBaseDate
         $this->offer_amount = $offer_amount;
     }
 
+    /**
+     * @return string
+     */
     protected function getTableName(): string
     {
         return 'coupon_template';

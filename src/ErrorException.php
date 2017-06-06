@@ -2,6 +2,10 @@
 
 namespace CouponPlugin;
 
+/**
+ * Class ErrorException
+ * @package CouponPlugin
+ */
 class ErrorException extends \ErrorException
 {
 }

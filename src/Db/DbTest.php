@@ -2,6 +2,10 @@
 
 namespace CouponPlugin\Db;
 
+/**
+ * Class DbTest
+ * @package CouponPlugin\Db
+ */
 class DbTest extends dbBaseDate
 {
     const COL_NAME = 'name';
@@ -17,6 +21,9 @@ class DbTest extends dbBaseDate
      */
     public $email;
 
+    /**
+     * @return string
+     */
     protected function getTableName(): string
     {
         return 'test';

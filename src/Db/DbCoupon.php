@@ -4,6 +4,10 @@ namespace CouponPlugin\Db;
 
 use CouponPlugin\Util\Date;
 
+/**
+ * Class DbCoupon
+ * @package CouponPlugin\Db
+ */
 class DbCoupon extends DbCouponTemplate
 {
     const COL_OWNER_ID = 'owner_id';
@@ -53,6 +57,9 @@ class DbCoupon extends DbCouponTemplate
         $this->template_id = $template_id;
     }
 
+    /**
+     * @return string
+     */
     protected function getTableName(): string
     {
         return 'coupon';

@@ -2,6 +2,10 @@
 
 namespace CouponPlugin\Util;
 
+/**
+ * Class Date
+ * @package CouponPlugin\Util
+ */
 class Date
 {
     /**
