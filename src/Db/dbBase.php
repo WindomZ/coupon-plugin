@@ -5,7 +5,7 @@ namespace CouponPlugin\Db;
 use CouponPlugin\Coupon;
 use Noodlehaus\ErrorException;
 
-abstract class base
+abstract class dbBase
 {
     abstract protected function getTableName(): string;
 

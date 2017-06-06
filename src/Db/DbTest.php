@@ -2,7 +2,7 @@
 
 namespace CouponPlugin\Db;
 
-class DbTest extends baseId
+class DbTest extends dbBaseId
 {
     const COL_NAME = 'name';
     const COL_EMAIL = 'email';

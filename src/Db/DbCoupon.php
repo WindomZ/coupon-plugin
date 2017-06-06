@@ -2,7 +2,7 @@
 
 namespace CouponPlugin\Db;
 
-class DbCoupon extends baseId
+class DbCoupon extends dbBaseId
 {
     const COL_OWNER_ID = 'owner_id';
     const COL_ACTIVITY_ID = 'activity_id';

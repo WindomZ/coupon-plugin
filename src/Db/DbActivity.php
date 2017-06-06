@@ -2,7 +2,7 @@
 
 namespace CouponPlugin\Db;
 
-class DbActivity extends baseId
+class DbActivity extends dbBaseId
 {
     const COL_NAME = 'name';
     const COL_NOTE = 'note';

@@ -4,7 +4,7 @@ namespace CouponPlugin\Db;
 
 use Ramsey\Uuid\Uuid;
 
-abstract class baseId extends base
+abstract class dbBaseId extends dbBase
 {
     const COL_ID = 'id';
 
