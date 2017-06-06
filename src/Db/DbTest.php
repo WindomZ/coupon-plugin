@@ -37,16 +37,14 @@ class DbTest extends dbBaseId
     }
 
     /**
-     * @return bool
+     * @return array
      */
-    public function insert(): bool
+    protected function getArray(): array
     {
-        return parent::_insert(
-            [
-                self::COL_NAME => $this->name,
-                self::COL_EMAIL => $this->email,
-            ]
-        );
+        return [
+            self::COL_NAME => $this->name,
+            self::COL_EMAIL => $this->email,
+        ];
     }
 
     /**

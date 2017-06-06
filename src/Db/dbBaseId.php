@@ -28,13 +28,17 @@ abstract class dbBaseId extends dbBase
         return Uuid::isValid($this->id);
     }
 
-    protected function _insert($data): bool
-    {
-        if (!$this->validId()) {
-            $data[self::COL_ID] = $this->makeId();
-        }
+    /**
+     * @return array
+     */
+    abstract protected function getArray(): array;
 
-        return parent::_insert($data);
+    /**
+     * @return array
+     */
+    protected function toArray(): array
+    {
+        return array();
     }
 
     /**
@@ -52,6 +56,27 @@ abstract class dbBaseId extends dbBase
         $this->id = $data[self::COL_ID];
 
         return $this->getInstance($data);
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    protected function _insert($data): bool
+    {
+        if (!$this->validId()) {
+            $data[self::COL_ID] = $this->makeId();
+        }
+
+        return parent::_insert($data);
+    }
+
+    /**
+     * @return bool
+     */
+    public function insert(): bool
+    {
+        return parent::_insert($this->getArray());
     }
 
     /**

@@ -29,6 +29,11 @@ abstract class dbBase
     abstract public function get($where): bool;
 
     /**
+     * @return array
+     */
+    abstract protected function toArray(): array;
+
+    /**
      * @param $data
      * @return bool
      */
