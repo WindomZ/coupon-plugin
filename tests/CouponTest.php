@@ -15,9 +15,7 @@ class CouponTest extends TestCase
      */
     public function testNewCoupon()
     {
-        $coupon = new Coupon('./tests/config.yml');
-        self::assertNotEmpty($coupon);
-
+        Coupon::$configPath = './tests/config.yml';
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 

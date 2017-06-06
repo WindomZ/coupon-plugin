@@ -32,6 +32,8 @@ class Coupon
         return $this->database;
     }
 
+    public static $configPath = './config.yml';
+
     private static $_instance;
 
     private function __clone()
@@ -41,15 +43,15 @@ class Coupon
     public static function getInstance(): Coupon
     {
         if (!(self::$_instance instanceof self)) {
-            throw new ErrorException('No initialization Coupon!');
+            self::$_instance = new Coupon();
         }
 
         return self::$_instance;
     }
 
-    public function __construct($configPath)
+    private function __construct()
     {
-        $this->config = new Config($configPath);
+        $this->config = new Config(self::$configPath);
         $this->database = new Database($this->config);
 
         self::$_instance = $this;
