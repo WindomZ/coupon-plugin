@@ -45,10 +45,12 @@ class CouponTest extends TestCase
         if ($test->get([DbTest::COL_NAME => 'name'])) {
             $this->assertEquals($test->name, 'name');
             $this->assertEquals($test->email, 'email');
+
+            $test->put();
         } else {
             $test->name = 'name';
             $test->email = 'email';
-            $this->assertTrue($test->insert());
+            $this->assertTrue($test->post());
         }
 
         $id = $test->id;
