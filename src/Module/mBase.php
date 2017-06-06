@@ -2,13 +2,9 @@
 
 namespace CouponPlugin\Module;
 
-class MCoupon extends mBase
+class mBase
 {
     private function __construct()
-    {
-    }
-
-    public static function post()
     {
     }
 }
