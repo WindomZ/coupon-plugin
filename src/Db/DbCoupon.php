@@ -2,22 +2,15 @@
 
 namespace CouponPlugin\Db;
 
-class DbCoupon extends dbBaseId
+use CouponPlugin\Util\Date;
+
+class DbCoupon extends DbCouponTemplate
 {
     const COL_OWNER_ID = 'owner_id';
     const COL_ACTIVITY_ID = 'activity_id';
-    const COL_CLASS = 'class';
-    const COL_KIND = 'kind';
-    const COL_NAME = 'name';
-    const COL_DESC = 'desc';
-    const COL_MIN_AMOUNT = 'min_amount';
-    const COL_OFFER_AMOUNT = 'offer_amount';
-    const COL_VALID = 'valid';
+    const COL_TEMPLATE_ID = 'template_id';
     const COL_USED_COUNT = 'used_count';
     const COL_USED_TIME = 'used_time';
-    const COL_POST_TIME = 'post_time';
-    const COL_PUT_TIME = 'put_time';
-    const COL_DEAD_TIME = 'dead_time';
 
     /**
      * @var string
@@ -30,64 +23,35 @@ class DbCoupon extends dbBaseId
     public $activity_id;
 
     /**
-     * @var int
-     */
-    public $class;
-
-    /**
-     * @var int
-     */
-    public $kind;
-
-    /**
      * @var string
      */
-    public $name;
-
-    /**
-     * @var string
-     */
-    public $desc;
-
-    /**
-     * @var float
-     */
-    public $min_amount;
-
-    /**
-     * @var float
-     */
-    public $offer_amount;
-
-    /**
-     * @var bool
-     */
-    public $valid;
+    public $template_id;
 
     /**
      * @var int
      */
-    public $used_count;
+    public $used_count = 0;
 
     /**
      * @var string
      */
     public $used_time;
 
-    /**
-     * @var string
-     */
-    public $post_time;
+    public function __construct(
+        $owner_id = '',
+        $activity_id = '',
+        $template_id = '',
+        $name = '',
+        $desc = '',
+        $min_amount = 0,
+        $offer_amount = 0
+    ) {
+        parent::__construct($name, $desc, $min_amount, $offer_amount);
 
-    /**
-     * @var string
-     */
-    public $put_time;
-
-    /**
-     * @var string
-     */
-    public $dead_time;
+        $this->owner_id = $owner_id;
+        $this->activity_id = $activity_id;
+        $this->template_id = $template_id;
+    }
 
     protected function getTableName(): string
     {
@@ -101,27 +65,57 @@ class DbCoupon extends dbBaseId
     public function valid($type): bool
     {
         switch ($type) {
-            case self::_TypeDbInsert:
-                return !empty($this->name) && !empty($this->tel);
+            case self::_TypeDbPost:
+            case self::_TypeDbPut:
+                return parent::valid($type)
+                    && !empty($this->owner_id) && !empty($this->activity_id) && !empty($this->template_id)
+                    && $this->used_count >= 0 && !empty($this->used_time);
         }
 
         return false;
     }
 
     /**
-     * @return bool
+     * @return array
      */
-    public function insert(): bool
+    protected function getArray(): array
     {
-        return false;
+        return array_merge(
+            parent::getArray(),
+            [
+                self::COL_OWNER_ID => $this->owner_id,
+                self::COL_ACTIVITY_ID => $this->activity_id,
+                self::COL_TEMPLATE_ID => $this->template_id,
+                self::COL_USED_COUNT => $this->used_count,
+                self::COL_USED_TIME => $this->used_time,
+            ]
+        );
     }
 
     /**
-     * @param array $where
+     * @param $data
+     * @return DbCoupon
+     */
+    protected function getInstance($data)
+    {
+        parent::getInstance($data);
+
+        $this->owner_id = $data[self::COL_OWNER_ID];
+        $this->activity_id = $data[self::COL_ACTIVITY_ID];
+        $this->template_id = $data[self::COL_TEMPLATE_ID];
+        $this->used_count = $data[self::COL_USED_COUNT];
+        $this->used_time = $data[self::COL_USED_TIME];
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
-    public function get($where): bool
+    public function post(): bool
     {
-        return false;
+        $this->used_time = Date::get_now_time();
+
+        return parent::post();
     }
 }

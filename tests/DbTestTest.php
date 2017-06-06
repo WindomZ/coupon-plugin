@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace CouponPlugin\Test;
 
 use CouponPlugin\Db\DbTest;
@@ -11,9 +10,21 @@ use PHPUnit\Framework\TestCase;
 class DbTestTest extends TestCase
 {
     /**
+     * @covers  Coupon::getInstance()
+     * @return Coupon
+     */
+    public function testNewCoupon()
+    {
+        Coupon::$configPath = './tests/config.yml';
+        $coupon = Coupon::getInstance();
+        self::assertNotEmpty($coupon);
+
+        return $coupon;
+    }
+
+    /**
      * @depends testNewCoupon
      * @param Coupon $coupon
-     * @return array
      */
     public function testDbTest($coupon)
     {
@@ -28,6 +39,7 @@ class DbTestTest extends TestCase
         } else {
             $test->name = 'name';
             $test->email = 'email';
+
             $this->assertTrue($test->post());
         }
 
