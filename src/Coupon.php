@@ -2,8 +2,6 @@
 
 namespace CouponPlugin;
 
-use Noodlehaus\ErrorException;
-
 class Coupon
 {
     /**

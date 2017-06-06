@@ -3,7 +3,7 @@
 namespace CouponPlugin\Db;
 
 use CouponPlugin\Coupon;
-use Noodlehaus\ErrorException;
+use CouponPlugin\ErrorException;
 
 abstract class dbBase
 {
