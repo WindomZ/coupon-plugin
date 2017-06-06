@@ -95,9 +95,27 @@ abstract class dbBase
      * @param array $where
      * @return bool
      */
-    protected function _get($where = null)
+    protected function _get(array $where = null)
     {
         $data = $this->getDb()->get($this->getTableName(), '*', $where);
+        if (!$data) {
+            return false;
+        }
+
+        return !empty($this->toInstance($data));
+    }
+
+    protected function _select(array $where = null, $limit = 0, $page = 0)
+    {
+        if ($limit > 0 && !empty($where)) {
+            if ($page > 0) {
+                $where['LIMIT'] = [$limit * $page, $limit * ($page + 1)];
+            } else {
+                $where['LIMIT'] = $limit;
+            }
+        }
+
+        $data = $this->getDb()->select($this->getTableName(), '*', $where);
         if (!$data) {
             return false;
         }
