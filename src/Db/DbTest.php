@@ -53,30 +53,11 @@ class DbTest extends dbBaseId
      * @param $data
      * @return bool
      */
-    protected function toInstance($data): bool
+    protected function getInstance($data): bool
     {
-        $this->id = $data[self::COL_ID];
         $this->name = $data[self::COL_NAME];
         $this->email = $data[self::COL_EMAIL];
 
         return true;
-    }
-
-    /**
-     * @param array $where
-     * @return bool
-     */
-    public function get($where): bool
-    {
-        return parent::_get($where);
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function getById($id): bool
-    {
-        return parent::_getById($id);
     }
 }

@@ -28,20 +28,49 @@ abstract class dbBaseId extends dbBase
         return Uuid::isValid($this->id);
     }
 
-    protected function _insert($datas): bool
+    protected function _insert($data): bool
     {
         if (!$this->validId()) {
-            $datas[self::COL_ID] = $this->makeId();
+            $data[self::COL_ID] = $this->makeId();
         }
 
-        return parent::_insert($datas);
+        return parent::_insert($data);
+    }
+
+    /**
+     * @param $data
+     * @return bool
+     */
+    abstract protected function getInstance($data): bool;
+
+    /**
+     * @param $data
+     * @return bool
+     */
+    protected function toInstance($data): bool
+    {
+        $this->id = $data[self::COL_ID];
+
+        return $this->getInstance($data);
+    }
+
+    /**
+     * @param array $where
+     * @return bool
+     */
+    public function get($where): bool
+    {
+        return $this->_get($where);
     }
 
     /**
      * @param $id
      * @return bool
      */
-    abstract public function getById($id): bool;
+    public function getById($id): bool
+    {
+        return $this->_getById($id);
+    }
 
     /**
      * @param string $id
