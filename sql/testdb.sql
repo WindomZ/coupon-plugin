@@ -1,3 +1,7 @@
+DROP SCHEMA IF EXISTS testdb;
+
+CREATE SCHEMA testdb;
+
 create table testdb.coupon
 (
 	id char(36) not null
@@ -43,7 +47,7 @@ create table testdb.coupon_template
 
 create table testdb.test
 (
-	id char(36) null,
+	id char(36) not null,
 	name varchar(16) default '' not null,
 	email varchar(32) default '' not null,
 	post_time datetime default CURRENT_TIMESTAMP not null,
