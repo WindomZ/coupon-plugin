@@ -85,7 +85,7 @@ class DbCoupon extends DbCouponTemplate
     /**
      * @return array
      */
-    protected function getArray(): array
+    public function getArray(): array
     {
         return array_merge(
             parent::getArray(),
@@ -103,7 +103,7 @@ class DbCoupon extends DbCouponTemplate
      * @param $data
      * @return DbCoupon
      */
-    protected function getInstance($data)
+    public function getInstance($data)
     {
         parent::getInstance($data);
 

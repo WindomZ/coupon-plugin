@@ -99,7 +99,7 @@ class DbCouponTemplate extends dbBaseDate
     /**
      * @return array
      */
-    protected function getArray(): array
+    public function getArray(): array
     {
         return array_merge(
             parent::getArray(),
@@ -120,7 +120,7 @@ class DbCouponTemplate extends dbBaseDate
      * @param $data
      * @return DbCouponTemplate
      */
-    protected function getInstance($data)
+    public function getInstance($data)
     {
         parent::getInstance($data);
 

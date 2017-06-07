@@ -26,7 +26,7 @@ abstract class dbBaseDate extends dbBaseId
     /**
      * @return array
      */
-    protected function getArray(): array
+    public function getArray(): array
     {
         return [
             self::COL_POST_TIME => $this->post_time,
@@ -38,7 +38,7 @@ abstract class dbBaseDate extends dbBaseId
      * @param $data
      * @return object
      */
-    protected function getInstance($data)
+    public function getInstance($data)
     {
         $this->post_time = $data[self::COL_POST_TIME];
         $this->put_time = $data[self::COL_PUT_TIME];

@@ -38,7 +38,7 @@ abstract class dbBaseId extends dbBase
     /**
      * @return array
      */
-    abstract protected function getArray(): array;
+    abstract public function getArray(): array;
 
     /**
      * @return array
@@ -52,7 +52,7 @@ abstract class dbBaseId extends dbBase
      * @param $data
      * @return object
      */
-    abstract protected function getInstance($data);
+    abstract public function getInstance($data);
 
     /**
      * @param $data

@@ -104,22 +104,4 @@ abstract class dbBase
 
         return !empty($this->toInstance($data));
     }
-
-    protected function _select(array $where = null, $limit = 0, $page = 0)
-    {
-        if ($limit > 0 && !empty($where)) {
-            if ($page > 0) {
-                $where['LIMIT'] = [$limit * $page, $limit * ($page + 1)];
-            } else {
-                $where['LIMIT'] = $limit;
-            }
-        }
-
-        $data = $this->getDb()->select($this->getTableName(), '*', $where);
-        if (!$data) {
-            return false;
-        }
-
-        return !empty($this->toInstance($data));
-    }
 }
