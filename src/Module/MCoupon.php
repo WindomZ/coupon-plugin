@@ -22,15 +22,15 @@ class MCoupon extends mBase
      * @param string $activity_id
      * @param string $template_id
      * @param int $second
-     * @return bool
+     * @return DbCoupon
      * @throws ErrorException
      */
-    public static function post(
+    public static function object(
         string $owner_id,
         string $activity_id,
         string $template_id,
         $second = 0
-    ): bool {
+    ): DbCoupon {
         if (empty($owner_id)) {
             throw new ErrorException('"owner_id" should not be empty: '.$owner_id);
         }
@@ -51,6 +51,25 @@ class MCoupon extends mBase
         if ($second > 0) {
             $ins->dead_time = Date::get_next_time($second);
         }
+
+        return $ins;
+    }
+
+    /**
+     * @param string $owner_id
+     * @param string $activity_id
+     * @param string $template_id
+     * @param int $second
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function post(
+        string $owner_id,
+        string $activity_id,
+        string $template_id,
+        $second = 0
+    ): bool {
+        $ins = self::object($owner_id, $activity_id, $template_id, $second);
 
         return $ins->post();
     }
