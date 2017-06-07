@@ -1,0 +1,13 @@
+<phpunit bootstrap="vendor/autoload.php">
+    <testsuites>
+        <testsuite name="init">
+            <file>tests/CouponTest.php</file>
+        </testsuite>
+        <testsuite name="module">
+            <directory>tests/Module</directory>
+        </testsuite>
+        <testsuite name="db">
+            <directory>tests/Db</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
