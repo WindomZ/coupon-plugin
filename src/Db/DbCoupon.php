@@ -44,17 +44,24 @@ class DbCoupon extends DbCouponTemplate
     public function __construct(
         $owner_id = '',
         $activity_id = '',
-        $template_id = '',
-        $name = '',
-        $desc = '',
-        $min_amount = 0,
-        $offer_amount = 0
+        DbCouponTemplate $template = null
     ) {
-        parent::__construct($name, $desc, $min_amount, $offer_amount);
+        if ($template) {
+            parent::__construct(
+                $template->name,
+                $template->desc,
+                $template->min_amount,
+                $template->offer_amount
+            );
+            $this->template_id = $template->id;
+            $this->valid = $template->valid;
+            $this->dead_time = $template->dead_time;
+        } else {
+            parent::__construct();
+        }
 
         $this->owner_id = $owner_id;
         $this->activity_id = $activity_id;
-        $this->template_id = $template_id;
     }
 
     /**
@@ -85,10 +92,10 @@ class DbCoupon extends DbCouponTemplate
     /**
      * @return array
      */
-    protected function getArray(): array
+    public function toArray(): array
     {
         return array_merge(
-            parent::getArray(),
+            parent::toArray(),
             [
                 self::COL_OWNER_ID => $this->owner_id,
                 self::COL_ACTIVITY_ID => $this->activity_id,
@@ -103,9 +110,9 @@ class DbCoupon extends DbCouponTemplate
      * @param $data
      * @return DbCoupon
      */
-    protected function getInstance($data)
+    public function toInstance($data)
     {
-        parent::getInstance($data);
+        parent::toInstance($data);
 
         $this->owner_id = $data[self::COL_OWNER_ID];
         $this->activity_id = $data[self::COL_ACTIVITY_ID];

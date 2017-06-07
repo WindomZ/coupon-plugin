@@ -3,6 +3,7 @@
 namespace CouponPlugin\Module;
 
 use CouponPlugin\Db\DbCouponTemplate;
+use CouponPlugin\Db\DbCouponTemplates;
 use CouponPlugin\ErrorException;
 use CouponPlugin\Util\Date;
 
@@ -89,7 +90,16 @@ class MCouponTemplate extends mBase
         return $ins;
     }
 
-    public static function list()
+    /**
+     * @param array|null $where
+     * @param int $limit
+     * @param int $page
+     * @return array|null
+     */
+    public static function list(array $where = null, $limit = 0, $page = 0)
     {
+        $ins = new DbCouponTemplates();
+
+        return $ins->select($where, $limit, $page);
     }
 }

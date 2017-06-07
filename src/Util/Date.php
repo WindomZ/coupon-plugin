@@ -2,12 +2,17 @@
 
 namespace CouponPlugin\Util;
 
+use CouponPlugin\ErrorException;
+use DateTime;
+
 /**
  * Class Date
  * @package CouponPlugin\Util
  */
 class Date
 {
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @return int
      */
@@ -32,7 +37,7 @@ class Date
     {
         $time = Date::get_now_time_stamp() + $second;
 
-        return date('Y-m-d H:i:s', $time);
+        return date(self::DATE_FORMAT, $time);
     }
 
     /**
@@ -44,5 +49,35 @@ class Date
         $time = time() + $second;
 
         return $time;
+    }
+
+    /**
+     * @param string $time
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function before(string $time)
+    {
+        $date = DateTime::createFromFormat(self::DATE_FORMAT, $time);
+        if (!$date) {
+            throw new ErrorException('Invalid time format!');
+        }
+
+        return time() > $date->getTimestamp();
+    }
+
+    /**
+     * @param string $time
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function after(string $time)
+    {
+        $date = DateTime::createFromFormat(self::DATE_FORMAT, $time);
+        if (!$date) {
+            throw new ErrorException('Invalid time format!');
+        }
+
+        return time() < $date->getTimestamp();
     }
 }

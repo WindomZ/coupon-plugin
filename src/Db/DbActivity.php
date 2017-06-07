@@ -14,8 +14,7 @@ class DbActivity extends dbBaseDate
     const COL_DEAD_TIME = 'dead_time';
     const COL_COUPON_SIZE = 'coupon_size';
     const COL_COUPON_USED = 'coupon_used';
-    const COL_COUPON_UNI = 'coupon_uni';
-
+    const COL_COUPON_LIMIT = 'coupon_limit';
 
     /**
      * @var string
@@ -48,9 +47,9 @@ class DbActivity extends dbBaseDate
     public $coupon_used = 0;
 
     /**
-     * @var bool
+     * @var int
      */
-    public $coupon_uni = false;
+    public $coupon_limit = 0;
 
     /**
      * @return string
@@ -79,10 +78,10 @@ class DbActivity extends dbBaseDate
     /**
      * @return array
      */
-    protected function getArray(): array
+    public function toArray(): array
     {
         return array_merge(
-            parent::getArray(),
+            parent::toArray(),
             [
                 self::COL_NAME => $this->name,
                 self::COL_NOTE => $this->note,
@@ -90,7 +89,7 @@ class DbActivity extends dbBaseDate
                 self::COL_DEAD_TIME => $this->dead_time,
                 self::COL_COUPON_SIZE => $this->coupon_size,
                 self::COL_COUPON_USED => $this->coupon_used,
-                self::COL_COUPON_UNI => $this->coupon_uni,
+                self::COL_COUPON_LIMIT => $this->coupon_limit,
             ]
         );
     }
@@ -99,9 +98,9 @@ class DbActivity extends dbBaseDate
      * @param $data
      * @return DbActivity
      */
-    protected function getInstance($data)
+    public function toInstance($data)
     {
-        parent::getInstance($data);
+        parent::toInstance($data);
 
         $this->name = $data[self::COL_NAME];
         $this->note = $data[self::COL_NOTE];
@@ -109,7 +108,7 @@ class DbActivity extends dbBaseDate
         $this->dead_time = $data[self::COL_DEAD_TIME];
         $this->coupon_size = $data[self::COL_COUPON_SIZE];
         $this->coupon_used = $data[self::COL_COUPON_USED];
-        $this->coupon_uni = $data[self::COL_COUPON_UNI];
+        $this->coupon_limit = $data[self::COL_COUPON_LIMIT];
 
         return $this;
     }

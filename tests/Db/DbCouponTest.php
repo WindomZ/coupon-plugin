@@ -12,25 +12,11 @@ use PHPUnit\Framework\TestCase;
 class DbCouponTest extends TestCase
 {
     /**
-     * @covers  Coupon::getInstance()
-     * @return Coupon
-     */
-    public function testNewCoupon()
-    {
-        Coupon::$configPath = './tests/config.yml';
-        $coupon = Coupon::getInstance();
-        self::assertNotEmpty($coupon);
-
-        return $coupon;
-    }
-
-    /**
-     * @depends testNewCoupon
-     * @param Coupon $coupon
      * @return DbCouponTemplate
      */
-    public function testDbCouponTemplate($coupon)
+    public function testDbCouponTemplate()
     {
+        $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
         $ins = new DbCouponTemplate();
