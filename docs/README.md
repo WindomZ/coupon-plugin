@@ -60,7 +60,7 @@ Coupon::$configPath = './config.yml';
   - @description 修改指定优惠卷模板(`CouponTemplate`)
   - @param
     - string $id uuid
-    - function $callback 回调方法
+    - function $callback 回调处理`CouponTemplate`的方法
     - array $columns 修改字段，见`COL_`开头常量
   - @return object
 
