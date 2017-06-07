@@ -44,17 +44,23 @@ class DbCoupon extends DbCouponTemplate
     public function __construct(
         $owner_id = '',
         $activity_id = '',
-        $template_id = '',
-        $name = '',
-        $desc = '',
-        $min_amount = 0,
-        $offer_amount = 0
+        DbCouponTemplate $template = null
     ) {
-        parent::__construct($name, $desc, $min_amount, $offer_amount);
+        if ($template) {
+            parent::__construct(
+                $template->name,
+                $template->desc,
+                $template->min_amount,
+                $template->offer_amount
+            );
+            $this->template_id = $template->id;
+            $this->dead_time = $template->dead_time;
+        } else {
+            parent::__construct();
+        }
 
         $this->owner_id = $owner_id;
         $this->activity_id = $activity_id;
-        $this->template_id = $template_id;
     }
 
     /**
