@@ -17,7 +17,7 @@ $ composer require windomz/coupon-plugin
 
 ### 配置文件
 
-创建并编写`config.yml`
+创建并编写`config.yml`，里面参数根据您的环境情况修改
 ```yaml
 database:
     host: 127.0.0.1
@@ -27,6 +27,8 @@ database:
     username: root
     password: root
 ```
+
+如果只是作为测试，可以在`MySQL`运行`./sql/testdb.sql`来快速创建测试数据库。
 
 在项目初始化阶段，加载指定配置文件
 ```php
@@ -120,7 +122,7 @@ Coupon::$configPath = './config.yml';
   - @param
     - string $id 优惠卷活动UUID
     - function $callback 回调处理`Activity`的方法
-    - array $columns 修改字段，选用`MActivity::COL_`开头字段
+    - array $columns 修改字段，选用`MActivity::COL_`开头的字段
   - @return object
 
 - MActivity::get($id)
@@ -132,7 +134,7 @@ Coupon::$configPath = './config.yml';
 - MActivity::list($where, $limit, $page)
   - @description 获取一组优惠卷活动(`Activity`)
   - @param
-    - array $where 筛选范围，选用`MActivity::COL_`开头字段
+    - array $where 筛选范围，选用`MActivity::COL_`开头的字段
     - int $limit 筛选数量
     - int $page 筛选页数
   - @return array
@@ -164,7 +166,7 @@ Coupon::$configPath = './config.yml';
   - @param
     - string $id 优惠卷模板UUID
     - function $callback 回调处理`CouponTemplate`的方法
-    - array $columns 修改字段，选用`MCouponTemplate::COL_`开头字段
+    - array $columns 修改字段，选用`MCouponTemplate::COL_`开头的字段
   - @return object
 
 - MCouponTemplate::get($id)
@@ -176,7 +178,7 @@ Coupon::$configPath = './config.yml';
 - MCouponTemplate::list($where, $limit, $page)
   - @description 获取一组优惠卷模板(`CouponTemplate`)
   - @param
-    - array $where 筛选范围，选用`MCouponTemplate::COL_`开头字段
+    - array $where 筛选范围，选用`MCouponTemplate::COL_`开头的字段
     - int $limit 筛选数量
     - int $page 筛选页数
   - @return array
@@ -187,7 +189,7 @@ Coupon::$configPath = './config.yml';
   - @description 构建优惠卷(`Coupon`)
   - @param
     - string $owner_id 用户UUID
-    - string $activity_id 活动UUID(**未完成**)
+    - string $activity_id 活动UUID
     - string $template_id 优惠卷模板UUID
     - int $second 有效期（从现在起，秒）
   - @return object
@@ -196,7 +198,7 @@ Coupon::$configPath = './config.yml';
   - @description 快速创建优惠卷(`Coupon`)
   - @param
     - string $owner_id 用户UUID
-    - string $activity_id 活动UUID(**未完成**)
+    - string $activity_id 活动UUID
     - string $template_id 优惠卷模板UUID
     - int $second 有效期（从现在起，秒）
   - @return bool
@@ -206,7 +208,7 @@ Coupon::$configPath = './config.yml';
   - @param
     - string $id 优惠卷UUID
     - function $callback 回调处理`Coupon`的方法
-    - array $columns 修改字段，选用`MCoupon::COL_`开头字段
+    - array $columns 修改字段，选用`MCoupon::COL_`开头的字段
   - @return bool
 
 - MCoupon::get($id)
@@ -218,7 +220,7 @@ Coupon::$configPath = './config.yml';
 - MCoupon::list($where, $limit, $page)
   - @description 获取一组优惠卷(`Coupon`)
   - @param
-    - array $where 筛选范围，选用`MCoupon::COL_`开头字段
+    - array $where 筛选范围，选用`MCoupon::COL_`开头的字段
     - int $limit 筛选数量
     - int $page 筛选页数
   - @return array
