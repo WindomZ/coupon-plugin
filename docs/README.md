@@ -2,17 +2,18 @@
 
 > 开发中...
 
-## 环境
+## 运行环境
 
-**PHP7** + **MySQL**
+- \>= **PHP7**
+- \>= **MySQL5.6**
 
-## 安装
+## 安装与更新
 
 ```bash
 $ composer require windomz/coupon-plugin
 ```
 
-## 用法
+## 使用用法
 
 ### 配置文件
 
@@ -32,7 +33,48 @@ database:
 Coupon::$configPath = './config.yml';
 ```
 
-### 使用方法
+### 属性字段
+
+#### 优惠卷模板(`CouponTemplate`)
+
+|类型|字段|修改|描述|
+|---|---|:---:|---|
+|string|id|N|UUID|
+|string|post_time|N|创建时间|
+|string|put_time|N|修改时间|
+|int|class|Y|类别(第一级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
+|int|kind|Y|类型(第二级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
+|string|name|Y|名称|
+|string|desc|Y|描述|
+|int|min_amount|Y|满减条件金额|
+|int|offer_amount|Y|满减金额|
+|int|coupon_limit|Y|优惠卷次数限制|
+|bool|valid|Y|是否有效|
+|string|dead_time|Y|截止时间|
+
+#### 优惠卷(`Coupon`)
+
+|类型|字段|修改|描述|
+|---|---|:---:|---|
+|string|id|N|UUID|
+|string|post_time|N|创建时间|
+|string|put_time|N|修改时间|
+|string|owner_id|N|用户UUID|
+|string|activity_id|N|活动UUID|
+|string|template_id|N|优惠卷模板UUID|
+|int|used_count|N|优惠卷使用次数|
+|string|used_time|N|优惠卷使用时间|
+|int|class|Y|类别(第一级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
+|int|kind|Y|类型(第二级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
+|string|name|Y|名称|
+|string|desc|Y|描述|
+|int|min_amount|Y|满减条件金额|
+|int|offer_amount|Y|满减金额|
+|int|coupon_limit|Y|优惠卷次数限制|
+|bool|valid|Y|是否有效|
+|string|dead_time|Y|截止时间|
+
+### 接口方法
 
 #### 优惠卷模板(`CouponTemplate`)
 
