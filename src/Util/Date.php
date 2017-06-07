@@ -51,7 +51,12 @@ class Date
         return $time;
     }
 
-    public static function before($time)
+    /**
+     * @param string $time
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function before(string $time)
     {
         $date = DateTime::createFromFormat(self::DATE_FORMAT, $time);
         if (!$date) {
@@ -61,7 +66,12 @@ class Date
         return time() > $date->getTimestamp();
     }
 
-    public static function after($time)
+    /**
+     * @param string $time
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function after(string $time)
     {
         $date = DateTime::createFromFormat(self::DATE_FORMAT, $time);
         if (!$date) {
