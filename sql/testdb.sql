@@ -2,6 +2,26 @@ DROP SCHEMA IF EXISTS testdb;
 
 CREATE SCHEMA testdb;
 
+create table testdb.activity
+(
+	id char(36) not null
+		primary key,
+	post_time datetime default CURRENT_TIMESTAMP not null,
+	put_time datetime default CURRENT_TIMESTAMP not null,
+	name varchar(64) default '' not null,
+	note varchar(512) default '' not null,
+	url varchar(256) default '' not null,
+	coupon_size int default '0' not null,
+	coupon_used int default '0' not null,
+	coupon_limit int default '0' not null,
+	level int default '0' not null,
+	valid tinyint(1) default '1' not null,
+	dead_time datetime default CURRENT_TIMESTAMP not null,
+	constraint activity_id_uindex
+		unique (id)
+)
+;
+
 create table testdb.coupon
 (
 	id char(36) not null

@@ -44,6 +44,10 @@ class MCoupon extends mBase
         if (empty($activity_id)) {
             throw new ErrorException('"activity_id" should not be empty: '.$activity_id);
         }
+        $activity = MActivity::get($activity_id);
+        if (!$activity) {
+            throw new ErrorException('"activity_id" should not be existed: '.$activity_id);
+        }
 
         if (empty($template_id)) {
             throw new ErrorException('"template_id" should not be empty: '.$template_id);
@@ -53,7 +57,7 @@ class MCoupon extends mBase
             throw new ErrorException('"template_id" should not be existed: '.$template_id);
         }
 
-        $ins = new DbCoupon($template->id, $template->id, $template);
+        $ins = new DbCoupon($owner_id, $activity->id, $template);
         if ($second > 0) {
             $ins->dead_time = Date::get_next_time($second);
         }

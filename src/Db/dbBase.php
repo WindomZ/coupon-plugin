@@ -73,7 +73,13 @@ abstract class dbBase
             throw new ErrorException('Invalid insert object!');
         }
 
-        return !empty($this->getDb()->insert($this->getTableName(), $data));
+        $this->getDb()->insert($this->getTableName(), $data);
+        if (!$this->getDb()->id()) {
+            $err = $this->getDb()->error();
+            throw new ErrorException(empty($err) ? 'SQL insert error!' : $err[2]);
+        }
+
+        return true;
     }
 
     /**
@@ -103,5 +109,19 @@ abstract class dbBase
         }
 
         return !empty($this->toInstance($data));
+    }
+
+    /**
+     * @param array|null $where
+     * @return int
+     */
+    protected function _count(array $where = null): int
+    {
+        $count = $this->getDb()->count($this->getTableName(), $where);
+        if (!$count) {
+            return -1;
+        }
+
+        return $count;
     }
 }
