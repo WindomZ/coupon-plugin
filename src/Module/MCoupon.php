@@ -13,6 +13,12 @@ use CouponPlugin\Util\Date;
  */
 class MCoupon extends mBase
 {
+    const COL_OWNER_ID = DbCoupon::COL_OWNER_ID;
+    const COL_ACTIVITY_ID = DbCoupon::COL_ACTIVITY_ID;
+    const COL_TEMPLATE_ID = DbCoupon::COL_TEMPLATE_ID;
+    const COL_USED_COUNT = DbCoupon::COL_USED_COUNT;
+    const COL_USED_TIME = DbCoupon::COL_USED_TIME;
+
     private function __construct()
     {
     }
