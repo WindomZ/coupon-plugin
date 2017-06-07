@@ -26,20 +26,25 @@ abstract class dbBaseDate extends dbBaseId
     /**
      * @return array
      */
-    public function getArray(): array
+    public function toArray(): array
     {
-        return [
-            self::COL_POST_TIME => $this->post_time,
-            self::COL_PUT_TIME => $this->put_time,
-        ];
+        return array_merge(
+            parent::toArray(),
+            [
+                self::COL_POST_TIME => $this->post_time,
+                self::COL_PUT_TIME => $this->put_time,
+            ]
+        );
     }
 
     /**
      * @param $data
      * @return object
      */
-    public function getInstance($data)
+    public function toInstance($data)
     {
+        parent::toInstance($data);
+
         $this->post_time = $data[self::COL_POST_TIME];
         $this->put_time = $data[self::COL_PUT_TIME];
 

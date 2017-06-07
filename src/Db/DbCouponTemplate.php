@@ -99,10 +99,10 @@ class DbCouponTemplate extends dbBaseDate
     /**
      * @return array
      */
-    public function getArray(): array
+    public function toArray(): array
     {
         return array_merge(
-            parent::getArray(),
+            parent::toArray(),
             [
                 self::COL_CLASS => $this->class,
                 self::COL_KIND => $this->kind,
@@ -120,9 +120,9 @@ class DbCouponTemplate extends dbBaseDate
      * @param $data
      * @return DbCouponTemplate
      */
-    public function getInstance($data)
+    public function toInstance($data)
     {
-        parent::getInstance($data);
+        parent::toInstance($data);
 
         $this->class = $data[self::COL_CLASS];
         $this->kind = $data[self::COL_KIND];

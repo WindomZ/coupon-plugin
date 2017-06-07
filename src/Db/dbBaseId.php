@@ -38,31 +38,20 @@ abstract class dbBaseId extends dbBase
     /**
      * @return array
      */
-    abstract public function getArray(): array;
-
-    /**
-     * @return array
-     */
-    protected function toArray(): array
+    public function toArray(): array
     {
-        return array_merge([self::COL_ID => $this->id], $this->getArray());
+        return [self::COL_ID => $this->id];
     }
 
     /**
      * @param $data
      * @return object
      */
-    abstract public function getInstance($data);
-
-    /**
-     * @param $data
-     * @return object
-     */
-    protected function toInstance($data)
+    public function toInstance($data)
     {
         $this->id = $data[self::COL_ID];
 
-        return $this->getInstance($data);
+        return $this;
     }
 
     /**

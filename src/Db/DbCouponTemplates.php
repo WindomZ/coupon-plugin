@@ -23,7 +23,7 @@ class DbCouponTemplates extends dbBaseList
     protected function addInstance($data)
     {
         $ins = new DbCouponTemplate();
-        $ins = $ins->getInstance($data);
+        $ins = $ins->toInstance($data);
         array_push($this->list, $ins);
 
         return $ins;

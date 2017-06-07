@@ -85,10 +85,10 @@ class DbCoupon extends DbCouponTemplate
     /**
      * @return array
      */
-    public function getArray(): array
+    public function toArray(): array
     {
         return array_merge(
-            parent::getArray(),
+            parent::toArray(),
             [
                 self::COL_OWNER_ID => $this->owner_id,
                 self::COL_ACTIVITY_ID => $this->activity_id,
@@ -103,9 +103,9 @@ class DbCoupon extends DbCouponTemplate
      * @param $data
      * @return DbCoupon
      */
-    public function getInstance($data)
+    public function toInstance($data)
     {
-        parent::getInstance($data);
+        parent::toInstance($data);
 
         $this->owner_id = $data[self::COL_OWNER_ID];
         $this->activity_id = $data[self::COL_ACTIVITY_ID];

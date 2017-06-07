@@ -47,10 +47,10 @@ class DbTest extends dbBaseDate
     /**
      * @return array
      */
-    public function getArray(): array
+    public function toArray(): array
     {
         return array_merge(
-            parent::getArray(),
+            parent::toArray(),
             [
                 self::COL_NAME => $this->name,
                 self::COL_EMAIL => $this->email,
@@ -62,9 +62,9 @@ class DbTest extends dbBaseDate
      * @param $data
      * @return DbTest
      */
-    public function getInstance($data)
+    public function toInstance($data)
     {
-        parent::getInstance($data);
+        parent::toInstance($data);
 
         $this->name = $data[self::COL_NAME];
         $this->email = $data[self::COL_EMAIL];
