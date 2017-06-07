@@ -13,8 +13,50 @@ use CouponPlugin\Util\Date;
  */
 class MCouponTemplate extends mBase
 {
+    const COL_CLASS = DbCouponTemplate::COL_CLASS;
+    const COL_KIND = DbCouponTemplate::COL_KIND;
+    const COL_NAME = DbCouponTemplate::COL_NAME;
+    const COL_DESC = DbCouponTemplate::COL_DESC;
+    const COL_MIN_AMOUNT = DbCouponTemplate::COL_MIN_AMOUNT;
+    const COL_OFFER_AMOUNT = DbCouponTemplate::COL_OFFER_AMOUNT;
+    const COL_COUPON_LIMIT = DbCouponTemplate::COL_COUPON_LIMIT;
+    const COL_VALID = DbCouponTemplate::COL_VALID;
+    const COL_DEAD_TIME = DbCouponTemplate::COL_DEAD_TIME;
+
     private function __construct()
     {
+    }
+
+    /**
+     * @param string $name
+     * @param string $desc
+     * @param int $min_amount
+     * @param int $offer_amount
+     * @param int $second
+     * @return DbCouponTemplate
+     * @throws ErrorException
+     */
+    public static function object(
+        string $name,
+        string $desc = '',
+        $min_amount = 0,
+        $offer_amount = 0,
+        $second = 86400// 1 day
+    ): DbCouponTemplate {
+        if (empty($name)) {
+            throw new ErrorException('"name" should not be empty: '.$name);
+        }
+        if ($min_amount < 0) {
+            $min_amount = 0;
+        }
+        if ($offer_amount <= 0) {
+            throw new ErrorException('"offer_amount" should be positive integer: '.$offer_amount);
+        }
+
+        $ins = new DbCouponTemplate($name, $desc, $min_amount, $offer_amount);
+        $ins->dead_time = Date::get_next_time($second);
+
+        return $ins;
     }
 
     /**
@@ -33,18 +75,7 @@ class MCouponTemplate extends mBase
         $offer_amount = 0,
         $second = 86400// 1 day
     ): bool {
-        if (empty($name)) {
-            throw new ErrorException('"name" should not be empty: '.$name);
-        }
-        if ($min_amount < 0) {
-            $min_amount = 0;
-        }
-        if ($offer_amount <= 0) {
-            throw new ErrorException('"offer_amount" should be positive integer: '.$offer_amount);
-        }
-
-        $ins = new DbCouponTemplate($name, $desc, $min_amount, $offer_amount);
-        $ins->dead_time = Date::get_next_time($second);
+        $ins = self::object($name, $desc, $min_amount, $offer_amount, $second);
 
         return $ins->post();
     }
