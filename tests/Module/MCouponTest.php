@@ -18,6 +18,18 @@ class MCouponTest extends TestCase
         self::assertNotEmpty($coupon);
 
         $list = MCouponTemplate::list([DbCouponTemplate::COL_NAME => 'name'], 10, 0);
+        if (!$list) {
+            $this->assertTrue(
+                MCouponTemplate::post(
+                    'name',
+                    'desc',
+                    100,
+                    200,
+                    0
+                )
+            );
+            $list = MCouponTemplate::list([DbCouponTemplate::COL_NAME => 'name'], 10, 0);
+        }
         self::assertNotEmpty($list);
         self::assertEquals(sizeof($list), 1);
 

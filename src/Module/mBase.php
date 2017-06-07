@@ -2,7 +2,7 @@
 
 namespace CouponPlugin\Module;
 
-class mBase
+abstract class mBase
 {
     private function __construct()
     {
