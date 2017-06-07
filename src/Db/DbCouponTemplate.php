@@ -135,14 +135,4 @@ class DbCouponTemplate extends dbBaseDate
 
         return $this;
     }
-
-    /**
-     * @return bool
-     */
-    public function post(): bool
-    {
-        $this->valid = true;
-
-        return parent::post();
-    }
 }

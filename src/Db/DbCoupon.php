@@ -54,6 +54,7 @@ class DbCoupon extends DbCouponTemplate
                 $template->offer_amount
             );
             $this->template_id = $template->id;
+            $this->valid = $template->valid;
             $this->dead_time = $template->dead_time;
         } else {
             parent::__construct();
