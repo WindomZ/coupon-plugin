@@ -10,43 +10,32 @@ use PHPUnit\Framework\TestCase;
 class DbTestTest extends TestCase
 {
     /**
-     * @covers  Coupon::getInstance()
-     * @return Coupon
+     * @return DbTest
      */
-    public function testNewCoupon()
+    public function testDbTest()
     {
-        Coupon::$configPath = './tests/config.yml';
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        return $coupon;
-    }
+        $ins = new DbTest();
+        if ($ins->get([DbTest::COL_NAME => 'name'])) {
+            $this->assertEquals($ins->name, 'name');
+            $this->assertEquals($ins->email, 'email');
 
-    /**
-     * @depends testNewCoupon
-     * @param Coupon $coupon
-     */
-    public function testDbTest($coupon)
-    {
-        self::assertNotEmpty($coupon);
-
-        $test = new DbTest();
-        if ($test->get([DbTest::COL_NAME => 'name'])) {
-            $this->assertEquals($test->name, 'name');
-            $this->assertEquals($test->email, 'email');
-
-            $test->put();
+            $ins->put();
         } else {
-            $test->name = 'name';
-            $test->email = 'email';
+            $ins->name = 'name';
+            $ins->email = 'email';
 
-            $this->assertTrue($test->post());
+            $this->assertTrue($ins->post());
         }
 
-        $id = $test->id;
-        $test = new DbTest();
-        $this->assertTrue($test->getById($id));
-        $this->assertEquals($test->name, 'name');
-        $this->assertEquals($test->email, 'email');
+        $id = $ins->id;
+        $ins = new DbTest();
+        $this->assertTrue($ins->getById($id));
+        $this->assertEquals($ins->name, 'name');
+        $this->assertEquals($ins->email, 'email');
+
+        return $ins;
     }
 }

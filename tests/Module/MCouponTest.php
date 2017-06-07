@@ -9,8 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class MCouponTest extends TestCase
 {
-    const ID = 'eb5ec8eb-c864-4376-9ff2-91828b0cf6ab';
-
     /**
      * @return DbCouponTemplate
      */
@@ -19,7 +17,19 @@ class MCouponTest extends TestCase
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        $ins = MCouponTemplate::get(self::ID);
+        $list = MCouponTemplate::list([DbCouponTemplate::COL_NAME => 'name'], 10, 0);
+        self::assertNotEmpty($list);
+        self::assertEquals(sizeof($list), 1);
+
+        $ins = $list[0];
+        self::assertNotEmpty($ins);
+
+        $this->assertEquals($ins->name, 'name');
+        $this->assertEquals($ins->desc, 'desc');
+        $this->assertEquals($ins->min_amount, 100);
+        $this->assertEquals($ins->offer_amount, 200);
+
+        $ins = MCouponTemplate::get($ins->id);
         self::assertNotEmpty($ins);
 
         $this->assertEquals($ins->name, 'name');
@@ -28,7 +38,7 @@ class MCouponTest extends TestCase
         $this->assertEquals($ins->offer_amount, 200);
 
         MCouponTemplate::put(
-            self::ID,
+            $ins->id,
             function ($v) {
                 self::assertNotEmpty($v);
             }
