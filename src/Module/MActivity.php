@@ -7,6 +7,10 @@ use CouponPlugin\Db\DbActivity;
 use CouponPlugin\ErrorException;
 use CouponPlugin\Util\Date;
 
+/**
+ * Class MActivity
+ * @package CouponPlugin\Module
+ */
 class MActivity extends mBase
 {
     const COL_NAME = DbActivity::COL_NAME;
@@ -23,6 +27,15 @@ class MActivity extends mBase
     {
     }
 
+    /**
+     * @param string $name
+     * @param string $note
+     * @param int $coupon_size
+     * @param int $coupon_limit
+     * @param int $second
+     * @return DbActivity
+     * @throws ErrorException
+     */
     public static function object(
         string $name,
         string $note = '',
@@ -42,13 +55,19 @@ class MActivity extends mBase
         }
 
         $ins = new DbActivity($name, $note, $coupon_size, $coupon_limit);
-        if ($second > 0) {
-            $ins->dead_time = Date::get_next_time($second);
-        }
+        $ins->dead_time = Date::get_next_time($second);
 
         return $ins;
     }
 
+    /**
+     * @param string $name
+     * @param string $note
+     * @param int $coupon_size
+     * @param int $coupon_limit
+     * @param int $second
+     * @return bool
+     */
     public static function post(
         string $name,
         string $note = '',

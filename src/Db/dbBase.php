@@ -73,7 +73,13 @@ abstract class dbBase
             throw new ErrorException('Invalid insert object!');
         }
 
-        return !empty($this->getDb()->insert($this->getTableName(), $data));
+        $this->getDb()->insert($this->getTableName(), $data);
+        if (!$this->getDb()->id()) {
+            $err = $this->getDb()->error();
+            throw new ErrorException(empty($err) ? 'SQL insert error!' : $err[2]);
+        }
+
+        return true;
     }
 
     /**
