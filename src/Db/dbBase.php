@@ -110,4 +110,18 @@ abstract class dbBase
 
         return !empty($this->toInstance($data));
     }
+
+    /**
+     * @param array|null $where
+     * @return int
+     */
+    protected function _count(array $where = null): int
+    {
+        $count = $this->getDb()->count($this->getTableName(), $where);
+        if (!$count) {
+            return -1;
+        }
+
+        return $count;
+    }
 }

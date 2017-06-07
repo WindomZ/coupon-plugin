@@ -2,6 +2,7 @@
 
 namespace CouponPlugin\Db;
 
+use CouponPlugin\ErrorException;
 use CouponPlugin\Util\Date;
 
 /**
@@ -131,5 +132,26 @@ class DbCoupon extends DbCouponTemplate
         $this->used_time = Date::get_now_time();
 
         return parent::post();
+    }
+
+    /**
+     * @return int
+     * @throws ErrorException
+     */
+    public function countActivityCoupon(): int
+    {
+        if (empty($this->owner_id)) {
+            throw new ErrorException('"owner_id" should not be empty: '.$this->owner_id);
+        }
+        if (empty($this->activity_id)) {
+            throw new ErrorException('"activity_id" should not be empty: '.$this->activity_id);
+        }
+
+        return $this->_count(
+            [
+                self::COL_OWNER_ID => $this->owner_id,
+                self::COL_ACTIVITY_ID => $this->activity_id,
+            ]
+        );
     }
 }
