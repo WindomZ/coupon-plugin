@@ -13,6 +13,16 @@ use CouponPlugin\Util\Date;
  */
 class MCouponTemplate extends mBase
 {
+    const COL_CLASS = DbCouponTemplate::COL_CLASS;
+    const COL_KIND = DbCouponTemplate::COL_KIND;
+    const COL_NAME = DbCouponTemplate::COL_NAME;
+    const COL_DESC = DbCouponTemplate::COL_DESC;
+    const COL_MIN_AMOUNT = DbCouponTemplate::COL_MIN_AMOUNT;
+    const COL_OFFER_AMOUNT = DbCouponTemplate::COL_OFFER_AMOUNT;
+    const COL_COUPON_LIMIT = DbCouponTemplate::COL_COUPON_LIMIT;
+    const COL_VALID = DbCouponTemplate::COL_VALID;
+    const COL_DEAD_TIME = DbCouponTemplate::COL_DEAD_TIME;
+
     private function __construct()
     {
     }
