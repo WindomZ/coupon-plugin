@@ -6,6 +6,7 @@ use CouponPlugin\Db\DbCoupon;
 use CouponPlugin\Db\DbCoupons;
 use CouponPlugin\ErrorException;
 use CouponPlugin\Util\Date;
+use CouponPlugin\Util\Uuid;
 
 /**
  * Class MCoupon
@@ -40,11 +41,11 @@ class MCoupon extends mBase
         string $template_id,
         $second = 0
     ): DbCoupon {
-        if (empty($owner_id)) {
+        if (!Uuid::isValid($owner_id)) {
             throw new ErrorException('"owner_id" should not be empty: '.$owner_id);
         }
 
-        if (empty($activity_id)) {
+        if (!Uuid::isValid($activity_id)) {
             throw new ErrorException('"activity_id" should not be empty: '.$activity_id);
         }
         $activity = MActivity::get($activity_id);
@@ -52,7 +53,7 @@ class MCoupon extends mBase
             throw new ErrorException('"activity_id" should not be existed: '.$activity_id);
         }
 
-        if (empty($template_id)) {
+        if (!Uuid::isValid($template_id)) {
             throw new ErrorException('"template_id" should not be empty: '.$template_id);
         }
         $template = MCouponTemplate::get($template_id);
@@ -96,7 +97,7 @@ class MCoupon extends mBase
      */
     public static function put(string $id, $callback = null, $columns = [])
     {
-        if (empty($id)) {
+        if (!Uuid::isValid($id)) {
             throw new ErrorException('"id" should not be empty: '.$id);
         }
 

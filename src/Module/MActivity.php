@@ -6,6 +6,7 @@ use CouponPlugin\Db\DbActivities;
 use CouponPlugin\Db\DbActivity;
 use CouponPlugin\ErrorException;
 use CouponPlugin\Util\Date;
+use CouponPlugin\Util\Uuid;
 
 /**
  * Class MActivity
@@ -92,7 +93,7 @@ class MActivity extends mBase
      */
     public static function put(string $id, $callback = null, $columns = [])
     {
-        if (empty($id)) {
+        if (!Uuid::isValid($id)) {
             throw new ErrorException('"id" should not be empty: '.$id);
         }
 

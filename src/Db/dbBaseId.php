@@ -2,7 +2,7 @@
 
 namespace CouponPlugin\Db;
 
-use Ramsey\Uuid\Uuid;
+use CouponPlugin\Util\Uuid;
 
 /**
  * Class dbBaseId
@@ -22,7 +22,7 @@ abstract class dbBaseId extends dbBase
      */
     protected function makeId(): string
     {
-        $this->id = Uuid::uuid4()->toString();
+        $this->id = Uuid::uuid();
 
         return $this->id;
     }
