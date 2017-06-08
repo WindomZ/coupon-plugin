@@ -91,10 +91,9 @@ abstract class dbBase
             throw new ErrorException('Invalid insert object!');
         }
 
-        $this->getDb()->insert($this->getTableName(), $data);
-        $err = $this->getDb()->error();
-        if ($err && sizeof($err) >= 2 && !empty($err[2])) {
-            throw new ErrorException($err[2]);
+        $query = $this->getDb()->insert($this->getTableName(), $data);
+        if ($query->errorCode() !== '00000') {
+            throw new ErrorException($query->errorInfo()[2]);
         }
 
         return true;
@@ -131,7 +130,12 @@ abstract class dbBase
             throw new ErrorException('Invalid update object!');
         }
 
-        return !empty($this->getDb()->update($this->getTableName(), $data, $where));
+        $query = $this->getDb()->update($this->getTableName(), $data, $where);
+        if ($query->errorCode() !== '00000') {
+            throw new ErrorException($query->errorInfo()[2]);
+        }
+
+        return true;
     }
 
     /**
