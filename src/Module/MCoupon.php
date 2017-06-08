@@ -23,6 +23,16 @@ class MCoupon extends mBase
     const COL_USED_COUNT = DbCoupon::COL_USED_COUNT;
     const COL_USED_TIME = DbCoupon::COL_USED_TIME;
 
+    const COL_CLASS = DbCoupon::COL_CLASS;
+    const COL_KIND = DbCoupon::COL_KIND;
+    const COL_NAME = DbCoupon::COL_NAME;
+    const COL_DESC = DbCoupon::COL_DESC;
+    const COL_MIN_AMOUNT = DbCoupon::COL_MIN_AMOUNT;
+    const COL_OFFER_AMOUNT = DbCoupon::COL_OFFER_AMOUNT;
+    const COL_COUPON_LIMIT = DbCoupon::COL_COUPON_LIMIT;
+    const COL_VALID = DbCoupon::COL_VALID;
+    const COL_DEAD_TIME = DbCoupon::COL_DEAD_TIME;
+
     private function __construct()
     {
     }
@@ -143,5 +153,19 @@ class MCoupon extends mBase
         $ins = new DbCoupons();
 
         return $ins->select($where, $limit, $page);
+    }
+
+    /**
+     * @param DbCoupon $obj
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function use(DbCoupon $obj): bool
+    {
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
+        }
+
+        return $obj->increaseCouponUsed();
     }
 }

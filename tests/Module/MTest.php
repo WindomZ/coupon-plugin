@@ -172,12 +172,19 @@ class MTest extends TestCase
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
 
+        $this->assertTrue($ins->used_count == 0 || $ins->used_count == 1);
+
         MCoupon::put(
             $ins->id,
             function ($v) {
                 self::assertNotEmpty($v);
-            }
+                $v->used_count = 0;
+                $v->valid = true;
+            },
+            [MCoupon::COL_USED_COUNT, MCoupon::COL_VALID]
         );
+
+        $this->assertTrue(MCoupon::use($ins));
 
         return $ins;
     }
