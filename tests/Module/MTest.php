@@ -26,7 +26,7 @@ class MTest extends TestCase
         self::assertNotEmpty($coupon);
 
         $list = MActivity::list([DbActivity::COL_NAME => 'name'], 10, 0);
-        if (!$list) {
+        if (!$list || !$list['size']) {
             $this->assertTrue(
                 MActivity::post(
                     MActivity::object(
@@ -88,7 +88,7 @@ class MTest extends TestCase
         self::assertNotEmpty($coupon);
 
         $list = MCouponTemplate::list([DbCouponTemplate::COL_NAME => 'name'], 10, 0);
-        if (!$list) {
+        if (!$list || !$list['size']) {
             $this->assertTrue(
                 MCouponTemplate::post(
                     MCouponTemplate::object(
@@ -161,7 +161,7 @@ class MTest extends TestCase
             10,
             0
         );
-        if (!$list) {
+        if (!$list || !$list['size']) {
             $this->assertTrue(
                 MCoupon::post(
                     MCoupon::object(

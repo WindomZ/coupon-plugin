@@ -110,8 +110,13 @@ abstract class dbBaseId extends dbBase
      */
     public function put($columns = []): bool
     {
+        $data = $this->columns2data($columns);
+        if (empty($data)) {
+            return false;
+        }
+
         return $this->_put(
-            $this->columns2data($columns),
+            $data,
             [self::COL_ID => $this->id]
         );
     }

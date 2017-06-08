@@ -63,6 +63,11 @@ abstract class dbBaseList
      */
     protected function _select(array $where = null, int $limit = 0, int $page = 0)
     {
+        $this->size = $this->getDb()->count($this->getTableName(), $where);
+        if (!$this->size) {
+            return true;
+        }
+
         if ($limit > 0) {
             if (!$where) {
                 $where = array();
@@ -85,8 +90,6 @@ abstract class dbBaseList
                 return false;
             }
         }
-
-        $this->size = $this->getDb()->count($this->getTableName(), $where);
 
         return true;
     }
