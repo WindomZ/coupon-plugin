@@ -4,7 +4,6 @@ namespace CouponPlugin\Db;
 
 use CouponPlugin\ErrorException;
 use CouponPlugin\Util\Date;
-use CouponPlugin\Util\Uuid;
 
 /**
  * Class DbCoupon
@@ -84,8 +83,8 @@ class DbCoupon extends DbCouponTemplate
             case self::_TypeDbPost:
             case self::_TypeDbPut:
                 return parent::valid($type)
-                    && Uuid::isValid($this->owner_id) && Uuid::isValid($this->activity_id)
-                    && Uuid::isValid($this->template_id)
+                    && $this->validId($this->owner_id) && $this->validId($this->activity_id)
+                    && $this->validId($this->template_id)
                     && $this->used_count >= 0 && !empty($this->used_time);
         }
 
@@ -142,10 +141,10 @@ class DbCoupon extends DbCouponTemplate
      */
     public function countActivityCoupon(): int
     {
-        if (!Uuid::isValid($this->owner_id)) {
+        if (!$this->validId($this->owner_id)) {
             throw new ErrorException('"owner_id" should not be empty: '.$this->owner_id);
         }
-        if (!Uuid::isValid($this->activity_id)) {
+        if (!$this->validId($this->activity_id)) {
             throw new ErrorException('"activity_id" should not be empty: '.$this->activity_id);
         }
 
