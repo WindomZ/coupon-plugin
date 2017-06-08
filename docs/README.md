@@ -71,7 +71,6 @@ Coupon::$configPath = './config.yml';
 |string|desc|Y|描述|
 |float|min_amount|N|满减条件金额|
 |float|offer_amount|N|满减金额|
-|int|coupon_limit|N|优惠卷次数限制|
 |bool|valid|Y|是否有效|
 |string|dead_time|Y|截止时间|
 
@@ -93,7 +92,6 @@ Coupon::$configPath = './config.yml';
 |string|desc|Y|描述|
 |float|min_amount|N|满减条件金额|
 |float|offer_amount|N|满减金额|
-|int|coupon_limit|N|优惠卷次数限制|
 |bool|valid|Y|是否有效|
 |string|dead_time|Y|截止时间|
 
@@ -111,14 +109,10 @@ Coupon::$configPath = './config.yml';
     - int $second 有效期（从现在起，秒）
   - @return object
 
-- MActivity::post($name, $note, $coupon_size, $coupon_limit, $second)
+- MActivity::post($obj)
   - @description 快速创建优惠卷活动(`Activity`)
   - @param
-    - string $name 名称
-    - string $note 描述
-    - int $coupon_size 优惠卷派放总额
-    - int $coupon_limit 优惠卷派放次数限制
-    - int $second 有效期（从现在起，秒）
+    - object $obj 由`MActivity::object`构建返回的对象
   - @return bool
 
 - MActivity::put($id, $callback, $columns)
@@ -155,14 +149,10 @@ Coupon::$configPath = './config.yml';
     - int $second 有效期（从现在起，秒）
   - @return object
 
-- MCouponTemplate::post($name, $desc, $min_amount, $offer_amount, $second)
+- MCouponTemplate::post($obj)
   - @description 快速创建优惠卷模板(`CouponTemplate`)
   - @param
-    - string $name 名称
-    - string $desc 描述
-    - float $min_amount 满减条件金额
-    - float $offer_amount 满减金额
-    - int $second 有效期（从现在起，秒）
+    - object $obj 由`MCouponTemplate::object`构建返回的对象
   - @return bool
 
 - MCouponTemplate::put($id, $callback, $columns)
@@ -198,13 +188,10 @@ Coupon::$configPath = './config.yml';
     - int $second 有效期（从现在起，秒）
   - @return object
 
-- MCoupon::post($owner_id, $activity_id, $template_id, $second)
+- MCoupon::post($obj)
   - @description 快速创建优惠卷(`Coupon`)
   - @param
-    - string $owner_id 用户UUID
-    - string $activity_id 活动UUID
-    - string $template_id 优惠卷模板UUID
-    - int $second 有效期（从现在起，秒）
+    - object $obj 由`MCoupon::object`构建返回的对象
   - @return bool
 
 - MCoupon::put($id, $callback, $columns)
@@ -228,3 +215,9 @@ Coupon::$configPath = './config.yml';
     - int $limit 筛选数量
     - int $page 筛选页数
   - @return array
+
+- MCoupon::use($obj)
+  - @description 使用优惠卷(`Coupon`)
+  - @param
+    - object $obj 由`MCoupon::object`构建返回的对象
+  - @return bool
