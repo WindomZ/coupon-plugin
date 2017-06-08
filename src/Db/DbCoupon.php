@@ -174,4 +174,20 @@ class DbCoupon extends DbCouponTemplate
             ]
         );
     }
+
+    /**
+     * @return bool
+     */
+    public function increaseCouponUsed(): bool
+    {
+        $this->getById($this->id);
+
+        if (!$this->valid || $this->used_count != 0) {
+            return false;
+        }
+
+        $this->valid = false;
+
+        return $this->increase(self::COL_USED_COUNT, 1, [self::COL_VALID]);
+    }
 }

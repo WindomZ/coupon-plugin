@@ -79,12 +79,13 @@ abstract class dbBaseDate extends dbBaseId
     /**
      * @param string $column
      * @param int $count
+     * @param array|string $columns
      * @return bool
      */
-    public function increase(string $column, int $count): bool
+    public function increase(string $column, int $count, $columns = []): bool
     {
         $this->put_time = Date::get_now_time();
 
-        return parent::increase($column, $count);
+        return parent::increase($column, $count, $columns);
     }
 }

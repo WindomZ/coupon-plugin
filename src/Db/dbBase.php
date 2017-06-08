@@ -166,14 +166,15 @@ abstract class dbBase
      * @param string $column
      * @param int $count
      * @param array $where
+     * @param array $data
      * @return bool
      */
-    protected function _increase(string $column, int $count, array $where): bool
+    protected function _increase(string $column, int $count, array $where, array $data = []): bool
     {
         if (empty($column) || empty($count)) {
             return false;
         }
 
-        return $this->_beforePut()->_put([$column.'[+]' => $count], $where);
+        return $this->_beforePut()->_put(array_merge($data, [$column.'[+]' => $count]), $where);
     }
 }
