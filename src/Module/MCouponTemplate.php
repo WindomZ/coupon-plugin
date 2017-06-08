@@ -126,9 +126,7 @@ class MCouponTemplate extends mBase
      */
     public static function list(array $where = null, int $limit = 0, int $page = 0)
     {
-        $ins = new DbCouponTemplates();
-
-        return $ins->select($where, $limit, $page);
+        return (new DbCouponTemplates())->select($where, $limit, $page);
     }
 
     /**

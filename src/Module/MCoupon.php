@@ -150,9 +150,7 @@ class MCoupon extends mBase
      */
     public static function list(array $where = null, int $limit = 0, int $page = 0)
     {
-        $ins = new DbCoupons();
-
-        return $ins->select($where, $limit, $page);
+        return (new DbCoupons())->select($where, $limit, $page);
     }
 
     /**

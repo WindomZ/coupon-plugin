@@ -24,6 +24,19 @@ abstract class dbBaseList
     }
 
     /**
+     * @var int
+     */
+    protected $size = 0;
+
+    /**
+     * @return int
+     */
+    public function getSize(): int
+    {
+        return $this->size;
+    }
+
+    /**
      * @return string
      */
     abstract protected function getTableName(): string;
@@ -73,6 +86,8 @@ abstract class dbBaseList
             }
         }
 
+        $this->size = $this->getDb()->count($this->getTableName(), $where);
+
         return true;
     }
 
@@ -85,7 +100,7 @@ abstract class dbBaseList
     public function select(array $where = null, int $limit = 0, int $page = 0)
     {
         if ($this->_select($where, $limit, $page)) {
-            return $this->getList();
+            return ['data' => $this->getList(), 'size' => $this->getSize()];
         }
 
         return null;
