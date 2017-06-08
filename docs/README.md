@@ -137,6 +137,12 @@ Coupon::$configPath = './config.yml';
     - int $page 筛选页数
   - @return array
 
+- MActivity::disable($obj)
+  - @description 取消优惠卷活动(`Activity`)
+  - @param
+    - object|string $obj 由`MActivity::object`构建返回的对象|优惠卷活动UUID
+  - @return bool
+
 #### 优惠卷模板(`CouponTemplate`)
 
 - MCouponTemplate::object($name, $desc, $min_amount, $offer_amount, $second)
@@ -177,6 +183,12 @@ Coupon::$configPath = './config.yml';
     - int $page 筛选页数
   - @return array
 
+- MCouponTemplate::disable($obj)
+  - @description 取消优惠卷模板(`CouponTemplate`)
+  - @param
+    - object|string $obj 由`MCouponTemplate::object`构建返回的对象|优惠卷模板UUID
+  - @return bool
+
 #### 优惠卷(`Coupon`)
 
 - MCoupon::object($owner_id, $activity_id, $template_id, $second)
@@ -216,8 +228,31 @@ Coupon::$configPath = './config.yml';
     - int $page 筛选页数
   - @return array
 
+- MCoupon::disable($obj)
+  - @description 快速创建优惠卷(`Coupon`)
+  - @param
+    - object|string $obj 由`MCoupon::object`构建返回的对象|优惠卷UUID
+  - @return bool
+
 - MCoupon::use($obj)
   - @description 使用优惠卷(`Coupon`)
   - @param
-    - object $obj 由`MCoupon::object`构建返回的对象
+    - object|string $obj 由`MCoupon::object`构建返回的对象|优惠卷UUID
   - @return bool
+
+#### 公共方法
+
+- M*::toJSON($obj)
+  - @description 转为JSON格式对象
+  - @demo `MCoupon::toJSON(MCoupon::get('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'))`
+  - @param
+    - object $obj 对象
+  - @return object
+
+- M*::where($type, $key)
+  - @description 使用`M*::list($where, $limit, $page)`时，构造`$where`的高级用法。
+  - @demo `[MCoupon::where(MCoupon::WHERE_GTE, MCoupon::COL_CLASS) => 10]`，等同于`[MCoupon::COL_CLASS>=10]`。
+  - @param
+    - int $type 对象
+    - string $key 对象
+  - @return object
