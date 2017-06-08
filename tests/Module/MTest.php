@@ -136,7 +136,11 @@ class MTest extends TestCase
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        $list = MCoupon::list([DbCoupon::COL_NAME => 'name'], 10, 0);
+        $list = MCoupon::list(
+            [MCoupon::where(MCoupon::WHERE_NEQ, DbCoupon::COL_NAME) => 'name!'],
+            10,
+            0
+        );
         if (!$list) {
             $this->assertTrue(
                 MCoupon::post(
