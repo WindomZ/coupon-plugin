@@ -97,7 +97,7 @@ abstract class dbBaseId extends dbBase
             $data = array_intersect_key($data, array_flip($columns));
         }
 
-        return $this->_put($data);
+        return $this->_put($data, [self::COL_ID => $this->id]);
     }
 
     /**
@@ -116,5 +116,15 @@ abstract class dbBaseId extends dbBase
     public function getById($id): bool
     {
         return $this->_get([self::COL_ID => $id]);
+    }
+
+    /**
+     * @param string $column
+     * @param int $count
+     * @return bool
+     */
+    public function increase(string $column, int $count): bool
+    {
+        return $this->_increase($column, $count, [self::COL_ID => $this->id]);
     }
 }

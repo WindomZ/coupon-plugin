@@ -19,10 +19,10 @@ class Uuid
     }
 
     /**
-     * @param string $uuid
+     * @param string|null $uuid
      * @return bool
      */
-    public static function isValid(string $uuid): bool
+    public static function isValid($uuid = ''): bool
     {
         if (empty($uuid)) {
             return false;

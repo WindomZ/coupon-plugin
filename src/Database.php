@@ -2,8 +2,6 @@
 
 namespace CouponPlugin;
 
-require 'vendor/autoload.php';
-
 use Medoo\Medoo;
 
 /**

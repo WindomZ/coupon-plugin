@@ -28,9 +28,19 @@ class DbCoupon extends DbCouponTemplate
     public $activity_id;
 
     /**
+     * @var DbActivity|null
+     */
+    public $activity = null;
+
+    /**
      * @var string
      */
     public $template_id;
+
+    /**
+     * @var DbCouponTemplate|null
+     */
+    public $template = null;
 
     /**
      * @var int
@@ -42,27 +52,35 @@ class DbCoupon extends DbCouponTemplate
      */
     public $used_time;
 
+    /**
+     * DbCoupon constructor.
+     * @param string $owner_id
+     * @param DbActivity|null $activity
+     * @param DbCouponTemplate|null $template
+     */
     public function __construct(
         $owner_id = '',
-        $activity_id = '',
+        DbActivity $activity = null,
         DbCouponTemplate $template = null
     ) {
-        if ($template) {
+        $this->owner_id = $owner_id;
+
+        if ($activity && $template) {
             parent::__construct(
                 $template->name,
                 $template->desc,
                 $template->min_amount,
                 $template->offer_amount
             );
+            $this->activity_id = $activity->id;
+            $this->activity = $activity;
             $this->template_id = $template->id;
+            $this->template = $template;
             $this->valid = $template->valid;
             $this->dead_time = $template->dead_time;
         } else {
             parent::__construct();
         }
-
-        $this->owner_id = $owner_id;
-        $this->activity_id = $activity_id;
     }
 
     /**
@@ -81,11 +99,12 @@ class DbCoupon extends DbCouponTemplate
     {
         switch ($type) {
             case self::_TypeDbPost:
-            case self::_TypeDbPut:
                 return parent::valid($type)
                     && $this->validUuid($this->owner_id) && $this->validUuid($this->activity_id)
                     && $this->validUuid($this->template_id)
                     && $this->used_count >= 0 && !empty($this->used_time);
+            case self::_TypeDbPut:
+                return $this->validId() && $this->valid(self::_TypeDbPost);
         }
 
         return false;

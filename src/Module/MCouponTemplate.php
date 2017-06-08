@@ -9,7 +9,7 @@ use CouponPlugin\Util\Date;
 use CouponPlugin\Util\Uuid;
 
 /**
- * Class MCouponTest
+ * Class MCouponTemplate
  * @package CouponPlugin\Module
  */
 class MCouponTemplate extends mBase

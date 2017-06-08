@@ -61,7 +61,7 @@ class MCoupon extends mBase
             throw new ErrorException('"template_id" should not be existed: '.$template_id);
         }
 
-        $ins = new DbCoupon($owner_id, $activity->id, $template);
+        $ins = new DbCoupon($owner_id, $activity, $template);
         if ($second > 0) {
             $ins->dead_time = Date::get_next_time($second);
         }
@@ -73,6 +73,14 @@ class MCoupon extends mBase
     {
         if (!$obj) {
             throw new ErrorException('"obj" should not be null!');
+        }
+
+        if ($obj->countActivityCoupon() >= $obj->activity->coupon_limit) {
+            return false;
+        }
+
+        if (!$obj->activity->increaseCouponUsed()) {
+            return false;
         }
 
         return $obj->_beforePost()->post();

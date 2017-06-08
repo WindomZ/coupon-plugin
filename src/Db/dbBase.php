@@ -61,8 +61,14 @@ abstract class dbBase
         return Coupon::getInstance()->getDb();
     }
 
+    /**
+     * @var bool
+     */
     private $beforePost = false;
 
+    /**
+     * @return $this
+     */
     public function _beforePost()
     {
         $this->beforePost = true;
@@ -82,21 +88,26 @@ abstract class dbBase
         }
         $this->beforePost = false;
         if (!$this->valid(self::_TypeDbPost)) {
-            var_dump($this);
             throw new ErrorException('Invalid insert object!');
         }
 
         $this->getDb()->insert($this->getTableName(), $data);
-        if (!$this->getDb()->id()) {
-            $err = $this->getDb()->error();
-            throw new ErrorException(empty($err) ? 'SQL insert error!' : $err[2]);
+        $err = $this->getDb()->error();
+        if ($err && sizeof($err) >= 2 && !empty($err[2])) {
+            throw new ErrorException($err[2]);
         }
 
         return true;
     }
 
+    /**
+     * @var bool
+     */
     private $beforePut = false;
 
+    /**
+     * @return $this
+     */
     public function _beforePut()
     {
         $this->beforePut = true;
@@ -106,21 +117,21 @@ abstract class dbBase
 
     /**
      * @param array $data
+     * @param array $where
      * @return bool
      * @throws ErrorException
      */
-    protected function _put($data): bool
+    protected function _put(array $data, array $where): bool
     {
         if (!$this->beforePut) {
             throw new ErrorException('Not ready to update object!');
         }
         $this->beforePut = false;
         if (!$this->valid(self::_TypeDbPut)) {
-            var_dump($this);
             throw new ErrorException('Invalid update object!');
         }
 
-        return !empty($this->getDb()->update($this->getTableName(), $data));
+        return !empty($this->getDb()->update($this->getTableName(), $data, $where));
     }
 
     /**
@@ -149,5 +160,20 @@ abstract class dbBase
         }
 
         return $count;
+    }
+
+    /**
+     * @param string $column
+     * @param int $count
+     * @param array $where
+     * @return bool
+     */
+    protected function _increase(string $column, int $count, array $where): bool
+    {
+        if (empty($column) || empty($count)) {
+            return false;
+        }
+
+        return $this->_beforePut()->_put([$column.'[+]' => $count], $where);
     }
 }
