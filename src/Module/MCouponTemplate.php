@@ -81,7 +81,7 @@ class MCouponTemplate extends mBase
     ): bool {
         $ins = self::object($name, $desc, $min_amount, $offer_amount, $second);
 
-        return $ins->post();
+        return $ins->_beforePost()->post();
     }
 
     /**
@@ -106,7 +106,7 @@ class MCouponTemplate extends mBase
             $callback($ins);
         }
 
-        $ins->put($columns);
+        $ins->_beforePut()->put($columns);
 
         return $ins;
     }

@@ -27,7 +27,7 @@ class DbCouponTest extends TestCase
             $this->assertEquals($ins->min_amount, 100);
             $this->assertEquals($ins->offer_amount, 200);
 
-            $ins->put();
+            $ins->_beforePut()->put();
         } else {
             $ins->name = 'name';
             $ins->desc = 'desc';
@@ -35,7 +35,7 @@ class DbCouponTest extends TestCase
             $ins->offer_amount = 200;
             $ins->dead_time = Date::get_now_time();
 
-            $this->assertTrue($ins->post());
+            $this->assertTrue($ins->_beforePost()->post());
         }
 
         $id = $ins->id;
@@ -69,7 +69,7 @@ class DbCouponTest extends TestCase
             $this->assertEquals($ins->min_amount, 100);
             $this->assertEquals($ins->offer_amount, 200);
 
-            $ins->put();
+            $ins->_beforePut()->put();
         } else {
             $ins->owner_id = $template->id;
             $ins->activity_id = $template->id;
@@ -80,7 +80,7 @@ class DbCouponTest extends TestCase
             $ins->offer_amount = 200;
             $ins->dead_time = Date::get_now_time();
 
-            $this->assertTrue($ins->post());
+            $this->assertTrue($ins->_beforePost()->post());
         }
 
         $id = $ins->id;

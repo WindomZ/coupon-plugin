@@ -69,23 +69,13 @@ class MCoupon extends mBase
         return $ins;
     }
 
-    /**
-     * @param string $owner_id
-     * @param string $activity_id
-     * @param string $template_id
-     * @param int $second
-     * @return bool
-     * @throws ErrorException
-     */
-    public static function post(
-        string $owner_id,
-        string $activity_id,
-        string $template_id,
-        $second = 0
-    ): bool {
-        $ins = self::object($owner_id, $activity_id, $template_id, $second);
+    public static function post(DbCoupon $obj): bool
+    {
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
+        }
 
-        return $ins->post();
+        return $obj->_beforePost()->post();
     }
 
     /**
@@ -110,7 +100,7 @@ class MCoupon extends mBase
             $callback($ins);
         }
 
-        $ins->put($columns);
+        $ins->_beforePut()->put($columns);
 
         return $ins;
     }

@@ -61,6 +61,15 @@ abstract class dbBase
         return Coupon::getInstance()->getDb();
     }
 
+    private $beforePost = false;
+
+    public function _beforePost()
+    {
+        $this->beforePost = true;
+
+        return $this;
+    }
+
     /**
      * @param array $data
      * @return bool
@@ -68,6 +77,10 @@ abstract class dbBase
      */
     protected function _post($data): bool
     {
+        if (!$this->beforePost) {
+            throw new ErrorException('Not ready to insert object!');
+        }
+        $this->beforePost = false;
         if (!$this->valid(self::_TypeDbPost)) {
             var_dump($this);
             throw new ErrorException('Invalid insert object!');
@@ -82,6 +95,15 @@ abstract class dbBase
         return true;
     }
 
+    private $beforePut = false;
+
+    public function _beforePut()
+    {
+        $this->beforePut = true;
+
+        return $this;
+    }
+
     /**
      * @param array $data
      * @return bool
@@ -89,6 +111,10 @@ abstract class dbBase
      */
     protected function _put($data): bool
     {
+        if (!$this->beforePut) {
+            throw new ErrorException('Not ready to update object!');
+        }
+        $this->beforePut = false;
         if (!$this->valid(self::_TypeDbPut)) {
             var_dump($this);
             throw new ErrorException('Invalid update object!');
