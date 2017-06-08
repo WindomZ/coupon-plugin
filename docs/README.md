@@ -17,7 +17,7 @@ $ composer require windomz/coupon-plugin
 
 ### 配置文件
 
-创建并编写`config.yml`，里面参数根据您的环境情况修改
+创建并编写`config.yml`，里面参数根据您的环境情况修改：
 ```yaml
 database:
     host: 127.0.0.1
@@ -30,10 +30,14 @@ database:
 
 如果只是作为测试，可以在`MySQL`运行`./sql/testdb.sql`来快速创建测试数据库。
 
-在项目初始化阶段，加载指定配置文件
+在项目初始化阶段，**加载**指定配置文件：
 ```php
 Coupon::$configPath = './config.yml';
 ```
+
+### 业务流程
+
+- 创建优惠卷：优惠卷活动(`Activity`) -> 优惠卷模板(`CouponTemplate`) -> 优惠卷(`Coupon`)
 
 ### 属性字段
 
