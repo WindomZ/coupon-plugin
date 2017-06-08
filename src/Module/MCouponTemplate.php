@@ -130,4 +130,42 @@ class MCouponTemplate extends mBase
 
         return $ins->select($where, $limit, $page);
     }
+
+    /**
+     * @param DbCouponTemplate|string $objOrId
+     * @return DbCouponTemplate
+     * @throws ErrorException
+     */
+    protected static function toObj($objOrId): DbCouponTemplate
+    {
+        if (!$objOrId) {
+            throw new ErrorException('"objOrId" should not be null!');
+        }
+
+        $obj = null;
+        if (gettype($objOrId) === 'string') {
+            $obj = self::get($objOrId);
+        } elseif ($objOrId instanceof DbCouponTemplate) {
+            $obj = $objOrId;
+        }
+
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
+        }
+
+        return $obj;
+    }
+
+    /**
+     * @param DbCouponTemplate|string $objOrId
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function disable($objOrId): bool
+    {
+        $obj = self::toObj($objOrId);
+        $obj->valid = false;
+
+        return $obj->_beforePut()->put([self::COL_VALID]);
+    }
 }

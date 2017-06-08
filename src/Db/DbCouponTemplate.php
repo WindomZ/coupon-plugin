@@ -125,7 +125,7 @@ class DbCouponTemplate extends dbBaseDate
         $this->desc = $data[self::COL_DESC];
         $this->min_amount = $data[self::COL_MIN_AMOUNT];
         $this->offer_amount = $data[self::COL_OFFER_AMOUNT];
-        $this->valid = $data[self::COL_VALID];
+        $this->valid = !empty($data[self::COL_VALID]);
         $this->dead_time = $data[self::COL_DEAD_TIME];
 
         return $this;

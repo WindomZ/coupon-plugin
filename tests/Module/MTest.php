@@ -59,12 +59,21 @@ class MTest extends TestCase
         $this->assertEquals($ins->coupon_size, 10000);
         $this->assertEquals($ins->coupon_limit, 1);
 
+        $this->assertTrue(MActivity::disable($ins));
+        $this->assertTrue(MActivity::disable($ins->id));
+
         MActivity::put(
             $ins->id,
             function ($v) {
                 self::assertNotEmpty($v);
-            }
+                $v->valid = true;
+            },
+            [MActivity::COL_VALID]
         );
+
+        $ins = MActivity::get($ins->id);
+        self::assertNotEmpty($ins);
+        $this->assertTrue($ins->valid);
 
         return $ins;
     }
@@ -111,12 +120,21 @@ class MTest extends TestCase
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
 
+        $this->assertTrue(MCouponTemplate::disable($ins));
+        $this->assertTrue(MCouponTemplate::disable($ins->id));
+
         MCouponTemplate::put(
             $ins->id,
             function ($v) {
                 self::assertNotEmpty($v);
-            }
+                $v->valid = true;
+            },
+            [MCouponTemplate::COL_VALID]
         );
+
+        $ins = MCouponTemplate::get($ins->id);
+        self::assertNotEmpty($ins);
+        $this->assertTrue($ins->valid);
 
         return $ins;
     }
@@ -136,7 +154,11 @@ class MTest extends TestCase
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        $list = MCoupon::list([DbCoupon::COL_NAME => 'name'], 10, 0);
+        $list = MCoupon::list(
+            [MCoupon::where(MCoupon::WHERE_NEQ, MCoupon::COL_NAME) => 'name!'],
+            10,
+            0
+        );
         if (!$list) {
             $this->assertTrue(
                 MCoupon::post(
@@ -147,7 +169,7 @@ class MTest extends TestCase
                     )
                 )
             );
-            $list = MCoupon::list([DbCoupon::COL_NAME => 'name'], 10, 0);
+            $list = MCoupon::list([MCoupon::COL_NAME => 'name'], 10, 0);
         }
         self::assertNotEmpty($list);
         self::assertEquals(sizeof($list), 1);
@@ -173,6 +195,9 @@ class MTest extends TestCase
         $this->assertEquals($ins->offer_amount, 200);
 
         $this->assertTrue($ins->used_count == 0 || $ins->used_count == 1);
+
+        $this->assertTrue(MCoupon::disable($ins));
+        $this->assertTrue(MCoupon::disable($ins->id));
 
         MCoupon::put(
             $ins->id,
