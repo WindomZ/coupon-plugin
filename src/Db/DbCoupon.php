@@ -83,8 +83,8 @@ class DbCoupon extends DbCouponTemplate
             case self::_TypeDbPost:
             case self::_TypeDbPut:
                 return parent::valid($type)
-                    && $this->validId($this->owner_id) && $this->validId($this->activity_id)
-                    && $this->validId($this->template_id)
+                    && $this->validUuid($this->owner_id) && $this->validUuid($this->activity_id)
+                    && $this->validUuid($this->template_id)
                     && $this->used_count >= 0 && !empty($this->used_time);
         }
 
@@ -141,10 +141,10 @@ class DbCoupon extends DbCouponTemplate
      */
     public function countActivityCoupon(): int
     {
-        if (!$this->validId($this->owner_id)) {
+        if (!$this->validUuid($this->owner_id)) {
             throw new ErrorException('"owner_id" should not be empty: '.$this->owner_id);
         }
-        if (!$this->validId($this->activity_id)) {
+        if (!$this->validUuid($this->activity_id)) {
             throw new ErrorException('"activity_id" should not be empty: '.$this->activity_id);
         }
 

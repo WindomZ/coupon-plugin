@@ -36,6 +36,15 @@ abstract class dbBaseId extends dbBase
     }
 
     /**
+     * @param string $Uuid
+     * @return bool
+     */
+    protected function validUuid(string $Uuid): bool
+    {
+        return Uuid::isValid($Uuid);
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
