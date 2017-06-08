@@ -100,7 +100,12 @@ abstract class dbBaseList
     public function select(array $where = null, int $limit = 0, int $page = 0)
     {
         if ($this->_select($where, $limit, $page)) {
-            return ['data' => $this->getList(), 'size' => $this->getSize()];
+            return [
+                'data' => $this->getList(),
+                'size' => $this->getSize(),
+                'limit' => $limit,
+                'page' => $page,
+            ];
         }
 
         return null;
