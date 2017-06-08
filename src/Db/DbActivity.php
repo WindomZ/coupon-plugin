@@ -137,7 +137,7 @@ class DbActivity extends dbBaseDate
         $this->coupon_used = $data[self::COL_COUPON_USED];
         $this->coupon_limit = $data[self::COL_COUPON_LIMIT];
         $this->level = $data[self::COL_LEVEL];
-        $this->valid = $data[self::COL_VALID];
+        $this->valid = !empty($data[self::COL_VALID]);
         $this->dead_time = $data[self::COL_DEAD_TIME];
 
         return $this;
