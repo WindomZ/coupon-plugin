@@ -13,6 +13,9 @@ use CouponPlugin\Util\Date;
  */
 class MCoupon extends mBase
 {
+    const COL_ID = DbCoupon::COL_ID;
+    const COL_POST_TIME = DbCoupon::COL_POST_TIME;
+    const COL_PUT_TIME = DbCoupon::COL_PUT_TIME;
     const COL_OWNER_ID = DbCoupon::COL_OWNER_ID;
     const COL_ACTIVITY_ID = DbCoupon::COL_ACTIVITY_ID;
     const COL_TEMPLATE_ID = DbCoupon::COL_TEMPLATE_ID;

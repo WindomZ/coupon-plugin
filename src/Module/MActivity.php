@@ -13,6 +13,9 @@ use CouponPlugin\Util\Date;
  */
 class MActivity extends mBase
 {
+    const COL_ID = DbActivity::COL_ID;
+    const COL_POST_TIME = DbActivity::COL_POST_TIME;
+    const COL_PUT_TIME = DbActivity::COL_PUT_TIME;
     const COL_NAME = DbActivity::COL_NAME;
     const COL_NOTE = DbActivity::COL_NOTE;
     const COL_URL = DbActivity::COL_URL;
