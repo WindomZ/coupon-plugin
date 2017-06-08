@@ -50,7 +50,10 @@ abstract class dbBaseList
      */
     protected function _select(array $where = null, int $limit = 0, int $page = 0)
     {
-        if ($limit > 0 && !empty($where)) {
+        if ($limit > 0) {
+            if (!$where) {
+                $where = array();
+            }
             if ($page > 0) {
                 $where['LIMIT'] = [$limit * $page, $limit];
             } else {
