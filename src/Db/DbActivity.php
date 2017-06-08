@@ -91,10 +91,11 @@ class DbActivity extends dbBaseDate
     {
         switch ($type) {
             case self::_TypeDbPost:
-            case self::_TypeDbPut:
                 return !empty($this->name)
                     && $this->coupon_size >= 0 && $this->coupon_used >= 0
                     && !empty($this->dead_time);
+            case self::_TypeDbPut:
+                return $this->validId() && $this->valid(self::_TypeDbPost);
         }
 
         return false;
@@ -140,5 +141,19 @@ class DbActivity extends dbBaseDate
         $this->dead_time = $data[self::COL_DEAD_TIME];
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function increaseCouponUsed(): bool
+    {
+        $this->getById($this->id);
+
+        if ($this->coupon_size <= $this->coupon_used) {
+            return false;
+        }
+
+        return $this->increase(self::COL_COUPON_USED, 1);
     }
 }

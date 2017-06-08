@@ -62,24 +62,18 @@ abstract class dbBase
     }
 
     /**
-     * @param array $data
-     * @return bool
-     * @throws ErrorException
+     * @var bool
      */
-    protected function _post($data): bool
+    private $beforePost = false;
+
+    /**
+     * @return $this
+     */
+    public function _beforePost()
     {
-        if (!$this->valid(self::_TypeDbPost)) {
-            var_dump($this);
-            throw new ErrorException('Invalid insert object!');
-        }
+        $this->beforePost = true;
 
-        $this->getDb()->insert($this->getTableName(), $data);
-        if (!$this->getDb()->id()) {
-            $err = $this->getDb()->error();
-            throw new ErrorException(empty($err) ? 'SQL insert error!' : $err[2]);
-        }
-
-        return true;
+        return $this;
     }
 
     /**
@@ -87,14 +81,57 @@ abstract class dbBase
      * @return bool
      * @throws ErrorException
      */
-    protected function _put($data): bool
+    protected function _post($data): bool
     {
+        if (!$this->beforePost) {
+            throw new ErrorException('Not ready to insert object!');
+        }
+        $this->beforePost = false;
+        if (!$this->valid(self::_TypeDbPost)) {
+            throw new ErrorException('Invalid insert object!');
+        }
+
+        $this->getDb()->insert($this->getTableName(), $data);
+        $err = $this->getDb()->error();
+        if ($err && sizeof($err) >= 2 && !empty($err[2])) {
+            throw new ErrorException($err[2]);
+        }
+
+        return true;
+    }
+
+    /**
+     * @var bool
+     */
+    private $beforePut = false;
+
+    /**
+     * @return $this
+     */
+    public function _beforePut()
+    {
+        $this->beforePut = true;
+
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @param array $where
+     * @return bool
+     * @throws ErrorException
+     */
+    protected function _put(array $data, array $where): bool
+    {
+        if (!$this->beforePut) {
+            throw new ErrorException('Not ready to update object!');
+        }
+        $this->beforePut = false;
         if (!$this->valid(self::_TypeDbPut)) {
-            var_dump($this);
             throw new ErrorException('Invalid update object!');
         }
 
-        return !empty($this->getDb()->update($this->getTableName(), $data));
+        return !empty($this->getDb()->update($this->getTableName(), $data, $where));
     }
 
     /**
@@ -123,5 +160,21 @@ abstract class dbBase
         }
 
         return $count;
+    }
+
+    /**
+     * @param string $column
+     * @param int $count
+     * @param array $where
+     * @param array $data
+     * @return bool
+     */
+    protected function _increase(string $column, int $count, array $where, array $data = []): bool
+    {
+        if (empty($column) || empty($count)) {
+            return false;
+        }
+
+        return $this->_beforePut()->_put(array_merge($data, [$column.'[+]' => $count]), $where);
     }
 }

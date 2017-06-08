@@ -6,13 +6,17 @@ use CouponPlugin\Db\DbCouponTemplate;
 use CouponPlugin\Db\DbCouponTemplates;
 use CouponPlugin\ErrorException;
 use CouponPlugin\Util\Date;
+use CouponPlugin\Util\Uuid;
 
 /**
- * Class MCouponTest
+ * Class MCouponTemplate
  * @package CouponPlugin\Module
  */
 class MCouponTemplate extends mBase
 {
+    const COL_ID = DbCouponTemplate::COL_ID;
+    const COL_POST_TIME = DbCouponTemplate::COL_POST_TIME;
+    const COL_PUT_TIME = DbCouponTemplate::COL_PUT_TIME;
     const COL_CLASS = DbCouponTemplate::COL_CLASS;
     const COL_KIND = DbCouponTemplate::COL_KIND;
     const COL_NAME = DbCouponTemplate::COL_NAME;
@@ -60,24 +64,17 @@ class MCouponTemplate extends mBase
     }
 
     /**
-     * @param string $name
-     * @param string $desc
-     * @param int $min_amount
-     * @param int $offer_amount
-     * @param int $second
+     * @param DbCouponTemplate $obj
      * @return bool
      * @throws ErrorException
      */
-    public static function post(
-        string $name,
-        string $desc = '',
-        $min_amount = 0,
-        $offer_amount = 0,
-        $second = 86400// 1 day
-    ): bool {
-        $ins = self::object($name, $desc, $min_amount, $offer_amount, $second);
+    public static function post(DbCouponTemplate $obj): bool
+    {
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
+        }
 
-        return $ins->post();
+        return $obj->_beforePost()->post();
     }
 
     /**
@@ -89,7 +86,7 @@ class MCouponTemplate extends mBase
      */
     public static function put(string $id, $callback = null, $columns = [])
     {
-        if (empty($id)) {
+        if (!Uuid::isValid($id)) {
             throw new ErrorException('"id" should not be empty: '.$id);
         }
 
@@ -102,7 +99,7 @@ class MCouponTemplate extends mBase
             $callback($ins);
         }
 
-        $ins->put($columns);
+        $ins->_beforePut()->put($columns);
 
         return $ins;
     }

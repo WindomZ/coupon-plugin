@@ -6,6 +6,7 @@ use CouponPlugin\Db\DbCoupon;
 use CouponPlugin\Db\DbCoupons;
 use CouponPlugin\ErrorException;
 use CouponPlugin\Util\Date;
+use CouponPlugin\Util\Uuid;
 
 /**
  * Class MCoupon
@@ -13,11 +14,24 @@ use CouponPlugin\Util\Date;
  */
 class MCoupon extends mBase
 {
+    const COL_ID = DbCoupon::COL_ID;
+    const COL_POST_TIME = DbCoupon::COL_POST_TIME;
+    const COL_PUT_TIME = DbCoupon::COL_PUT_TIME;
     const COL_OWNER_ID = DbCoupon::COL_OWNER_ID;
     const COL_ACTIVITY_ID = DbCoupon::COL_ACTIVITY_ID;
     const COL_TEMPLATE_ID = DbCoupon::COL_TEMPLATE_ID;
     const COL_USED_COUNT = DbCoupon::COL_USED_COUNT;
     const COL_USED_TIME = DbCoupon::COL_USED_TIME;
+
+    const COL_CLASS = DbCoupon::COL_CLASS;
+    const COL_KIND = DbCoupon::COL_KIND;
+    const COL_NAME = DbCoupon::COL_NAME;
+    const COL_DESC = DbCoupon::COL_DESC;
+    const COL_MIN_AMOUNT = DbCoupon::COL_MIN_AMOUNT;
+    const COL_OFFER_AMOUNT = DbCoupon::COL_OFFER_AMOUNT;
+    const COL_COUPON_LIMIT = DbCoupon::COL_COUPON_LIMIT;
+    const COL_VALID = DbCoupon::COL_VALID;
+    const COL_DEAD_TIME = DbCoupon::COL_DEAD_TIME;
 
     private function __construct()
     {
@@ -37,11 +51,11 @@ class MCoupon extends mBase
         string $template_id,
         $second = 0
     ): DbCoupon {
-        if (empty($owner_id)) {
+        if (!Uuid::isValid($owner_id)) {
             throw new ErrorException('"owner_id" should not be empty: '.$owner_id);
         }
 
-        if (empty($activity_id)) {
+        if (!Uuid::isValid($activity_id)) {
             throw new ErrorException('"activity_id" should not be empty: '.$activity_id);
         }
         $activity = MActivity::get($activity_id);
@@ -49,7 +63,7 @@ class MCoupon extends mBase
             throw new ErrorException('"activity_id" should not be existed: '.$activity_id);
         }
 
-        if (empty($template_id)) {
+        if (!Uuid::isValid($template_id)) {
             throw new ErrorException('"template_id" should not be empty: '.$template_id);
         }
         $template = MCouponTemplate::get($template_id);
@@ -57,7 +71,7 @@ class MCoupon extends mBase
             throw new ErrorException('"template_id" should not be existed: '.$template_id);
         }
 
-        $ins = new DbCoupon($owner_id, $activity->id, $template);
+        $ins = new DbCoupon($owner_id, $activity, $template);
         if ($second > 0) {
             $ins->dead_time = Date::get_next_time($second);
         }
@@ -66,22 +80,25 @@ class MCoupon extends mBase
     }
 
     /**
-     * @param string $owner_id
-     * @param string $activity_id
-     * @param string $template_id
-     * @param int $second
+     * @param DbCoupon $obj
      * @return bool
      * @throws ErrorException
      */
-    public static function post(
-        string $owner_id,
-        string $activity_id,
-        string $template_id,
-        $second = 0
-    ): bool {
-        $ins = self::object($owner_id, $activity_id, $template_id, $second);
+    public static function post(DbCoupon $obj): bool
+    {
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
+        }
 
-        return $ins->post();
+        if ($obj->countActivityCoupon() >= $obj->activity->coupon_limit) {
+            return false;
+        }
+
+        if (!$obj->activity->increaseCouponUsed()) {
+            return false;
+        }
+
+        return $obj->_beforePost()->post();
     }
 
     /**
@@ -93,7 +110,7 @@ class MCoupon extends mBase
      */
     public static function put(string $id, $callback = null, $columns = [])
     {
-        if (empty($id)) {
+        if (!Uuid::isValid($id)) {
             throw new ErrorException('"id" should not be empty: '.$id);
         }
 
@@ -106,7 +123,7 @@ class MCoupon extends mBase
             $callback($ins);
         }
 
-        $ins->put($columns);
+        $ins->_beforePut()->put($columns);
 
         return $ins;
     }
@@ -136,5 +153,19 @@ class MCoupon extends mBase
         $ins = new DbCoupons();
 
         return $ins->select($where, $limit, $page);
+    }
+
+    /**
+     * @param DbCoupon $obj
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function use(DbCoupon $obj): bool
+    {
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
+        }
+
+        return $obj->increaseCouponUsed();
     }
 }

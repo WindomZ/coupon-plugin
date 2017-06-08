@@ -2,7 +2,7 @@
 
 namespace CouponPlugin\Db;
 
-use Ramsey\Uuid\Uuid;
+use CouponPlugin\Util\Uuid;
 
 /**
  * Class dbBaseId
@@ -22,7 +22,7 @@ abstract class dbBaseId extends dbBase
      */
     protected function makeId(): string
     {
-        $this->id = Uuid::uuid4()->toString();
+        $this->id = Uuid::uuid();
 
         return $this->id;
     }
@@ -33,6 +33,15 @@ abstract class dbBaseId extends dbBase
     protected function validId(): bool
     {
         return Uuid::isValid($this->id);
+    }
+
+    /**
+     * @param string $Uuid
+     * @return bool
+     */
+    protected function validUuid(string $Uuid): bool
+    {
+        return Uuid::isValid($Uuid);
     }
 
     /**
@@ -77,18 +86,34 @@ abstract class dbBaseId extends dbBase
 
     /**
      * @param array|string $columns
-     * @return bool
+     * @return array
      */
-    public function put($columns = []): bool
+    protected function columns2data($columns = []): array
     {
+        if (empty($columns)) {
+            return [];
+        }
+
         $data = $this->toArray();
 
-        if ($columns !== '*' && gettype($columns) === 'array') {
+        if ($columns !== '*') {
             $columns = array_diff($columns, [self::COL_ID]);
             $data = array_intersect_key($data, array_flip($columns));
         }
 
-        return $this->_put($data);
+        return $data;
+    }
+
+    /**
+     * @param array|string $columns
+     * @return bool
+     */
+    public function put($columns = []): bool
+    {
+        return $this->_put(
+            $this->columns2data($columns),
+            [self::COL_ID => $this->id]
+        );
     }
 
     /**
@@ -107,5 +132,21 @@ abstract class dbBaseId extends dbBase
     public function getById($id): bool
     {
         return $this->_get([self::COL_ID => $id]);
+    }
+
+    /**
+     * @param string $column
+     * @param int $count
+     * @param array|string $columns
+     * @return bool
+     */
+    public function increase(string $column, int $count, $columns = []): bool
+    {
+        return $this->_increase(
+            $column,
+            $count,
+            [self::COL_ID => $this->id],
+            $this->columns2data($columns)
+        );
     }
 }

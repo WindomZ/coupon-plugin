@@ -6,6 +6,7 @@ use CouponPlugin\Db\DbActivities;
 use CouponPlugin\Db\DbActivity;
 use CouponPlugin\ErrorException;
 use CouponPlugin\Util\Date;
+use CouponPlugin\Util\Uuid;
 
 /**
  * Class MActivity
@@ -13,6 +14,9 @@ use CouponPlugin\Util\Date;
  */
 class MActivity extends mBase
 {
+    const COL_ID = DbActivity::COL_ID;
+    const COL_POST_TIME = DbActivity::COL_POST_TIME;
+    const COL_PUT_TIME = DbActivity::COL_PUT_TIME;
     const COL_NAME = DbActivity::COL_NAME;
     const COL_NOTE = DbActivity::COL_NOTE;
     const COL_URL = DbActivity::COL_URL;
@@ -61,23 +65,17 @@ class MActivity extends mBase
     }
 
     /**
-     * @param string $name
-     * @param string $note
-     * @param int $coupon_size
-     * @param int $coupon_limit
-     * @param int $second
+     * @param DbActivity $obj
      * @return bool
+     * @throws ErrorException
      */
-    public static function post(
-        string $name,
-        string $note = '',
-        $coupon_size = 0,
-        $coupon_limit = 0,
-        $second = 0
-    ): bool {
-        $ins = self::object($name, $note, $coupon_size, $coupon_limit, $second);
+    public static function post(DbActivity $obj): bool
+    {
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
+        }
 
-        return $ins->post();
+        return $obj->_beforePost()->post();
     }
 
     /**
@@ -89,7 +87,7 @@ class MActivity extends mBase
      */
     public static function put(string $id, $callback = null, $columns = [])
     {
-        if (empty($id)) {
+        if (!Uuid::isValid($id)) {
             throw new ErrorException('"id" should not be empty: '.$id);
         }
 
@@ -102,7 +100,7 @@ class MActivity extends mBase
             $callback($ins);
         }
 
-        $ins->put($columns);
+        $ins->_beforePut()->put($columns);
 
         return $ins;
     }

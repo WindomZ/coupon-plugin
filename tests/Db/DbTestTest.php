@@ -22,12 +22,12 @@ class DbTestTest extends TestCase
             $this->assertEquals($ins->name, 'name');
             $this->assertEquals($ins->email, 'email');
 
-            $ins->put();
+            $ins->_beforePut()->put();
         } else {
             $ins->name = 'name';
             $ins->email = 'email';
 
-            $this->assertTrue($ins->post());
+            $this->assertTrue($ins->_beforePost()->post());
         }
 
         $id = $ins->id;
