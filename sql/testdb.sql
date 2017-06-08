@@ -37,7 +37,6 @@ create table testdb.coupon
 	`desc` varchar(256) default '' not null,
 	min_amount decimal(10,2) default '0.00' not null,
 	offer_amount decimal(10,2) default '0.00' not null,
-	coupon_limit int default '0' not null,
 	valid tinyint(1) default '1' not null,
 	dead_time datetime default CURRENT_TIMESTAMP not null,
 	used_count int default '0' not null,
@@ -59,7 +58,6 @@ create table testdb.coupon_template
 	`desc` varchar(256) default '' not null,
 	min_amount decimal(10,2) default '0.00' not null,
 	offer_amount decimal(10,2) default '0.00' not null,
-	coupon_limit int default '0' not null,
 	valid tinyint(1) default '1' not null,
 	dead_time datetime default CURRENT_TIMESTAMP not null,
 	constraint coupon_template_id_uindex

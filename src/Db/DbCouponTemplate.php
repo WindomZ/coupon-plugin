@@ -14,7 +14,6 @@ class DbCouponTemplate extends dbBaseDate
     const COL_DESC = 'desc';
     const COL_MIN_AMOUNT = 'min_amount';
     const COL_OFFER_AMOUNT = 'offer_amount';
-    const COL_COUPON_LIMIT = 'coupon_limit';
     const COL_VALID = 'valid';
     const COL_DEAD_TIME = 'dead_time';
 
@@ -47,11 +46,6 @@ class DbCouponTemplate extends dbBaseDate
      * @var float
      */
     public $offer_amount = 0;
-
-    /**
-     * @var int
-     */
-    public $coupon_limit = 0;
 
     /**
      * @var bool
@@ -89,7 +83,7 @@ class DbCouponTemplate extends dbBaseDate
             case self::_TypeDbPost:
                 return !empty($this->name)
                     && $this->min_amount >= 0 && $this->offer_amount > 0
-                    && $this->coupon_limit >= 0 && !empty($this->dead_time);
+                    && !empty($this->dead_time);
             case self::_TypeDbPut:
                 return $this->validId() && $this->valid(self::_TypeDbPost);
         }
