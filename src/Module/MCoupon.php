@@ -157,10 +157,10 @@ class MCoupon extends mBase
 
     /**
      * @param DbCoupon|string $objOrId
-     * @return bool
+     * @return DbCoupon
      * @throws ErrorException
      */
-    public static function disable($objOrId): bool
+    protected static function toObj($objOrId): DbCoupon
     {
         if (!$objOrId) {
             throw new ErrorException('"objOrId" should not be null!');
@@ -177,6 +177,17 @@ class MCoupon extends mBase
             throw new ErrorException('"obj" should not be null!');
         }
 
+        return $obj;
+    }
+
+    /**
+     * @param DbCoupon|string $objOrId
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function disable($objOrId): bool
+    {
+        $obj = self::toObj($objOrId);
         $obj->valid = false;
 
         return $obj->_beforePut()->put([self::COL_VALID]);
@@ -189,20 +200,7 @@ class MCoupon extends mBase
      */
     public static function use(DbCoupon $objOrId): bool
     {
-        if (!$objOrId) {
-            throw new ErrorException('"objOrId" should not be null!');
-        }
-
-        $obj = null;
-        if (gettype($objOrId) === 'string') {
-            $obj = self::get($objOrId);
-        } elseif ($objOrId instanceof DbCoupon) {
-            $obj = $objOrId;
-        }
-
-        if (!$obj) {
-            throw new ErrorException('"obj" should not be null!');
-        }
+        $obj = self::toObj($objOrId);
 
         return $obj->increaseCouponUsed();
     }

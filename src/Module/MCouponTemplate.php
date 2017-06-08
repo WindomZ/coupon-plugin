@@ -133,10 +133,10 @@ class MCouponTemplate extends mBase
 
     /**
      * @param DbCouponTemplate|string $objOrId
-     * @return bool
+     * @return DbCouponTemplate
      * @throws ErrorException
      */
-    public static function disable($objOrId): bool
+    protected static function toObj($objOrId): DbCouponTemplate
     {
         if (!$objOrId) {
             throw new ErrorException('"objOrId" should not be null!');
@@ -153,6 +153,17 @@ class MCouponTemplate extends mBase
             throw new ErrorException('"obj" should not be null!');
         }
 
+        return $obj;
+    }
+
+    /**
+     * @param DbCouponTemplate|string $objOrId
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function disable($objOrId): bool
+    {
+        $obj = self::toObj($objOrId);
         $obj->valid = false;
 
         return $obj->_beforePut()->put([self::COL_VALID]);
