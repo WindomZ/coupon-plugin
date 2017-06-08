@@ -183,12 +183,23 @@ class MCoupon extends mBase
     }
 
     /**
-     * @param DbCoupon $obj
+     * @param DbCoupon|string $objOrId
      * @return bool
      * @throws ErrorException
      */
-    public static function use(DbCoupon $obj): bool
+    public static function use(DbCoupon $objOrId): bool
     {
+        if (!$objOrId) {
+            throw new ErrorException('"objOrId" should not be null!');
+        }
+
+        $obj = null;
+        if (gettype($objOrId) === 'string') {
+            $obj = self::get($objOrId);
+        } elseif ($objOrId instanceof DbCoupon) {
+            $obj = $objOrId;
+        }
+
         if (!$obj) {
             throw new ErrorException('"obj" should not be null!');
         }
