@@ -65,8 +65,8 @@ Coupon::$configPath = './config.yml';
 |int|kind|N|类型(第二级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
 |string|name|Y|名称|
 |string|desc|Y|描述|
-|int|min_amount|N|满减条件金额|
-|int|offer_amount|N|满减金额|
+|float|min_amount|N|满减条件金额|
+|float|offer_amount|N|满减金额|
 |int|coupon_limit|N|优惠卷次数限制|
 |bool|valid|Y|是否有效|
 |string|dead_time|Y|截止时间|
@@ -87,8 +87,8 @@ Coupon::$configPath = './config.yml';
 |int|kind|N|类型(第二级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
 |string|name|Y|名称|
 |string|desc|Y|描述|
-|int|min_amount|N|满减条件金额|
-|int|offer_amount|N|满减金额|
+|float|min_amount|N|满减条件金额|
+|float|offer_amount|N|满减金额|
 |int|coupon_limit|N|优惠卷次数限制|
 |bool|valid|Y|是否有效|
 |string|dead_time|Y|截止时间|
@@ -146,8 +146,8 @@ Coupon::$configPath = './config.yml';
   - @param
     - string $name 名称
     - string $desc 描述
-    - int $min_amount 满减条件金额
-    - int $offer_amount 满减金额
+    - float $min_amount 满减条件金额
+    - float $offer_amount 满减金额
     - int $second 有效期（从现在起，秒）
   - @return object
 
@@ -156,8 +156,8 @@ Coupon::$configPath = './config.yml';
   - @param
     - string $name 名称
     - string $desc 描述
-    - int $min_amount 满减条件金额
-    - int $offer_amount 满减金额
+    - float $min_amount 满减条件金额
+    - float $offer_amount 满减金额
     - int $second 有效期（从现在起，秒）
   - @return bool
 
