@@ -155,7 +155,7 @@ class MTest extends TestCase
         self::assertNotEmpty($coupon);
 
         $list = MCoupon::list(
-            [MCoupon::where(MCoupon::WHERE_NEQ, DbCoupon::COL_NAME) => 'name!'],
+            [MCoupon::where(MCoupon::WHERE_NEQ, MCoupon::COL_NAME) => 'name!'],
             10,
             0
         );
@@ -169,7 +169,7 @@ class MTest extends TestCase
                     )
                 )
             );
-            $list = MCoupon::list([DbCoupon::COL_NAME => 'name'], 10, 0);
+            $list = MCoupon::list([MCoupon::COL_NAME => 'name'], 10, 0);
         }
         self::assertNotEmpty($list);
         self::assertEquals(sizeof($list), 1);
