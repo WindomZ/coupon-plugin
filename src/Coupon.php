@@ -37,7 +37,15 @@ class Coupon
     /**
      * @var string
      */
-    public static $configPath = './config.yml';
+    private static $configPath = './config.yml';
+
+    /**
+     * @param string $configPath
+     */
+    public static function setConfigPath(string $configPath)
+    {
+        self::$configPath = $configPath;
+    }
 
     /**
      * @var Coupon
