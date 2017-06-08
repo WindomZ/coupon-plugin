@@ -22,17 +22,17 @@ class Config extends \Noodlehaus\Config
      */
     protected function getDefaults()
     {
-        return array(
-            'host' => '127.0.0.1',
-            'port' => 80,
-            'database' => array(
+        return [
+            'database' => [
                 'host' => '127.0.0.1',
                 'port' => 3306,
                 'type' => 'mysql',
-                'name' => 'name',
+                'name' => 'testdb',
                 'username' => 'root',
                 'password' => 'root',
-            ),
-        );
+                'logging' => false,
+                'prefix' => 'cp_',
+            ],
+        ];
     }
 }

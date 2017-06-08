@@ -18,15 +18,14 @@ class CouponTest extends TestCase
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        self::assertEquals($coupon->getConfig()->get('host'), '127.0.0.1');
-        self::assertEquals($coupon->getConfig()->get('port'), 80);
-
         self::assertEquals($coupon->getConfig()->get('database.host'), '127.0.0.1');
         self::assertEquals($coupon->getConfig()->get('database.port'), 3306);
         self::assertEquals($coupon->getConfig()->get('database.type'), 'mysql');
         self::assertEquals($coupon->getConfig()->get('database.name'), 'testdb');
         self::assertEquals($coupon->getConfig()->get('database.username'), 'root');
         self::assertEquals($coupon->getConfig()->get('database.password'), 'root');
+        self::assertEquals($coupon->getConfig()->get('database.logging'), true);
+        self::assertEquals($coupon->getConfig()->get('database.prefix'), null);
 
         return $coupon;
     }

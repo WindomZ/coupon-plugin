@@ -23,6 +23,9 @@ class Database extends Medoo
                 'server' => $config->get('database.host'),
                 'username' => $config->get('database.username'),
                 'password' => $config->get('database.password'),
+                'port' => $config->get('database.port'),
+                'logging' => $config->get('database.logging'),
+                'prefix' => $config->get('database.prefix'),
             ]
         );
 
