@@ -29,11 +29,13 @@ class MTest extends TestCase
         if (!$list) {
             $this->assertTrue(
                 MActivity::post(
-                    'name',
-                    'note',
-                    10000,
-                    1,
-                    0
+                    MActivity::object(
+                        'name',
+                        'note',
+                        10000,
+                        1,
+                        0
+                    )
                 )
             );
             $list = MActivity::list([DbActivity::COL_NAME => 'name'], 10, 0);
@@ -79,11 +81,13 @@ class MTest extends TestCase
         if (!$list) {
             $this->assertTrue(
                 MCouponTemplate::post(
-                    'name',
-                    'desc',
-                    100,
-                    200,
-                    0
+                    MCouponTemplate::object(
+                        'name',
+                        'desc',
+                        100,
+                        200,
+                        0
+                    )
                 )
             );
             $list = MCouponTemplate::list([DbCouponTemplate::COL_NAME => 'name'], 10, 0);

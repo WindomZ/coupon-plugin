@@ -64,24 +64,17 @@ class MCouponTemplate extends mBase
     }
 
     /**
-     * @param string $name
-     * @param string $desc
-     * @param int $min_amount
-     * @param int $offer_amount
-     * @param int $second
+     * @param DbCouponTemplate $obj
      * @return bool
      * @throws ErrorException
      */
-    public static function post(
-        string $name,
-        string $desc = '',
-        $min_amount = 0,
-        $offer_amount = 0,
-        $second = 86400// 1 day
-    ): bool {
-        $ins = self::object($name, $desc, $min_amount, $offer_amount, $second);
+    public static function post(DbCouponTemplate $obj): bool
+    {
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
+        }
 
-        return $ins->_beforePost()->post();
+        return $obj->_beforePost()->post();
     }
 
     /**

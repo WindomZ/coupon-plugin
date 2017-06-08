@@ -69,6 +69,11 @@ class MCoupon extends mBase
         return $ins;
     }
 
+    /**
+     * @param DbCoupon $obj
+     * @return bool
+     * @throws ErrorException
+     */
     public static function post(DbCoupon $obj): bool
     {
         if (!$obj) {

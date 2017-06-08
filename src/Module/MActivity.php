@@ -65,23 +65,17 @@ class MActivity extends mBase
     }
 
     /**
-     * @param string $name
-     * @param string $note
-     * @param int $coupon_size
-     * @param int $coupon_limit
-     * @param int $second
+     * @param DbActivity $obj
      * @return bool
+     * @throws ErrorException
      */
-    public static function post(
-        string $name,
-        string $note = '',
-        $coupon_size = 0,
-        $coupon_limit = 0,
-        $second = 0
-    ): bool {
-        $ins = self::object($name, $note, $coupon_size, $coupon_limit, $second);
+    public static function post(DbActivity $obj): bool
+    {
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
+        }
 
-        return $ins->_beforePost()->post();
+        return $obj->_beforePost()->post();
     }
 
     /**
