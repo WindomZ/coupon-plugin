@@ -48,11 +48,14 @@ abstract class dbBaseList
      * @param int $page
      * @return bool
      */
-    protected function _select(array $where = null, $limit = 0, $page = 0)
+    protected function _select(array $where = null, int $limit = 0, int $page = 0)
     {
-        if ($limit > 0 && !empty($where)) {
+        if ($limit > 0) {
+            if (!$where) {
+                $where = array();
+            }
             if ($page > 0) {
-                $where['LIMIT'] = [$limit * $page, $limit * ($page + 1)];
+                $where['LIMIT'] = [$limit * $page, $limit];
             } else {
                 $where['LIMIT'] = $limit;
             }
@@ -79,7 +82,7 @@ abstract class dbBaseList
      * @param int $page
      * @return array|null
      */
-    public function select(array $where = null, $limit = 0, $page = 0)
+    public function select(array $where = null, int $limit = 0, int $page = 0)
     {
         if ($this->_select($where, $limit, $page)) {
             return $this->getList();
