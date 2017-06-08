@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace CouponPlugin\Test\Date;
+namespace CouponPlugin\Test\Util;
 
 use CouponPlugin\Util\Date;
 use PHPUnit\Framework\TestCase;
