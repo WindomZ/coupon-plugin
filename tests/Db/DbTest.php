@@ -4,13 +4,52 @@ namespace CouponPlugin\Test\Db;
 
 use CouponPlugin\Coupon;
 
+use CouponPlugin\Db\DbActivity;
 use CouponPlugin\Db\DbCoupon;
 use CouponPlugin\Db\DbCouponTemplate;
 use CouponPlugin\Util\Date;
 use PHPUnit\Framework\TestCase;
 
-class DbCouponTest extends TestCase
+class DbTest extends TestCase
 {
+    /**
+     * @return DbActivity
+     */
+    public function testDbActivity()
+    {
+        $coupon = Coupon::getInstance();
+        self::assertNotEmpty($coupon);
+
+        $ins = new DbActivity();
+
+        if ($ins->get([DbActivity::COL_NAME => 'name'])) {
+            $this->assertEquals($ins->name, 'name');
+            $this->assertEquals($ins->note, 'note');
+            $this->assertEquals($ins->coupon_size, 10000);
+            $this->assertEquals($ins->coupon_limit, 1);
+
+            $ins->_beforePut()->put();
+        } else {
+            $ins->name = 'name';
+            $ins->note = 'note';
+            $ins->coupon_size = 10000;
+            $ins->coupon_limit = 1;
+            $ins->dead_time = Date::get_now_time();
+
+            $this->assertTrue($ins->_beforePost()->post());
+        }
+
+        $id = $ins->id;
+        $ins = new DbActivity();
+        $this->assertTrue($ins->getById($id));
+        $this->assertEquals($ins->name, 'name');
+        $this->assertEquals($ins->note, 'note');
+        $this->assertEquals($ins->coupon_size, 10000);
+        $this->assertEquals($ins->coupon_limit, 1);
+
+        return $ins;
+    }
+
     /**
      * @return DbCouponTemplate
      */
@@ -50,11 +89,16 @@ class DbCouponTest extends TestCase
     }
 
     /**
+     * @depends testDbActivity
      * @depends testDbCouponTemplate
+     * @param DbActivity $activity
      * @param DbCouponTemplate $template
      */
-    public function testDbCoupon($template)
+    public function testDbCoupon($activity, $template)
     {
+        self::assertNotEmpty($activity);
+        self::assertNotEmpty($template);
+
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
@@ -62,7 +106,7 @@ class DbCouponTest extends TestCase
 
         if ($ins->get([DbCoupon::COL_TEMPLATE_ID => $template->id])) {
             $this->assertEquals($ins->owner_id, $template->id);
-            $this->assertEquals($ins->activity_id, $template->id);
+            $this->assertEquals($ins->activity_id, $activity->id);
             $this->assertEquals($ins->template_id, $template->id);
             $this->assertEquals($ins->name, 'name');
             $this->assertEquals($ins->desc, 'desc');
@@ -72,7 +116,7 @@ class DbCouponTest extends TestCase
             $ins->_beforePut()->put();
         } else {
             $ins->owner_id = $template->id;
-            $ins->activity_id = $template->id;
+            $ins->activity_id = $activity->id;
             $ins->template_id = $template->id;
             $ins->name = 'name';
             $ins->desc = 'desc';
@@ -87,7 +131,7 @@ class DbCouponTest extends TestCase
         $ins = new DbCoupon();
         $this->assertTrue($ins->getById($id));
         $this->assertEquals($ins->owner_id, $template->id);
-        $this->assertEquals($ins->activity_id, $template->id);
+        $this->assertEquals($ins->activity_id, $activity->id);
         $this->assertEquals($ins->template_id, $template->id);
         $this->assertEquals($ins->name, 'name');
         $this->assertEquals($ins->desc, 'desc');
