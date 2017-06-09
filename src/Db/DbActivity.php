@@ -11,6 +11,8 @@ class DbActivity extends dbBaseDate
     const COL_NAME = 'name';
     const COL_NOTE = 'note';
     const COL_URL = 'url';
+    const COL_CLASS = 'class';
+    const COL_KIND = 'kind';
     const COL_COUPON_SIZE = 'coupon_size';
     const COL_COUPON_USED = 'coupon_used';
     const COL_COUPON_LIMIT = 'coupon_limit';
@@ -32,6 +34,16 @@ class DbActivity extends dbBaseDate
      * @var string
      */
     public $url = '';
+
+    /**
+     * @var int
+     */
+    public $class = 0;
+
+    /**
+     * @var int
+     */
+    public $kind = 0;
 
     /**
      * @var int
@@ -92,6 +104,8 @@ class DbActivity extends dbBaseDate
         switch ($type) {
             case self::_TypeDbPost:
                 return !empty($this->name)
+                    && $this->class >= 0 && $this->kind >= 0
+                    && !($this->kind & ($this->kind - 1))
                     && $this->coupon_size >= 0 && $this->coupon_used >= 0
                     && !empty($this->dead_time);
             case self::_TypeDbPut:
@@ -112,6 +126,8 @@ class DbActivity extends dbBaseDate
                 self::COL_NAME => $this->name,
                 self::COL_NOTE => $this->note,
                 self::COL_URL => $this->url,
+                self::COL_CLASS => $this->class,
+                self::COL_KIND => $this->kind,
                 self::COL_COUPON_SIZE => $this->coupon_size,
                 self::COL_COUPON_USED => $this->coupon_used,
                 self::COL_COUPON_LIMIT => $this->coupon_limit,
@@ -133,6 +149,8 @@ class DbActivity extends dbBaseDate
         $this->name = $data[self::COL_NAME];
         $this->note = $data[self::COL_NOTE];
         $this->url = $data[self::COL_URL];
+        $this->class = $data[self::COL_CLASS];
+        $this->kind = $data[self::COL_KIND];
         $this->coupon_size = $data[self::COL_COUPON_SIZE];
         $this->coupon_used = $data[self::COL_COUPON_USED];
         $this->coupon_limit = $data[self::COL_COUPON_LIMIT];
