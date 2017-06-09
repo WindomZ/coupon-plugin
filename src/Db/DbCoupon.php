@@ -76,6 +76,8 @@ class DbCoupon extends DbCouponTemplate
             $this->activity = $activity;
             $this->template_id = $template->id;
             $this->template = $template;
+            $this->class = $template->class;
+            $this->kind = $template->kind;
             $this->valid = $template->valid;
             $this->dead_time = $template->dead_time;
         } else {
@@ -102,7 +104,7 @@ class DbCoupon extends DbCouponTemplate
                 return parent::valid($type)
                     && $this->validUuid($this->owner_id) && $this->validUuid($this->activity_id)
                     && $this->validUuid($this->template_id)
-                    && $this->used_count >= 0 && !empty($this->used_time);
+                    && $this->used_count >= 0;
             case self::_TypeDbPut:
                 return $this->validId() && $this->valid(self::_TypeDbPost);
         }

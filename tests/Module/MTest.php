@@ -25,20 +25,26 @@ class MTest extends TestCase
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        $list = MActivity::list([DbActivity::COL_NAME => 'name'], 10, 0);
+        $list = MActivity::list([MActivity::COL_NAME => 'name'], 10, 0);
         if (!$list || !$list['size']) {
-            $this->assertTrue(
-                MActivity::post(
-                    MActivity::object(
-                        'name',
-                        'note',
-                        10000,
-                        1,
-                        0
-                    )
-                )
+            $obj = MActivity::object(
+                'name',
+                'note',
+                10000,
+                1,
+                0
             );
-            $list = MActivity::list([DbActivity::COL_NAME => 'name'], 10, 0);
+
+            $obj->class = -1;
+            $obj->kind = 3;
+            $this->assertFalse($obj->valid($obj::_TypeDbPost));
+
+            $obj->class = 1;
+            $this->assertTrue($obj->valid($obj::_TypeDbPost));
+
+            $this->assertTrue(MActivity::post($obj));
+
+            $list = MActivity::list([MActivity::COL_NAME => 'name'], 10, 0);
         }
         self::assertNotEmpty($list);
         self::assertEquals(sizeof($list), 4);
@@ -87,7 +93,7 @@ class MTest extends TestCase
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        $list = MCouponTemplate::list([DbCouponTemplate::COL_NAME => 'name'], 10, 0);
+        $list = MCouponTemplate::list([MCouponTemplate::COL_NAME => 'name'], 10, 0);
         if (!$list || !$list['size']) {
             $obj = MCouponTemplate::object(
                 'name',
@@ -98,17 +104,15 @@ class MTest extends TestCase
             );
 
             $obj->class = -1;
-            $this->assertFalse($obj->valid($obj::_TypeDbPost));
-
-            $obj->class = 1;
             $obj->kind = 3;
             $this->assertFalse($obj->valid($obj::_TypeDbPost));
 
-            $obj->kind = 4;
+            $obj->class = 1;
             $this->assertTrue($obj->valid($obj::_TypeDbPost));
+
             $this->assertTrue(MCouponTemplate::post($obj));
 
-            $list = MCouponTemplate::list([DbCouponTemplate::COL_NAME => 'name'], 10, 0);
+            $list = MCouponTemplate::list([MCouponTemplate::COL_NAME => 'name'], 10, 0);
         }
         self::assertNotEmpty($list);
         self::assertEquals(sizeof($list), 4);
@@ -170,15 +174,21 @@ class MTest extends TestCase
             0
         );
         if (!$list || !$list['size']) {
-            $this->assertTrue(
-                MCoupon::post(
-                    MCoupon::object(
-                        $template->id,
-                        $activity->id,
-                        $template->id
-                    )
-                )
+            $obj = MCoupon::object(
+                $template->id,
+                $activity->id,
+                $template->id
             );
+
+            $obj->class = -1;
+            $obj->kind = 3;
+            $this->assertFalse($obj->valid($obj::_TypeDbPost));
+
+            $obj->class = 1;
+            $this->assertTrue($obj->valid($obj::_TypeDbPost));
+
+            $this->assertTrue(MCoupon::post($obj));
+
             $list = MCoupon::list([MCoupon::COL_NAME => 'name'], 10, 0);
         }
         self::assertNotEmpty($list);

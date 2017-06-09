@@ -105,7 +105,6 @@ class DbActivity extends dbBaseDate
             case self::_TypeDbPost:
                 return !empty($this->name)
                     && $this->class >= 0 && $this->kind > 0
-                    && !($this->kind & ($this->kind - 1))
                     && $this->coupon_size >= 0 && $this->coupon_used >= 0
                     && !empty($this->dead_time);
             case self::_TypeDbPut:

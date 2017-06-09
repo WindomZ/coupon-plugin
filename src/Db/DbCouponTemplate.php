@@ -83,8 +83,7 @@ class DbCouponTemplate extends dbBaseDate
             case self::_TypeDbPost:
                 return !empty($this->name)
                     && $this->class >= 0 && $this->kind > 0
-                    && !($this->kind & ($this->kind - 1))
-                    && $this->min_amount >= 0 && $this->offer_amount > 0
+                    && $this->min_amount >= 0 && $this->offer_amount >= 0
                     && !empty($this->dead_time);
             case self::_TypeDbPut:
                 return $this->validId() && $this->valid(self::_TypeDbPost);

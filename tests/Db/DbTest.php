@@ -32,6 +32,8 @@ class DbTest extends TestCase
         } else {
             $ins->name = 'name';
             $ins->note = 'note';
+            $ins->class = 0;
+            $ins->kind = 1;
             $ins->coupon_size = 10000;
             $ins->coupon_limit = 1;
             $ins->dead_time = Date::get_now_time();
@@ -70,6 +72,8 @@ class DbTest extends TestCase
         } else {
             $ins->name = 'name';
             $ins->desc = 'desc';
+            $ins->class = 0;
+            $ins->kind = 1;
             $ins->min_amount = 100;
             $ins->offer_amount = 200;
             $ins->dead_time = Date::get_now_time();
@@ -120,6 +124,8 @@ class DbTest extends TestCase
             $ins->template_id = $template->id;
             $ins->name = 'name';
             $ins->desc = 'desc';
+            $ins->class = 0;
+            $ins->kind = 1;
             $ins->min_amount = 100;
             $ins->offer_amount = 200;
             $ins->dead_time = Date::get_now_time();
