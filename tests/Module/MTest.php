@@ -89,17 +89,25 @@ class MTest extends TestCase
 
         $list = MCouponTemplate::list([DbCouponTemplate::COL_NAME => 'name'], 10, 0);
         if (!$list || !$list['size']) {
-            $this->assertTrue(
-                MCouponTemplate::post(
-                    MCouponTemplate::object(
-                        'name',
-                        'desc',
-                        100,
-                        200,
-                        0
-                    )
-                )
+            $obj = MCouponTemplate::object(
+                'name',
+                'desc',
+                100,
+                200,
+                0
             );
+
+            $obj->class = -1;
+            $this->assertFalse($obj->valid($obj::_TypeDbPost));
+
+            $obj->class = 1;
+            $obj->kind = 3;
+            $this->assertFalse($obj->valid($obj::_TypeDbPost));
+
+            $obj->kind = 4;
+            $this->assertTrue($obj->valid($obj::_TypeDbPost));
+            $this->assertTrue(MCouponTemplate::post($obj));
+
             $list = MCouponTemplate::list([DbCouponTemplate::COL_NAME => 'name'], 10, 0);
         }
         self::assertNotEmpty($list);
