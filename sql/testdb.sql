@@ -11,6 +11,8 @@ create table testdb.cp_activity
 	name varchar(64) default '' not null,
 	note varchar(512) default '' not null,
 	url varchar(256) default '' not null,
+	class int default '0' not null,
+	kind int default '0' not null,
 	coupon_size int default '0' not null,
 	coupon_used int default '0' not null,
 	coupon_limit int default '0' not null,
