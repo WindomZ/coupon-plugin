@@ -10,6 +10,7 @@ class DbCouponTemplate extends dbBaseDate
 {
     const COL_CLASS = 'class';
     const COL_KIND = 'kind';
+    const COL_PRODUCT_ID = 'product_id';
     const COL_NAME = 'name';
     const COL_DESC = 'desc';
     const COL_MIN_AMOUNT = 'min_amount';
@@ -26,6 +27,11 @@ class DbCouponTemplate extends dbBaseDate
      * @var int
      */
     public $kind = 0;
+
+    /**
+     * @var string
+     */
+    public $product_id = '';
 
     /**
      * @var string
@@ -102,6 +108,7 @@ class DbCouponTemplate extends dbBaseDate
             [
                 self::COL_CLASS => $this->class,
                 self::COL_KIND => $this->kind,
+                self::COL_PRODUCT_ID => $this->product_id,
                 self::COL_NAME => $this->name,
                 self::COL_DESC => $this->desc,
                 self::COL_MIN_AMOUNT => $this->min_amount,
@@ -122,6 +129,7 @@ class DbCouponTemplate extends dbBaseDate
 
         $this->class = $data[self::COL_CLASS];
         $this->kind = $data[self::COL_KIND];
+        $this->product_id = $data[self::COL_PRODUCT_ID];
         $this->name = $data[self::COL_NAME];
         $this->desc = $data[self::COL_DESC];
         $this->min_amount = $data[self::COL_MIN_AMOUNT];

@@ -78,6 +78,7 @@ class DbCoupon extends DbCouponTemplate
             $this->template = $template;
             $this->class = $template->class;
             $this->kind = $template->kind;
+            $this->product_id = $template->product_id;
             $this->valid = $template->valid;
             $this->dead_time = $template->dead_time;
         } else {
