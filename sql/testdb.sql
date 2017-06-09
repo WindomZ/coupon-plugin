@@ -2,7 +2,7 @@ DROP SCHEMA IF EXISTS testdb;
 
 CREATE SCHEMA testdb;
 
-create table testdb.activity
+create table testdb.cp_activity
 (
 	id char(36) not null
 		primary key,
@@ -22,7 +22,7 @@ create table testdb.activity
 )
 ;
 
-create table testdb.coupon
+create table testdb.cp_coupon
 (
 	id char(36) not null
 		primary key,
@@ -46,7 +46,7 @@ create table testdb.coupon
 )
 ;
 
-create table testdb.coupon_template
+create table testdb.cp_coupon_template
 (
 	id char(36) not null
 		primary key,
@@ -65,7 +65,7 @@ create table testdb.coupon_template
 )
 ;
 
-create table testdb.test
+create table testdb.cp_test
 (
 	id char(36) not null
 		primary key,
