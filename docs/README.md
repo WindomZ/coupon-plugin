@@ -51,6 +51,8 @@ Coupon::$configPath = './config.yml';
 |string|name|Y|名称|
 |string|note|Y|描述|
 |string|url|Y|链接地址|
+|int|class|N|类别(第一级分类，单选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
+|int|kind|N|类型(第二级分类，多选)，采用分类方式：0, 1, 2, 4, 8, 16, 32, 64...|
 |int|coupon_size|Y|优惠卷派放总额|
 |int|coupon_used|N|优惠卷派放数量|
 |int|coupon_limit|Y|优惠卷派放次数限制|
