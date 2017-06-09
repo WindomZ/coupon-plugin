@@ -20,6 +20,8 @@ class MActivity extends mBase
     const COL_NAME = DbActivity::COL_NAME;
     const COL_NOTE = DbActivity::COL_NOTE;
     const COL_URL = DbActivity::COL_URL;
+    const COL_CLASS = DbActivity::COL_CLASS;
+    const COL_KIND = DbActivity::COL_KIND;
     const COL_COUPON_SIZE = DbActivity::COL_COUPON_SIZE;
     const COL_COUPON_USED = DbActivity::COL_COUPON_USED;
     const COL_COUPON_LIMIT = DbActivity::COL_COUPON_LIMIT;
