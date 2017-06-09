@@ -2,10 +2,14 @@
 
 > 开发中...
 
+## 当前版本
+
+[![Latest Stable Version](https://img.shields.io/packagist/v/windomz/coupon-plugin.svg?style=flat-square)](https://packagist.org/packages/windomz/coupon-plugin)
+
 ## 运行环境
 
-- \>= **PHP7**
-- \>= **MySQL5.6**
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.0-8892BF.svg?style=flat-square)](https://php.net/)
+[![Minimum MYSQL Version](https://img.shields.io/badge/mysql-%3E%3D%205.6-4479a1.svg?style=flat-square)](https://www.mysql.com/)
 
 ## 安装与更新
 
@@ -32,7 +36,7 @@ database:
 
 在项目初始化阶段，**加载**指定配置文件：
 ```php
-Coupon::$configPath = './config.yml';
+Coupon::setConfigPath('./config.yml');
 ```
 
 ### 业务流程
@@ -51,6 +55,8 @@ Coupon::$configPath = './config.yml';
 |string|name|Y|名称|
 |string|note|Y|描述|
 |string|url|Y|链接地址|
+|int|class|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
+|int|kind|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
 |int|coupon_size|Y|优惠卷派放总额|
 |int|coupon_used|N|优惠卷派放数量|
 |int|coupon_limit|Y|优惠卷派放次数限制|
@@ -65,8 +71,9 @@ Coupon::$configPath = './config.yml';
 |string|id|N|UUID|
 |string|post_time|N|创建时间|
 |string|put_time|N|修改时间|
-|int|class|N|类别(第一级分类，单选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
-|int|kind|N|类型(第二级分类，多选)，采用分类方式：0, 1, 2, 4, 8, 16, 32, 64...|
+|int|class|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
+|int|kind|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
+|string|product_id|N|关联商品UUID(第二级分类，单选，可选)|
 |string|name|Y|名称|
 |string|desc|Y|描述|
 |float|min_amount|N|满减条件金额|
@@ -86,8 +93,9 @@ Coupon::$configPath = './config.yml';
 |string|template_id|N|优惠卷模板UUID|
 |int|used_count|N|优惠卷使用次数|
 |string|used_time|N|优惠卷使用时间|
-|int|class|N|类别(第一级分类，单选)，同`CouponTemplate`|
-|int|kind|N|类型(第二级分类，多选)，同`CouponTemplate`|
+|int|class|N|类别(第一级分类，单选，可选)，同`CouponTemplate`|
+|int|kind|N|类型(第二级分类，多选，可选)，同`CouponTemplate`|
+|string|product_id|N|关联商品UUID(第二级分类，单选，可选)，同`CouponTemplate`|
 |string|name|Y|名称|
 |string|desc|Y|描述|
 |float|min_amount|N|满减条件金额|
