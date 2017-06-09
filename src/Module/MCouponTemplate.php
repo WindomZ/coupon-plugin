@@ -53,7 +53,7 @@ class MCouponTemplate extends mBase
         if ($min_amount < 0) {
             $min_amount = 0;
         }
-        if ($offer_amount <= 0) {
+        if ($offer_amount < 0) {
             throw new ErrorException('"offer_amount" should be positive integer: '.$offer_amount);
         }
 
