@@ -65,8 +65,8 @@ Coupon::$configPath = './config.yml';
 |string|id|N|UUID|
 |string|post_time|N|创建时间|
 |string|put_time|N|修改时间|
-|int|class|N|类别(第一级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
-|int|kind|N|类型(第二级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
+|int|class|N|类别(第一级分类，单选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
+|int|kind|N|类型(第二级分类，多选)，采用分类方式：0, 1, 2, 4, 8, 16, 32, 64...|
 |string|name|Y|名称|
 |string|desc|Y|描述|
 |float|min_amount|N|满减条件金额|
@@ -86,8 +86,8 @@ Coupon::$configPath = './config.yml';
 |string|template_id|N|优惠卷模板UUID|
 |int|used_count|N|优惠卷使用次数|
 |string|used_time|N|优惠卷使用时间|
-|int|class|N|类别(第一级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
-|int|kind|N|类型(第二级分类)，推荐采用分类方式：1, 2, 4, 8, 16, 32, 64...|
+|int|class|N|类别(第一级分类，单选)，同`CouponTemplate`|
+|int|kind|N|类型(第二级分类，多选)，同`CouponTemplate`|
 |string|name|Y|名称|
 |string|desc|Y|描述|
 |float|min_amount|N|满减条件金额|
