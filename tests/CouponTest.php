@@ -25,7 +25,7 @@ class CouponTest extends TestCase
         self::assertEquals($coupon->getConfig()->get('database.username'), 'root');
         self::assertEquals($coupon->getConfig()->get('database.password'), 'root');
         self::assertEquals($coupon->getConfig()->get('database.logging'), true);
-        self::assertEquals($coupon->getConfig()->get('database.prefix'), null);
+        self::assertEquals($coupon->getConfig()->get('database.prefix'), 'cp_');
 
         return $coupon;
     }

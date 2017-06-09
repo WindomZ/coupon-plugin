@@ -35,4 +35,36 @@ class Config extends \Noodlehaus\Config
             ],
         ];
     }
+
+    protected function getDefault($key)
+    {
+        $default = null;
+        $defaults = $this->getDefaults();
+        if (array_key_exists($key, $defaults)) {
+            $default = $defaults[$key];
+        } else {
+            $default = $defaults;
+            $segments = explode('.', $key);
+            foreach ($segments as $segment) {
+                if (array_key_exists($segment, $default)) {
+                    $default = $default[$segment];
+                    continue;
+                } else {
+                    $default = null;
+                    break;
+                }
+            }
+        }
+
+        return $default;
+    }
+
+    public function get($key, $default = null)
+    {
+        if (!isset($default)) {
+            $default = $this->getDefault($key);
+        }
+
+        return parent::get($key, $default);
+    }
 }
