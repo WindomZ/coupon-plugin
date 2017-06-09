@@ -25,11 +25,11 @@ class MCoupon extends mBase
 
     const COL_CLASS = DbCoupon::COL_CLASS;
     const COL_KIND = DbCoupon::COL_KIND;
+    const COL_PRODUCT_ID = DbCoupon::COL_PRODUCT_ID;
     const COL_NAME = DbCoupon::COL_NAME;
     const COL_DESC = DbCoupon::COL_DESC;
     const COL_MIN_AMOUNT = DbCoupon::COL_MIN_AMOUNT;
     const COL_OFFER_AMOUNT = DbCoupon::COL_OFFER_AMOUNT;
-    const COL_COUPON_LIMIT = DbCoupon::COL_COUPON_LIMIT;
     const COL_VALID = DbCoupon::COL_VALID;
     const COL_DEAD_TIME = DbCoupon::COL_DEAD_TIME;
 
