@@ -28,11 +28,5 @@ class Database extends Medoo
                 'prefix' => $config->get('database.prefix'),
             ]
         );
-
-        $this->prepare();
-    }
-
-    protected function prepare()
-    {
     }
 }
