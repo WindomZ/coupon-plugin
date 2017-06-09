@@ -82,7 +82,7 @@ class DbCouponTemplate extends dbBaseDate
         switch ($type) {
             case self::_TypeDbPost:
                 return !empty($this->name)
-                    && $this->class >= 0 && $this->kind >= 0
+                    && $this->class >= 0 && $this->kind > 0
                     && !($this->kind & ($this->kind - 1))
                     && $this->min_amount >= 0 && $this->offer_amount > 0
                     && !empty($this->dead_time);
