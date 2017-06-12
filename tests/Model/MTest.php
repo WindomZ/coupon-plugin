@@ -211,16 +211,13 @@ class MTest extends TestCase
     }
 
     /**
-     * @depends testMActivity
-     * @depends testMCouponTemplate
-     * @param DbActivity $activity
-     * @param DbCouponTemplate $template
+     * @depends testMPack
+     * @param DbPack $pack
      * @return DbCoupon|null
      */
-    public function testMCoupon($activity, $template)
+    public function testMCoupon($pack)
     {
-        self::assertNotEmpty($activity);
-        self::assertNotEmpty($template);
+        self::assertNotEmpty($pack);
 
         $coupon = Coupon::getInstance();
         self::assertNotEmpty($coupon);
@@ -232,9 +229,8 @@ class MTest extends TestCase
         );
         if (!$list || !$list['size']) {
             $obj = MCoupon::object(
-                $template->id,
-                $activity->id,
-                $template->id
+                $pack->id,
+                $pack->id
             );
 
             $obj->class = -1;
@@ -255,8 +251,8 @@ class MTest extends TestCase
         $ins = $list['data'][0];
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->activity_id, $activity->id);
-        $this->assertEquals($ins->template_id, $template->id);
+        $this->assertEquals($ins->activity_id, $pack->activity_id);
+        $this->assertEquals($ins->template_id, $pack->template_id);
         $this->assertEquals($ins->name, 'name');
         $this->assertEquals($ins->desc, 'desc');
         $this->assertEquals($ins->min_amount, 100);
@@ -265,8 +261,8 @@ class MTest extends TestCase
         $ins = MCoupon::get($ins->id);
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->activity_id, $activity->id);
-        $this->assertEquals($ins->template_id, $template->id);
+        $this->assertEquals($ins->activity_id, $pack->activity_id);
+        $this->assertEquals($ins->template_id, $pack->template_id);
         $this->assertEquals($ins->name, 'name');
         $this->assertEquals($ins->desc, 'desc');
         $this->assertEquals($ins->min_amount, 100);

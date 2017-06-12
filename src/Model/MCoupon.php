@@ -39,36 +39,42 @@ class MCoupon extends mBase
 
     /**
      * @param string $owner_id
-     * @param string $activity_id
-     * @param string $template_id
+     * @param string $pack_id
      * @param int $second
      * @return DbCoupon
      * @throws ErrorException
      */
     public static function object(
         string $owner_id,
-        string $activity_id,
-        string $template_id,
+        string $pack_id,
         $second = 0
     ): DbCoupon {
         if (!Uuid::isValid($owner_id)) {
-            throw new ErrorException('"owner_id" should not be empty: '.$owner_id);
+            throw new ErrorException('"owner_id" should be UUID: '.$owner_id);
         }
 
-        if (!Uuid::isValid($activity_id)) {
-            throw new ErrorException('"activity_id" should not be empty: '.$activity_id);
+        if (!Uuid::isValid($pack_id)) {
+            throw new ErrorException('"pack_id" should be UUID: '.$pack_id);
         }
-        $activity = MActivity::get($activity_id);
+        $pack = MPack::get($pack_id);
+        if (!$pack) {
+            throw new ErrorException('"pack_id" should not be existed: '.$pack_id);
+        }
+
+        if (!Uuid::isValid($pack->activity_id)) {
+            throw new ErrorException('"activity_id" should be UUID: '.$pack->activity_id);
+        }
+        $activity = MActivity::get($pack->activity_id);
         if (!$activity) {
-            throw new ErrorException('"activity_id" should not be existed: '.$activity_id);
+            throw new ErrorException('"activity_id" should not be existed: '.$pack->activity_id);
         }
 
-        if (!Uuid::isValid($template_id)) {
-            throw new ErrorException('"template_id" should not be empty: '.$template_id);
+        if (!Uuid::isValid($pack->template_id)) {
+            throw new ErrorException('"template_id" should not be empty: '.$pack->template_id);
         }
-        $template = MCouponTemplate::get($template_id);
+        $template = MCouponTemplate::get($pack->template_id);
         if (!$template) {
-            throw new ErrorException('"template_id" should not be existed: '.$template_id);
+            throw new ErrorException('"template_id" should not be existed: '.$pack->template_id);
         }
 
         $ins = new DbCoupon($owner_id, $activity, $template);
