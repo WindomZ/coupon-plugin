@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace CouponPlugin\Module;
+namespace CouponPlugin\Model;
 
 /**
  * Class mBase
- * @package CouponPlugin\Module
+ * @package CouponPlugin\Model
  */
 abstract class mBase
 {

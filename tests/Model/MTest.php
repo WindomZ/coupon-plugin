@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace CouponPlugin\Test\Module;
+namespace CouponPlugin\Test\Model;
 
 use CouponPlugin\Coupon;
 use CouponPlugin\Db\DbActivity;
 use CouponPlugin\Db\DbCoupon;
 use CouponPlugin\Db\DbCouponTemplate;
-use CouponPlugin\Module\MActivity;
-use CouponPlugin\Module\MCoupon;
-use CouponPlugin\Module\MCouponTemplate;
+use CouponPlugin\Model\MActivity;
+use CouponPlugin\Model\MCoupon;
+use CouponPlugin\Model\MCouponTemplate;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class MTest
- * @package CouponPlugin\Test\Module
+ * @package CouponPlugin\Test\Model
  */
 class MTest extends TestCase
 {
@@ -69,12 +69,9 @@ class MTest extends TestCase
         $this->assertTrue(MActivity::disable($ins));
         $this->assertTrue(MActivity::disable($ins->id));
 
+        $ins->valid = true;
         MActivity::put(
-            $ins->id,
-            function ($v) {
-                self::assertNotEmpty($v);
-                $v->valid = true;
-            },
+            $ins,
             [MActivity::COL_VALID]
         );
 
@@ -137,12 +134,9 @@ class MTest extends TestCase
         $this->assertTrue(MCouponTemplate::disable($ins));
         $this->assertTrue(MCouponTemplate::disable($ins->id));
 
+        $ins->valid = true;
         MCouponTemplate::put(
-            $ins->id,
-            function ($v) {
-                self::assertNotEmpty($v);
-                $v->valid = true;
-            },
+            $ins,
             [MCouponTemplate::COL_VALID]
         );
 
@@ -220,13 +214,10 @@ class MTest extends TestCase
         $this->assertTrue(MCoupon::disable($ins));
         $this->assertTrue(MCoupon::disable($ins->id));
 
+        $ins->used_count = 0;
+        $ins->valid = true;
         MCoupon::put(
-            $ins->id,
-            function ($v) {
-                self::assertNotEmpty($v);
-                $v->used_count = 0;
-                $v->valid = true;
-            },
+            $ins,
             [MCoupon::COL_USED_COUNT, MCoupon::COL_VALID]
         );
 

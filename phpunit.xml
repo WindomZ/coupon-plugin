@@ -4,7 +4,7 @@
             <file>tests/CouponTest.php</file>
         </testsuite>
         <testsuite name="module">
-            <directory>tests/Module</directory>
+            <directory>tests/Model</directory>
         </testsuite>
         <testsuite name="db">
             <directory>tests/Db</directory>

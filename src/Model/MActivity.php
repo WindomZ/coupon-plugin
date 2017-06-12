@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace CouponPlugin\Module;
+namespace CouponPlugin\Model;
 
 use CouponPlugin\Db\DbActivities;
 use CouponPlugin\Db\DbActivity;
@@ -10,7 +10,7 @@ use CouponPlugin\Util\Uuid;
 
 /**
  * Class MActivity
- * @package CouponPlugin\Module
+ * @package CouponPlugin\Model
  */
 class MActivity extends mBase
 {
@@ -81,30 +81,20 @@ class MActivity extends mBase
     }
 
     /**
-     * @param string $id
-     * @param array $columns
-     * @param callback $callback
-     * @return DbActivity|null
+     * @param DbActivity $obj
+     * @param array|string $columns
+     * @return DbActivity
      * @throws ErrorException
      */
-    public static function put(string $id, $callback = null, $columns = [])
+    public static function put(DbActivity $obj, $columns = [])
     {
-        if (!Uuid::isValid($id)) {
-            throw new ErrorException('"id" should not be empty: '.$id);
+        if (!$obj) {
+            throw new ErrorException('"obj" should not be null!');
         }
 
-        $ins = self::get($id);
-        if (!$ins) {
-            throw new ErrorException('Not found id: '.$id);
-        }
+        $obj->_beforePut()->put($columns);
 
-        if ($callback) {
-            $callback($ins);
-        }
-
-        $ins->_beforePut()->put($columns);
-
-        return $ins;
+        return $obj;
     }
 
     /**
