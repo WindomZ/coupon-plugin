@@ -6,9 +6,11 @@ use CouponPlugin\Coupon;
 use CouponPlugin\Db\DbActivity;
 use CouponPlugin\Db\DbCoupon;
 use CouponPlugin\Db\DbCouponTemplate;
+use CouponPlugin\Db\DbPack;
 use CouponPlugin\Model\MActivity;
 use CouponPlugin\Model\MCoupon;
 use CouponPlugin\Model\MCouponTemplate;
+use CouponPlugin\Model\MPack;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -143,6 +145,67 @@ class MTest extends TestCase
         $ins = MCouponTemplate::get($ins->id);
         self::assertNotEmpty($ins);
         $this->assertTrue($ins->valid);
+
+        return $ins;
+    }
+
+    /**
+     * @depends testMActivity
+     * @depends testMCouponTemplate
+     * @param DbActivity $activity
+     * @param DbCouponTemplate $template
+     * @return DbPack|null
+     */
+    public function testMPack($activity, $template)
+    {
+        self::assertNotEmpty($activity);
+        self::assertNotEmpty($template);
+
+        $coupon = Coupon::getInstance();
+        self::assertNotEmpty($coupon);
+
+        $list = MPack::list(
+            [MPack::where(MPack::WHERE_NEQ, MPack::COL_NAME) => '!name'],
+            10,
+            0
+        );
+        if (!$list || !$list['size']) {
+            $obj = MPack::object(
+                'name',
+                $activity->id,
+                $template->id
+            );
+
+            $this->assertTrue(MPack::post($obj));
+
+            $list = MPack::list([MPack::COL_NAME => 'name'], 10, 0);
+        }
+        self::assertNotEmpty($list);
+        self::assertEquals(sizeof($list), 4);
+        self::assertEquals($list['size'], 1);
+
+        $ins = $list['data'][0];
+        self::assertNotEmpty($ins);
+
+        $this->assertEquals($ins->activity_id, $activity->id);
+        $this->assertEquals($ins->template_id, $template->id);
+        $this->assertEquals($ins->name, 'name');
+
+        $ins = MPack::get($ins->id);
+        self::assertNotEmpty($ins);
+
+        $this->assertEquals($ins->activity_id, $activity->id);
+        $this->assertEquals($ins->template_id, $template->id);
+        $this->assertEquals($ins->name, 'name');
+
+        $this->assertTrue(MPack::disable($ins));
+        $this->assertTrue(MPack::disable($ins->id));
+
+        $ins->valid = true;
+        MPack::put(
+            $ins,
+            [MPack::COL_VALID]
+        );
 
         return $ins;
     }
