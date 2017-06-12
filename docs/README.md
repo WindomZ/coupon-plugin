@@ -39,6 +39,12 @@ database:
 Coupon::setConfigPath('./config.yml');
 ```
 
+### 模块定义
+
+- 优惠卷活动(`Activity`): 方便管理优惠卷的发放
+- 优惠卷模板(`CouponTemplate`): 方便统一生成生成优惠卷
+- 优惠卷(`Coupon`): 指定用户的优惠卷
+
 ### 业务流程
 
 - 创建优惠卷：优惠卷活动(`Activity`) -> 优惠卷模板(`CouponTemplate`) -> 优惠卷(`Coupon`)
@@ -128,7 +134,7 @@ Coupon::setConfigPath('./config.yml');
   - @param
     - string $id 优惠卷活动UUID
     - function $callback 回调处理`Activity`的方法
-    - array $columns 修改字段，选用`MActivity::COL_`开头的字段
+    - array $columns 标明修改的字段，选用`MActivity::COL_`开头的字段
   - @return object
 
 - MActivity::get($id)
@@ -174,7 +180,7 @@ Coupon::setConfigPath('./config.yml');
   - @param
     - string $id 优惠卷模板UUID
     - function $callback 回调处理`CouponTemplate`的方法
-    - array $columns 修改字段，选用`MCouponTemplate::COL_`开头的字段
+    - array $columns 标明修改的字段，选用`MCouponTemplate::COL_`开头的字段
   - @return object
 
 - MCouponTemplate::get($id)
@@ -219,7 +225,7 @@ Coupon::setConfigPath('./config.yml');
   - @param
     - string $id 优惠卷UUID
     - function $callback 回调处理`Coupon`的方法
-    - array $columns 修改字段，选用`MCoupon::COL_`开头的字段
+    - array $columns 标明修改的字段，选用`MCoupon::COL_`开头的字段
   - @return bool
 
 - MCoupon::get($id)
