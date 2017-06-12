@@ -261,12 +261,11 @@ Coupon::setConfigPath('./config.yml');
 
 #### 优惠卷(`Coupon`)
 
-- MCoupon::object($owner_id, $activity_id, $template_id, $second)
+- MCoupon::object($owner_id, $pack_id, $second)
   - @description 构建优惠卷(`Coupon`)
   - @param
     - string $owner_id 用户UUID
-    - string $activity_id 活动UUID
-    - string $template_id 优惠卷模板UUID
+    - string $pack_id 优惠卷包UUID
     - int $second 有效期（从现在起，秒）
   - @return object
 
