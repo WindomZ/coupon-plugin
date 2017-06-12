@@ -69,6 +69,23 @@ create table testdb.cp_coupon_template
 )
 ;
 
+create table testdb.cp_pack
+(
+	id char(36) not null
+		primary key,
+	post_time datetime default CURRENT_TIMESTAMP not null,
+	put_time datetime default CURRENT_TIMESTAMP not null,
+	name varchar(64) default '' not null,
+	activity_id char(36) not null,
+	template_id char(36) not null,
+	level int default '0' not null,
+	valid tinyint(1) default '1' not null,
+	dead_time datetime default CURRENT_TIMESTAMP not null,
+	constraint cp_pack_id_uindex
+		unique (id)
+)
+;
+
 create table testdb.cp_test
 (
 	id char(36) not null
