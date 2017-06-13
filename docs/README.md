@@ -54,75 +54,75 @@ Coupon::setConfigPath('./config.yml');
 
 #### 优惠卷活动(`Activity`)
 
-|类型|字段|允许修改|描述|
+|类型|字段|必填|修改|描述|
 |---|---|:---:|---|
-|string|id|N|UUID|
-|string|post_time|N|创建时间|
-|string|put_time|N|修改时间|
-|string|name|Y|名称|
-|string|note|Y|描述|
-|string|url|Y|链接地址|
-|int|class|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
-|int|kind|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
-|int|coupon_size|Y|优惠卷派放总额|
-|int|coupon_used|N|优惠卷派放数量|
-|int|coupon_limit|Y|优惠卷派放次数限制|
-|int|level|Y|活动等级|
-|bool|valid|Y|是否有效|
-|string|dead_time|Y|截止时间|
+|string|id|N|N|UUID|
+|string|post_time|N|N|创建时间|
+|string|put_time|N|N|修改时间|
+|string|name|Y|Y|名称|
+|string|note|N|Y|描述|
+|string|url|N|Y|链接地址|
+|int|class|Y|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
+|int|kind|Y|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
+|int|coupon_size|Y|Y|优惠卷派放总额|
+|int|coupon_used|Y|N|优惠卷派放数量|
+|int|coupon_limit|Y|Y|优惠卷派放次数限制|
+|int|level|N|Y|活动等级|
+|bool|valid|Y|Y|是否有效|
+|string|dead_time|Y|Y|截止时间|
 
 #### 优惠卷模板(`CouponTemplate`)
 
-|类型|字段|允许修改|描述|
+|类型|字段|必填|修改|描述|
 |---|---|:---:|---|
-|string|id|N|UUID|
-|string|post_time|N|创建时间|
-|string|put_time|N|修改时间|
-|int|class|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
-|int|kind|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
-|string|product_id|N|关联商品UUID(第二级分类，单选，可选)|
-|string|name|Y|名称|
-|string|desc|Y|描述|
-|float|min_amount|N|满减条件金额|
-|float|offer_amount|N|满减金额|
-|bool|valid|Y|是否有效|
-|string|dead_time|Y|截止时间|
+|string|id|N|N|UUID|
+|string|post_time|N|N|创建时间|
+|string|put_time|N|N|修改时间|
+|int|class|Y|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
+|int|kind|Y|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
+|string|product_id|N|N|关联商品UUID(第二级分类，单选，可选)|
+|string|name|Y|Y|名称|
+|string|desc|N|Y|描述|
+|float|min_amount|Y|N|满减条件金额|
+|float|offer_amount|Y|N|满减金额|
+|bool|valid|Y|Y|是否有效|
+|string|dead_time|Y|Y|截止时间|
 
 #### 优惠卷包(`Pack`)
 
-|类型|字段|允许修改|描述|
+|类型|字段|必填|修改|描述|
 |---|---|:---:|---|
-|string|id|N|UUID|
-|string|post_time|N|创建时间|
-|string|put_time|N|修改时间|
-|string|name|Y|名称|
-|string|activity_id|N|活动UUID|
-|string|template_id|N|优惠卷模板UUID|
-|int|level|Y|活动等级|
-|bool|valid|Y|是否有效|
-|string|dead_time|Y|截止时间|
+|string|id|N|N|UUID|
+|string|post_time|N|N|创建时间|
+|string|put_time|N|N|修改时间|
+|string|name|Y|Y|名称|
+|string|activity_id|Y|N|活动UUID|
+|string|template_id|Y|N|优惠卷模板UUID|
+|int|level|N|Y|活动等级|
+|bool|valid|Y|Y|是否有效|
+|string|dead_time|Y|Y|截止时间|
 
 #### 优惠卷(`Coupon`)
 
-|类型|字段|允许修改|描述|
+|类型|字段|必填|修改|描述|
 |---|---|:---:|---|
-|string|id|N|UUID|
-|string|post_time|N|创建时间|
-|string|put_time|N|修改时间|
-|string|owner_id|N|用户UUID|
-|string|activity_id|N|活动UUID|
-|string|template_id|N|优惠卷模板UUID|
-|int|used_count|N|优惠卷使用次数|
-|string|used_time|N|优惠卷使用时间|
-|int|class|N|类别(第一级分类，单选，可选)，同`CouponTemplate`|
-|int|kind|N|类型(第二级分类，多选，可选)，同`CouponTemplate`|
-|string|product_id|N|关联商品UUID(第二级分类，单选，可选)，同`CouponTemplate`|
-|string|name|Y|名称|
-|string|desc|Y|描述|
-|float|min_amount|N|满减条件金额|
-|float|offer_amount|N|满减金额|
-|bool|valid|Y|是否有效|
-|string|dead_time|Y|截止时间|
+|string|id|N|N|UUID|
+|string|post_time|N|N|创建时间|
+|string|put_time|N|N|修改时间|
+|string|owner_id|Y|N|用户UUID|
+|string|activity_id|Y|N|活动UUID|
+|string|template_id|Y|N|优惠卷模板UUID|
+|int|used_count|N|N|优惠卷使用次数|
+|string|used_time|N|N|优惠卷使用时间|
+|int|class|Y|N|类别(第一级分类，单选，可选)，同`CouponTemplate`|
+|int|kind|Y|N|类型(第二级分类，多选，可选)，同`CouponTemplate`|
+|string|product_id|N|N|关联商品UUID(第二级分类，单选，可选)，同`CouponTemplate`|
+|string|name|Y|Y|名称|
+|string|desc|N|Y|描述|
+|float|min_amount|Y|N|满减条件金额|
+|float|offer_amount|Y|N|满减金额|
+|bool|valid|Y|Y|是否有效|
+|string|dead_time|Y|Y|截止时间|
 
 ### 接口方法
 
