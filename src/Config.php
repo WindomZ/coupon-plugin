@@ -2,6 +2,8 @@
 
 namespace CouponPlugin;
 
+use PDO;
+
 /**
  * Class Config
  * @package CouponPlugin
@@ -30,8 +32,15 @@ class Config extends \Noodlehaus\Config
                 'name' => 'testdb',
                 'username' => 'root',
                 'password' => 'root',
+                'charset' => 'utf8',
                 'logging' => false,
                 'prefix' => 'cp_',
+                'option' => [
+                    PDO::ATTR_CASE => PDO::CASE_NATURAL,
+                ],
+                'command' => [
+                    'SET SQL_MODE=ANSI_QUOTES',
+                ],
             ],
         ];
     }
