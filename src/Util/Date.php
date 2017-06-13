@@ -70,6 +70,7 @@ class Date
      * @param string $time
      * @param string|null $refer
      * @return bool
+     * @throws ErrorException
      */
     public static function before(string $time, string $refer = null)
     {
@@ -88,6 +89,7 @@ class Date
      * @param string $time
      * @param string|null $refer
      * @return bool
+     * @throws ErrorException
      */
     public static function after(string $time, string $refer = null)
     {
