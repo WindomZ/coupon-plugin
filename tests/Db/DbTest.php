@@ -65,14 +65,14 @@ class DbTest extends TestCase
 
         if ($ins->get([DbCouponTemplate::COL_NAME => 'name'])) {
             $this->assertEquals($ins->name, 'name');
-            $this->assertEquals($ins->desc, 'desc');
+            $this->assertEquals($ins->desc, '这是描述');
             $this->assertEquals($ins->min_amount, 100);
             $this->assertEquals($ins->offer_amount, 200);
 
             $ins->_beforePut()->put();
         } else {
             $ins->name = 'name';
-            $ins->desc = 'desc';
+            $ins->desc = '这是描述';
             $ins->class = 0;
             $ins->kind = 1;
             $ins->min_amount = 100;
@@ -86,7 +86,7 @@ class DbTest extends TestCase
         $ins = new DbCouponTemplate();
         $this->assertTrue($ins->getById($id));
         $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, 'desc');
+        $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
 
@@ -152,7 +152,7 @@ class DbTest extends TestCase
             $this->assertEquals($ins->activity_id, $pack->activity_id);
             $this->assertEquals($ins->template_id, $pack->template_id);
             $this->assertEquals($ins->name, 'name');
-            $this->assertEquals($ins->desc, 'desc');
+            $this->assertEquals($ins->desc, '这是描述');
             $this->assertEquals($ins->min_amount, 100);
             $this->assertEquals($ins->offer_amount, 200);
 
@@ -169,7 +169,7 @@ class DbTest extends TestCase
         $this->assertEquals($ins->activity_id, $pack->activity_id);
         $this->assertEquals($ins->template_id, $pack->template_id);
         $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, 'desc');
+        $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
 

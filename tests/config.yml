@@ -5,4 +5,5 @@ database:
     name: testdb
     username: root
     password: root
+    charset: utf8
     logging: true

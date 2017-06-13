@@ -96,7 +96,7 @@ class MTest extends TestCase
         if (!$list || !$list['size']) {
             $obj = MCouponTemplate::object(
                 'name',
-                'desc',
+                '这是描述',
                 100,
                 200,
                 0
@@ -121,7 +121,7 @@ class MTest extends TestCase
         self::assertNotEmpty($ins);
 
         $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, 'desc');
+        $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
 
@@ -129,7 +129,7 @@ class MTest extends TestCase
         self::assertNotEmpty($ins);
 
         $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, 'desc');
+        $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
 
@@ -254,7 +254,7 @@ class MTest extends TestCase
         $this->assertEquals($ins->activity_id, $pack->activity_id);
         $this->assertEquals($ins->template_id, $pack->template_id);
         $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, 'desc');
+        $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
 
@@ -264,7 +264,7 @@ class MTest extends TestCase
         $this->assertEquals($ins->activity_id, $pack->activity_id);
         $this->assertEquals($ins->template_id, $pack->template_id);
         $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, 'desc');
+        $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
 
