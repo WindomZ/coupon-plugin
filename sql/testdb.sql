@@ -63,7 +63,6 @@ create table testdb.cp_coupon_template
 	min_amount decimal(10,2) default '0.00' not null,
 	offer_amount decimal(10,2) default '0.00' not null,
 	valid tinyint(1) default '1' not null,
-	dead_time datetime default CURRENT_TIMESTAMP not null,
 	constraint coupon_template_id_uindex
 		unique (id)
 )
