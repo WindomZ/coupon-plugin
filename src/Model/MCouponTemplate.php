@@ -5,8 +5,6 @@ namespace CouponPlugin\Model;
 use CouponPlugin\Db\DbCouponTemplate;
 use CouponPlugin\Db\DbCouponTemplates;
 use CouponPlugin\ErrorException;
-use CouponPlugin\Util\Date;
-use CouponPlugin\Util\Uuid;
 
 /**
  * Class MCouponTemplate
@@ -25,7 +23,6 @@ class MCouponTemplate extends mBase
     const COL_MIN_AMOUNT = DbCouponTemplate::COL_MIN_AMOUNT;
     const COL_OFFER_AMOUNT = DbCouponTemplate::COL_OFFER_AMOUNT;
     const COL_VALID = DbCouponTemplate::COL_VALID;
-    const COL_DEAD_TIME = DbCouponTemplate::COL_DEAD_TIME;
 
     private function __construct()
     {
@@ -36,7 +33,6 @@ class MCouponTemplate extends mBase
      * @param string $desc
      * @param int $min_amount
      * @param int $offer_amount
-     * @param int $second
      * @return DbCouponTemplate
      * @throws ErrorException
      */
@@ -44,8 +40,7 @@ class MCouponTemplate extends mBase
         string $name,
         string $desc = '',
         $min_amount = 0,
-        $offer_amount = 0,
-        $second = 86400// 1 day
+        $offer_amount = 0
     ): DbCouponTemplate {
         if (empty($name)) {
             throw new ErrorException('"name" should not be empty: '.$name);
@@ -57,10 +52,7 @@ class MCouponTemplate extends mBase
             throw new ErrorException('"offer_amount" should be positive integer: '.$offer_amount);
         }
 
-        $ins = new DbCouponTemplate($name, $desc, $min_amount, $offer_amount);
-        $ins->dead_time = Date::get_next_time($second);
-
-        return $ins;
+        return new DbCouponTemplate($name, $desc, $min_amount, $offer_amount);
     }
 
     /**

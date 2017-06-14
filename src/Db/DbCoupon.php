@@ -16,6 +16,7 @@ class DbCoupon extends DbCouponTemplate
     const COL_TEMPLATE_ID = 'template_id';
     const COL_USED_COUNT = 'used_count';
     const COL_USED_TIME = 'used_time';
+    const COL_DEAD_TIME = 'dead_time';
 
     /**
      * @var string
@@ -53,6 +54,11 @@ class DbCoupon extends DbCouponTemplate
     public $used_time;
 
     /**
+     * @var string
+     */
+    public $dead_time;
+
+    /**
      * DbCoupon constructor.
      * @param string $owner_id
      * @param DbActivity|null $activity
@@ -80,7 +86,7 @@ class DbCoupon extends DbCouponTemplate
             $this->kind = $template->kind;
             $this->product_id = $template->product_id;
             $this->valid = $template->valid;
-            $this->dead_time = $template->dead_time;
+            $this->dead_time = $activity->dead_time;
         } else {
             parent::__construct();
         }
@@ -105,7 +111,7 @@ class DbCoupon extends DbCouponTemplate
                 return parent::valid($type)
                     && $this->validUuid($this->owner_id) && $this->validUuid($this->activity_id)
                     && $this->validUuid($this->template_id)
-                    && $this->used_count >= 0;
+                    && $this->used_count >= 0 && !empty($this->dead_time);
             case self::_TypeDbPut:
                 return $this->validId() && $this->valid(self::_TypeDbPost);
         }
@@ -126,6 +132,7 @@ class DbCoupon extends DbCouponTemplate
                 self::COL_TEMPLATE_ID => $this->template_id,
                 self::COL_USED_COUNT => $this->used_count,
                 self::COL_USED_TIME => $this->used_time,
+                self::COL_DEAD_TIME => $this->dead_time,
             ]
         );
     }
@@ -143,6 +150,7 @@ class DbCoupon extends DbCouponTemplate
         $this->template_id = $data[self::COL_TEMPLATE_ID];
         $this->used_count = $data[self::COL_USED_COUNT];
         $this->used_time = $data[self::COL_USED_TIME];
+        $this->dead_time = $data[self::COL_DEAD_TIME];
 
         return $this;
     }

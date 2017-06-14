@@ -5,7 +5,6 @@ namespace CouponPlugin\Model;
 use CouponPlugin\Db\DbPack;
 use CouponPlugin\Db\DbPacks;
 use CouponPlugin\ErrorException;
-use CouponPlugin\Util\Date;
 use CouponPlugin\Util\Uuid;
 
 /**
@@ -66,9 +65,6 @@ class MPack extends mBase
         $ins->level = $activity->level;
         $ins->valid = $activity->valid && $template->valid;
         $ins->dead_time = $activity->dead_time;
-        if (Date::after($ins->dead_time, $template->dead_time)) {
-            $ins->dead_time = $template->dead_time;
-        }
 
         return $ins;
     }
@@ -175,11 +171,6 @@ class MPack extends mBase
      */
     public static function objectCoupon($objOrId, string $owner_id)
     {
-        $obj = self::toObj($objOrId);
-
-        $ins = MCoupon::object($owner_id, $obj->activity_id, $obj->template_id);
-        $ins->dead_time = $obj->dead_time;
-
-        return $ins;
+        return MCoupon::object($owner_id, self::toObj($objOrId)->id);
     }
 }

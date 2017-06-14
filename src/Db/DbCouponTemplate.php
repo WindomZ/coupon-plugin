@@ -16,7 +16,6 @@ class DbCouponTemplate extends dbBaseDate
     const COL_MIN_AMOUNT = 'min_amount';
     const COL_OFFER_AMOUNT = 'offer_amount';
     const COL_VALID = 'valid';
-    const COL_DEAD_TIME = 'dead_time';
 
     /**
      * @var int
@@ -58,11 +57,6 @@ class DbCouponTemplate extends dbBaseDate
      */
     public $valid = true;
 
-    /**
-     * @var string
-     */
-    public $dead_time;
-
     public function __construct($name = '', $desc = '', $min_amount = 0, $offer_amount = 0)
     {
         $this->name = $name;
@@ -89,8 +83,7 @@ class DbCouponTemplate extends dbBaseDate
             case self::_TypeDbPost:
                 return !empty($this->name)
                     && $this->class >= 0 && $this->kind >= 0
-                    && $this->min_amount >= 0 && $this->offer_amount >= 0
-                    && !empty($this->dead_time);
+                    && $this->min_amount >= 0 && $this->offer_amount >= 0;
             case self::_TypeDbPut:
                 return $this->validId() && $this->valid(self::_TypeDbPost);
         }
@@ -114,7 +107,6 @@ class DbCouponTemplate extends dbBaseDate
                 self::COL_MIN_AMOUNT => $this->min_amount,
                 self::COL_OFFER_AMOUNT => $this->offer_amount,
                 self::COL_VALID => $this->valid,
-                self::COL_DEAD_TIME => $this->dead_time,
             ]
         );
     }
@@ -135,7 +127,6 @@ class DbCouponTemplate extends dbBaseDate
         $this->min_amount = $data[self::COL_MIN_AMOUNT];
         $this->offer_amount = $data[self::COL_OFFER_AMOUNT];
         $this->valid = !empty($data[self::COL_VALID]);
-        $this->dead_time = $data[self::COL_DEAD_TIME];
 
         return $this;
     }

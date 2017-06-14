@@ -5,7 +5,6 @@ namespace CouponPlugin\Model;
 use CouponPlugin\Db\DbCoupon;
 use CouponPlugin\Db\DbCoupons;
 use CouponPlugin\ErrorException;
-use CouponPlugin\Util\Date;
 use CouponPlugin\Util\Uuid;
 
 /**
@@ -40,14 +39,12 @@ class MCoupon extends mBase
     /**
      * @param string $owner_id
      * @param string $pack_id
-     * @param int $second
      * @return DbCoupon
      * @throws ErrorException
      */
     public static function object(
         string $owner_id,
-        string $pack_id,
-        $second = 0
+        string $pack_id
     ): DbCoupon {
         if (!Uuid::isValid($owner_id)) {
             throw new ErrorException('"owner_id" should be UUID: '.$owner_id);
@@ -78,9 +75,7 @@ class MCoupon extends mBase
         }
 
         $ins = new DbCoupon($owner_id, $activity, $template);
-        if ($second > 0) {
-            $ins->dead_time = Date::get_next_time($second);
-        }
+        $ins->dead_time = $pack->dead_time;
 
         return $ins;
     }

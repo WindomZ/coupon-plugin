@@ -5,8 +5,6 @@ namespace CouponPlugin\Model;
 use CouponPlugin\Db\DbActivities;
 use CouponPlugin\Db\DbActivity;
 use CouponPlugin\ErrorException;
-use CouponPlugin\Util\Date;
-use CouponPlugin\Util\Uuid;
 
 /**
  * Class MActivity
@@ -38,7 +36,6 @@ class MActivity extends mBase
      * @param string $note
      * @param int $coupon_size
      * @param int $coupon_limit
-     * @param int $second
      * @return DbActivity
      * @throws ErrorException
      */
@@ -46,8 +43,7 @@ class MActivity extends mBase
         string $name,
         string $note = '',
         $coupon_size = 0,
-        $coupon_limit = 0,
-        $second = 0
+        $coupon_limit = 0
     ): DbActivity {
         if (empty($name)) {
             throw new ErrorException('"name" should not be empty: '.$name);
@@ -60,10 +56,7 @@ class MActivity extends mBase
             $coupon_limit = 0;
         }
 
-        $ins = new DbActivity($name, $note, $coupon_size, $coupon_limit);
-        $ins->dead_time = Date::get_next_time($second);
-
-        return $ins;
+        return new DbActivity($name, $note, $coupon_size, $coupon_limit);
     }
 
     /**
