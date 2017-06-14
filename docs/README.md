@@ -65,7 +65,7 @@ Coupon::setConfigPath('./config.yml');
 |int|class|Y|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
 |int|kind|Y|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
 |int|coupon_size|Y|Y|优惠卷派放总额|
-|int|coupon_used|Y|N|优惠卷派放数量|
+|int|coupon_used|N|N|优惠卷派放数量|
 |int|coupon_limit|Y|Y|优惠卷派放次数限制|
 |int|level|N|Y|活动等级|
 |bool|valid|Y|Y|是否有效|
@@ -86,7 +86,6 @@ Coupon::setConfigPath('./config.yml');
 |float|min_amount|Y|N|满减条件金额|
 |float|offer_amount|Y|N|满减金额|
 |bool|valid|Y|Y|是否有效|
-|string|dead_time|Y|Y|截止时间|
 
 #### 优惠卷包(`Pack`)
 
@@ -128,14 +127,13 @@ Coupon::setConfigPath('./config.yml');
 
 #### 优惠卷活动(`Activity`)
 
-- MActivity::object($name, $note, $coupon_size, $coupon_limit, $second)
+- MActivity::object($name, $note, $coupon_size, $coupon_limit)
   - @description 构建优惠卷活动(`Activity`)
   - @param
     - string $name 名称
     - string $note 描述
     - int $coupon_size 优惠卷派放总额
     - int $coupon_limit 优惠卷派放次数限制
-    - int $second 有效期（从现在起，秒）
   - @return object
 
 - MActivity::post($obj)
@@ -173,14 +171,13 @@ Coupon::setConfigPath('./config.yml');
 
 #### 优惠卷模板(`CouponTemplate`)
 
-- MCouponTemplate::object($name, $desc, $min_amount, $offer_amount, $second)
+- MCouponTemplate::object($name, $desc, $min_amount, $offer_amount)
   - @description 构建优惠卷模板(`CouponTemplate`)
   - @param
     - string $name 名称
     - string $desc 描述
     - float $min_amount 满减条件金额
     - float $offer_amount 满减金额
-    - int $second 有效期（从现在起，秒）
   - @return object
 
 - MCouponTemplate::post($obj)
@@ -261,12 +258,11 @@ Coupon::setConfigPath('./config.yml');
 
 #### 优惠卷(`Coupon`)
 
-- MCoupon::object($owner_id, $pack_id, $second)
+- MCoupon::object($owner_id, $pack_id)
   - @description 构建优惠卷(`Coupon`)
   - @param
     - string $owner_id 用户UUID
     - string $pack_id 优惠卷包UUID
-    - int $second 有效期（从现在起，秒）
   - @return object
 
 - MCoupon::post($obj)
