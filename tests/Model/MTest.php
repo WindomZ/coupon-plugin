@@ -11,6 +11,7 @@ use CouponPlugin\Model\MActivity;
 use CouponPlugin\Model\MCoupon;
 use CouponPlugin\Model\MCouponTemplate;
 use CouponPlugin\Model\MPack;
+use CouponPlugin\Util\Date;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,8 +34,7 @@ class MTest extends TestCase
                 'name',
                 'note',
                 10000,
-                1,
-                0
+                1
             );
 
             $obj->class = -1;
@@ -42,6 +42,7 @@ class MTest extends TestCase
             $this->assertFalse($obj->valid($obj::_TypeDbPost));
 
             $obj->class = 1;
+            $obj->dead_time = Date::get_now_time();
             $this->assertTrue($obj->valid($obj::_TypeDbPost));
 
             $this->assertTrue(MActivity::post($obj));
@@ -98,8 +99,7 @@ class MTest extends TestCase
                 'name',
                 '这是描述',
                 100,
-                200,
-                0
+                200
             );
 
             $obj->class = -1;

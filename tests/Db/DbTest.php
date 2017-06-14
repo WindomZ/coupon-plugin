@@ -77,7 +77,6 @@ class DbTest extends TestCase
             $ins->kind = 1;
             $ins->min_amount = 100;
             $ins->offer_amount = 200;
-            $ins->dead_time = Date::get_now_time();
 
             $this->assertTrue($ins->_beforePost()->post());
         }
