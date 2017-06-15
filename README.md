@@ -9,12 +9,10 @@
 
 ## Feature
 
-- [x] Coupon
-  - [x] CouponTemplate
-    - [x] The amount of coupons
 - [x] Activity
-  - [x] Dispatch
-  - [ ] Games
+- [x] CouponTemplate
+- [x] Pack = Activity + CouponTemplate
+- [x] Coupon = one of Pack
 
 ## Installation
 
@@ -52,4 +50,4 @@ Refer to the [Document](https://windomz.github.io/coupon-plugin)(_Currently only
 
 ## License
 
-The [Apache License 2.0](https://github.com/WindomZ/coupon-plugin/blob/master/LICENSE)
+The [MIT License](https://github.com/WindomZ/coupon-plugin/blob/master/LICENSE)
