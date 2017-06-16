@@ -1,3 +1,5 @@
+## **This project has been suspended, and moved to [coupon-module](https://github.com/WindomZ/coupon-module).**
+
 # coupon-plugin
 
 > Developing...
